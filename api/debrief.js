@@ -31,7 +31,11 @@ const DEBRIEF_SCHEMA = {
     planNote: { type: "string", description: "One sentence describing the plan, or what was missing." },
     policyAligned: { type: "boolean", description: "The manager's approach and plan fit the company HR policy." },
     policyNote: { type: "string", description: "One sentence on how the approach fit the policy, or what it missed (e.g. involving HR, written summary, check-in)." },
-    overall: { type: "string", description: "A one-sentence overall takeaway." },
+    overall: {
+      type: "string",
+      description:
+        "The headline: one short, punchy sentence of 15 words or fewer with the single biggest takeaway. Not a list of advice; the details belong in the other fields.",
+    },
   },
 };
 
