@@ -45,10 +45,11 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
           Start call
         </button>
-        <button class="btn btn-ghost btn-lg policy-open" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
-          Review the policy guide
-        </button>
+        </div>
+        <div class="prep-row">
+          <span class="muted">Prepare with:</span>
+          <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policy</button>
+          <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
         </div>
       </article>
 
@@ -73,7 +74,7 @@
             <span class="call-timer" id="call-timer">00:00</span>
           </div>
           <div class="call-tools">
-          <button class="icon-btn policy-open" type="button" title="Open the policy guide">
+          <button class="icon-btn" type="button" data-guide="policy" title="Open the HR policy">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
             Policy
           </button>
@@ -197,6 +198,7 @@
 
         <div class="debrief-actions">
           <button class="btn btn-primary btn-lg" id="again-btn">Practice again</button>
+          <button class="btn btn-ghost btn-lg" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
           <button class="btn btn-ghost btn-lg" id="download-btn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4l-5.7-5.7 1.4-1.4 3.3 3.3zM5 18h14v2H5z"/></svg>
             Download transcript
@@ -207,18 +209,18 @@
     </main>
 
     <!-- ======================= POLICY JOB AID ======================= -->
-    <dialog class="policy-dialog" id="policy-dialog" aria-labelledby="policy-title">
+    <dialog class="policy-dialog" id="guide-dialog" aria-labelledby="guide-title">
       <header class="policy-head">
         <div>
-          <p class="eyebrow" id="policy-company"></p>
-          <h2 id="policy-title"></h2>
+          <p class="eyebrow" id="guide-eyebrow"></p>
+          <h2 id="guide-title"></h2>
         </div>
-        <button class="close-btn" type="button" id="policy-close" aria-label="Close policy guide">✕</button>
+        <button class="close-btn" type="button" id="guide-close" aria-label="Close">✕</button>
       </header>
       <div class="policy-body">
-        <p class="policy-intro" id="policy-intro"></p>
-        <div id="policy-sections"></div>
-        <p class="policy-fine">Fictional company policy, written for practice purposes.</p>
+        <p class="policy-intro" id="guide-intro"></p>
+        <div id="guide-sections"></div>
+        <p class="policy-fine" id="guide-footnote"></p>
       </div>
     </dialog>
 

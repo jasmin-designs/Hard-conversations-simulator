@@ -1,65 +1,74 @@
 // ============================================================
-//  THE POLICY JOB AID
-//  A fictional company's guidance for managers. Learners can open it on the
-//  start screen and during the call, and the coach uses it to check whether
-//  the manager's approach and plan fit the policy. Jordan never sees it.
+//  THE HR POLICY
+//  A fictional company's attendance policy: rules and procedures only.
+//  Learners can open it on the start screen and during the call, and the
+//  coach uses it to check whether the manager's approach and plan fit.
+//  Jordan never sees it.
 //
-//  To adapt it for another company, edit the text below. Keep each point
-//  short: it's a job aid, not the full policy manual.
+//  (The "how to have the conversation" guidance is in toolkit.js.)
 // ============================================================
 
 export const POLICY = {
   company: "Northwind Logistics",
-  title: "Attendance & Flexibility: Manager Quick Guide",
+  label: "HR Policy",
+  title: "Attendance and Punctuality (HR-104)",
   intro:
-    "Use this guide when an employee's attendance or deadlines slip. Lead with curiosity: the policy supports the conversation, it doesn't replace it.",
+    "Purpose: to set clear attendance expectations, describe the flexible work options available, and explain when Human Resources must be involved. Applies to all full-time and part-time employees. Effective January 1, 2026.",
   sections: [
     {
-      heading: "The expectation",
+      heading: "1. Standard hours and punctuality",
       points: [
-        "Standard hours are 9:00–5:30, unless a different schedule has been agreed.",
-        "Arriving more than 10 minutes after the scheduled start without notice counts as late.",
-        "If running late, employees should message their manager before their start time.",
+        "Standard working hours are 9:00 a.m. to 5:30 p.m., unless an alternative schedule has been approved in writing.",
+        "An employee is late when they arrive more than 10 minutes after their scheduled start time without prior notice.",
+        "Employees who expect to be late must notify their manager before their scheduled start time.",
       ],
     },
     {
-      heading: "Options you can approve yourself",
+      heading: "2. Flexible work arrangements",
       points: [
-        "A shifted start and end time, as long as the employee works core hours, 10:00–3:00.",
-        "Up to 2 remote days per week, where the role allows.",
-        "Short-term adjustments to deadlines or workload, for up to 4 weeks.",
+        "Managers may approve an adjusted start and end time, provided the employee works the core hours of 10:00 a.m. to 3:00 p.m.",
+        "Managers may approve up to two remote workdays per week where the role allows.",
+        "Managers may approve temporary adjustments to deadlines or workload for up to four weeks. Longer arrangements require HR review.",
       ],
     },
     {
-      heading: "Bring in HR (don't decide alone)",
+      heading: "3. Leave and accommodations",
+      highlight: true,
       points: [
-        "Ongoing caregiving, family, or health needs may qualify for protected leave or a formal accommodation. Say: \"HR can walk you through your options.\"",
-        "Don't ask about medical details or try to diagnose. If the employee shares health or family information, keep it confidential.",
-        "Don't promise leave, approve unpaid time off, or share the employee's situation with the team.",
+        "Ongoing caregiving, family, or health needs may qualify for protected leave or a formal accommodation. Managers must refer these requests to HR.",
+        "Managers may not approve unpaid leave or promise leave eligibility.",
+        "Managers must not ask about medical details or diagnoses.",
         "HR Partner line: ext. 4400 · hr@northwind.example",
       ],
     },
     {
-      heading: "Support resources",
+      heading: "4. Confidentiality",
       points: [
-        "Employee Assistance Program (EAP): free, confidential, 24/7 support, including caregiver resources. Offer it; don't require it.",
+        "Personal, family, and health information shared by an employee must be kept confidential and shared only with HR as needed.",
       ],
     },
     {
-      heading: "Document and follow up",
+      heading: "5. Employee Assistance Program (EAP)",
       points: [
-        "Within 1 business day, send the employee a short written summary of what you agreed.",
-        "Set a check-in within 2 weeks to review how the plan is working.",
-        "Formal steps, such as a written warning, only after talking with HR and only if issues continue after an agreed plan.",
+        "All employees have access to free, confidential support 24/7, including caregiver resources. Participation is voluntary.",
+      ],
+    },
+    {
+      heading: "6. Documentation and follow-up",
+      points: [
+        "Managers must provide the employee with a written summary of any agreed plan within one business day.",
+        "A follow-up meeting must take place within two weeks of the agreement.",
+        "Formal corrective action, such as a written warning, requires prior consultation with HR and may be used only if attendance issues continue after an agreed plan.",
       ],
     },
   ],
+  footnote: "Fictional company policy, written for practice purposes.",
 };
 
 /** The policy as plain text, for the coach's instructions. */
 export function policyAsText(policy = POLICY) {
   return [
-    `${policy.company}: ${policy.title}`,
+    `${policy.company} ${policy.label}: ${policy.title}`,
     policy.intro,
     ...policy.sections.map((s) => `${s.heading}:\n${s.points.map((p) => `- ${p}`).join("\n")}`),
   ].join("\n\n");

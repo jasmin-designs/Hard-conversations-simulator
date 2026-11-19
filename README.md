@@ -22,7 +22,7 @@ The browser never sees your API key. It only sends the conversation to your own 
 1. `api/employee.js` sends the conversation to Claude with **Prompt 1**, and Claude replies as Jordan.
 2. `api/coach.js` sends the conversation to Claude with **Prompt 2**, and Claude returns the verdict, the "why", a "try instead", and the hidden scores.
 
-**The policy job aid.** Learners can open a short company policy guide from the start screen and during the call, as a real manager would have HR guidance at hand. The coach also reads the policy, so its feedback and the debrief can say whether the manager's approach fits it. Jordan never sees the policy. To adapt it for another company, edit `public/policy.js`.
+**The HR policy and manager toolkit.** Two separate resources, like a real company has. The **HR policy** (rules: hours, what managers can approve, when to involve HR) is available on the start screen and during the call, and the coach checks the manager's approach against it. The **manager toolkit** (how to have the conversation, with phrases that help and phrases to avoid) is available before the call to prepare and after it on the debrief screen, but hidden during the call, because it describes the skills the coach is scoring. Jordan never sees either. To adapt them for another company, edit `public/policy.js` and `public/toolkit.js`.
 
 When the learner clicks **End call**, `api/debrief.js` sends the whole transcript plus every hidden score to the coach, which writes the debrief. The skill bars on the debrief screen average those hidden scores. Jordan's openness level stays inside Jordan's head; it's never sent to the screen.
 
@@ -32,7 +32,8 @@ When the learner clicks **End call**, `api/debrief.js` sends the whole transcrip
 prompts/employee.js   ← Prompt 1 (Jordan). Edit this to change Jordan.
 prompts/coach.js      ← Prompt 2 (the coach). Edit this to change the coaching.
 public/scenario.js    ← The scenario text on the start screen.
-public/policy.js      ← The company policy job aid (fictional "Northwind Logistics").
+public/policy.js      ← The HR policy (fictional "Northwind Logistics"): rules only.
+public/toolkit.js     ← The manager toolkit: how to have the conversation.
 public/index.html     ← The three screens (start, call, debrief).
 public/styles.css     ← Colors, fonts, layout.
 public/app.js         ← Screen behavior, mic, and voice.

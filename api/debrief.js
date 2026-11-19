@@ -31,7 +31,7 @@ const DEBRIEF_SCHEMA = {
     planAgreed: { type: "boolean", description: "A concrete plan was agreed." },
     followUpAgreed: { type: "boolean", description: "A specific follow-up (time or check-in) was agreed." },
     planNote: { type: "string", description: "One sentence describing the plan, or what was missing." },
-    policyAligned: { type: "boolean", description: "The manager's approach and plan fit the company policy job aid." },
+    policyAligned: { type: "boolean", description: "The manager's approach and plan fit the company HR policy." },
     policyNote: { type: "string", description: "One sentence on how the approach fit the policy, or what it missed (e.g. involving HR, written summary, check-in)." },
     overall: { type: "string", description: "A one-sentence overall takeaway." },
   },

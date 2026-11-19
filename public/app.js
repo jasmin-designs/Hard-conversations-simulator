@@ -4,6 +4,7 @@
 
 import { SCENARIO } from "./scenario.js";
 import { POLICY } from "./policy.js";
+import { TOOLKIT } from "./toolkit.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
 const SKILLS = {
@@ -42,30 +43,39 @@ for (const d of SCENARIO.details) {
 }
 $("message").placeholder = `Say something to ${name}…`;
 
-// ---------- Policy job aid ----------
-$("policy-company").textContent = POLICY.company;
-$("policy-title").textContent = POLICY.title;
-$("policy-intro").textContent = POLICY.intro;
-for (const section of POLICY.sections) {
-  const div = document.createElement("section");
-  div.className = `policy-section${/HR/.test(section.heading) ? " hr" : ""}`;
-  const h = document.createElement("h3");
-  h.textContent = section.heading;
-  const ul = document.createElement("ul");
-  for (const point of section.points) {
-    const li = document.createElement("li");
-    li.textContent = point;
-    ul.append(li);
+// ---------- HR policy and manager toolkit ----------
+// One pop-up window shows either guide. Buttons say which with data-guide="policy" or "toolkit".
+const GUIDES = { policy: POLICY, toolkit: TOOLKIT };
+
+function openGuide(guide) {
+  $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
+  $("guide-title").textContent = guide.title;
+  $("guide-intro").textContent = guide.intro;
+  $("guide-footnote").textContent = guide.footnote || "";
+  $("guide-sections").replaceChildren();
+  for (const section of guide.sections) {
+    const div = document.createElement("section");
+    div.className = `policy-section${section.highlight ? " highlight" : ""}`;
+    const h = document.createElement("h3");
+    h.textContent = section.heading;
+    const ul = document.createElement("ul");
+    for (const point of section.points) {
+      const li = document.createElement("li");
+      li.textContent = point;
+      ul.append(li);
+    }
+    div.append(h, ul);
+    $("guide-sections").append(div);
   }
-  div.append(h, ul);
-  $("policy-sections").append(div);
+  $("guide-dialog").querySelector(".policy-body").scrollTop = 0;
+  $("guide-dialog").showModal();
 }
-for (const btn of document.querySelectorAll(".policy-open")) {
-  btn.addEventListener("click", () => $("policy-dialog").showModal());
+for (const btn of document.querySelectorAll("[data-guide]")) {
+  btn.addEventListener("click", () => openGuide(GUIDES[btn.dataset.guide]));
 }
-$("policy-close").addEventListener("click", () => $("policy-dialog").close());
-$("policy-dialog").addEventListener("click", (e) => {
-  if (e.target === $("policy-dialog")) $("policy-dialog").close(); // tap outside to close
+$("guide-close").addEventListener("click", () => $("guide-dialog").close());
+$("guide-dialog").addEventListener("click", (e) => {
+  if (e.target === $("guide-dialog")) $("guide-dialog").close(); // tap outside to close
 });
 
 function show(screen) {
