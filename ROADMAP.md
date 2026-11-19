@@ -89,6 +89,8 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 - [ ] Show progress on the debrief, not just averages. A draft exists on the `progress-view` branch; current leaning is to keep averages and add the rubric instead (see `RUBRIC-DRAFT.md`)
 - [x] Stop saying "turn" in the app: moments are now quoted ("when you asked…") with plain timing words
 - [ ] Turn on the access code in Vercel (`ACCESS_CODE`) and add the LinkedIn address in `public/contact.js`
+- [ ] **Vercel Web Analytics (site visits):** switch it on in Vercel (project → Analytics → Enable), and Claude adds one line to the site. It counts visits, pages, countries, and devices, with no personal info.
+- [ ] **Learning data dashboard** (build with the database for one-time codes): conversations started vs. finished; how often learners uncover the real issue, agree a plan, and follow policy; average skill scores; and which access code was used, when. No conversation text is stored.
 - [ ] **One-time (limited-use) access codes:** each person gets their own code that works for a set number of conversations (for example, 1 for a recruiter, 3 for a friend). This needs a small free database on Vercel to remember used codes, and it shows who used their code and when. Build it together with turning on access codes. (A gentler option: the browser remembers a finished call, but that's easy to get around.)
 
 - [ ] An iPhone + Chrome message: "For voice input on iPhone, open this page in Safari"
