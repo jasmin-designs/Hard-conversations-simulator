@@ -45,7 +45,7 @@ $("message").placeholder = `Say something to ${name}…`;
 
 // ---------- HR policy library and manager toolkit ----------
 // One pop-up window shows either guide. Buttons say which with data-guide="policy" or "toolkit".
-// The policy library has one tab per policy; the toolkit is a single page.
+// The policy library opens as a list of policies; the toolkit is a single page.
 const GUIDES = { policy: POLICY_LIBRARY, toolkit: TOOLKIT };
 
 function renderSections(sections) {
@@ -67,29 +67,97 @@ function renderSections(sections) {
   $("guide-dialog").querySelector(".policy-body").scrollTop = 0;
 }
 
-function showPolicy(library, index) {
+// The policy library: a plain list of policies...
+function showPolicyIndex(library) {
+  $("guide-title").textContent = "All policies";
+  $("guide-intro").textContent = "";
+  const ul = document.createElement("ul");
+  ul.className = "policy-index";
+  library.policies.forEach((p, i) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    const num = document.createElement("span");
+    num.className = "num";
+    num.textContent = p.number;
+    const ttl = document.createElement("span");
+    ttl.className = "ttl";
+    ttl.textContent = p.title;
+    const date = document.createElement("span");
+    date.className = "date";
+    date.textContent = `Rev. ${p.revised}`;
+    btn.append(num, ttl, date);
+    btn.addEventListener("click", () => showPolicyDoc(library, i));
+    li.append(btn);
+    ul.append(li);
+  });
+  $("guide-sections").replaceChildren(ul);
+  $("guide-dialog").querySelector(".policy-body").scrollTop = 0;
+}
+
+// ...and each policy as a plain document with numbered clauses.
+function showPolicyDoc(library, index) {
   const p = library.policies[index];
-  $("guide-title").textContent = `${p.number} · ${p.title}`;
-  $("guide-intro").textContent = `Purpose: ${p.purpose}`;
-  [...$("guide-tabs").children].forEach((tab, i) => tab.setAttribute("aria-selected", String(i === index)));
-  renderSections(p.sections);
+  $("guide-title").textContent = `${p.number} ${p.title}`;
+  $("guide-intro").textContent = "";
+
+  const back = document.createElement("button");
+  back.type = "button";
+  back.className = "back-link";
+  back.textContent = "← All policies";
+  back.addEventListener("click", () => showPolicyIndex(library));
+
+  const doc = document.createElement("article");
+  doc.className = "policy-doc";
+  const h = document.createElement("h3");
+  h.textContent = `${library.company} Policy ${p.number}: ${p.title}`;
+  const table = document.createElement("table");
+  for (const [k, v] of [
+    ["Policy owner", p.owner],
+    ["Applies to", p.appliesTo],
+    ["Effective date", p.effective],
+    ["Last revised", p.revised],
+  ]) {
+    const tr = document.createElement("tr");
+    const th = document.createElement("th");
+    th.textContent = k;
+    const td = document.createElement("td");
+    td.textContent = v;
+    tr.append(th, td);
+    table.append(tr);
+  }
+  doc.append(h, table);
+
+  const purpose = document.createElement("h4");
+  purpose.textContent = "Purpose";
+  const pp = document.createElement("p");
+  pp.style.cssText = "padding-left:0;text-indent:0";
+  pp.textContent = p.purpose;
+  doc.append(purpose, pp);
+
+  p.sections.forEach((section, i) => {
+    const sh = document.createElement("h4");
+    sh.textContent = `${i + 1}. ${section.heading}`;
+    doc.append(sh);
+    section.points.forEach((point, j) => {
+      const para = document.createElement("p");
+      const n = document.createElement("span");
+      n.className = "clause-num";
+      n.textContent = `${i + 1}.${j + 1}`;
+      para.append(n, document.createTextNode(point));
+      doc.append(para);
+    });
+  });
+
+  $("guide-sections").replaceChildren(back, doc);
+  $("guide-dialog").querySelector(".policy-body").scrollTop = 0;
 }
 
 function openGuide(guide) {
   $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
   $("guide-footnote").textContent = guide.footnote || "";
-  $("guide-tabs").replaceChildren();
   if (guide.policies) {
-    guide.policies.forEach((p, i) => {
-      const tab = document.createElement("button");
-      tab.type = "button";
-      tab.className = "guide-tab";
-      tab.setAttribute("role", "tab");
-      tab.textContent = `${p.number} ${p.tab}`;
-      tab.addEventListener("click", () => showPolicy(guide, i));
-      $("guide-tabs").append(tab);
-    });
-    showPolicy(guide, 0);
+    showPolicyIndex(guide);
   } else {
     $("guide-title").textContent = guide.title;
     $("guide-intro").textContent = guide.intro;
