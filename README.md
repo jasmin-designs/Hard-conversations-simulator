@@ -102,4 +102,5 @@ The `.env` file is already listed in `.gitignore`, so it is never uploaded to Gi
 - **Jordan's voice** uses the computer's built-in voices, so it sounds different on a Mac, Windows, or a phone. Learners can mute it with the **Voice on/off** button.
 - **Cost:** each learner turn makes two AI calls, and the debrief makes one more. A typical 8-turn practice call costs roughly 10–40 cents. To lower it, set the `MODEL` variable to `claude-sonnet-5-5` (about half the cost).
 - **Limits:** each message is capped at 1,500 characters and each conversation at 60 messages, so nobody can run up a large bill through your site.
+- **Transcripts:** the debrief screen has a **Download transcript** button (a text file with the conversation, the coach's notes, and the debrief) and a **Save as PDF** button.
 - **Adding a scenario later:** change `public/scenario.js` (what the learner sees) and `prompts/employee.js` (how the employee behaves). Claude Code can turn this into a scenario picker whenever you're ready.

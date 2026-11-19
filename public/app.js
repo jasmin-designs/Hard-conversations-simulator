@@ -406,7 +406,10 @@ async function loadDebrief() {
 }
 $("debrief-retry").addEventListener("click", loadDebrief);
 
+let lastDebrief = null;
+
 function renderDebrief(d) {
+  lastDebrief = d;
   $("debrief-loading").hidden = true;
   $("debrief-body").hidden = false;
 
@@ -500,3 +503,88 @@ function fillList(id, items = []) {
 
 $("again-btn").addEventListener("click", () => show("start-screen"));
 $("print-btn").addEventListener("click", () => window.print());
+
+// Show the full conversation in the PDF, then put things back afterwards.
+let reviewWasOpen = false;
+window.addEventListener("beforeprint", () => {
+  reviewWasOpen = $("debrief-transcript").parentElement.open;
+  $("debrief-transcript").parentElement.open = true;
+});
+window.addEventListener("afterprint", () => {
+  $("debrief-transcript").parentElement.open = reviewWasOpen;
+});
+
+// ---------- Download the transcript as a text file ----------
+$("download-btn").addEventListener("click", () => {
+  const text = buildTranscript(lastDebrief);
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `hard-conversation-${name.toLowerCase()}-${new Date().toISOString().slice(0, 10)}.txt`;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+
+function buildTranscript(d) {
+  const line = "=".repeat(60);
+  const out = [
+    "HARD CONVERSATIONS SIMULATOR: PRACTICE TRANSCRIPT",
+    line,
+    `Scenario: ${SCENARIO.title}`,
+    SCENARIO.summary,
+    `Date: ${new Date().toLocaleString()}`,
+    `Length: ${coachNotes.length} turns, ${durationText}`,
+    "",
+    "CONVERSATION",
+    line,
+  ];
+
+  let turn = 0;
+  for (const t of transcript) {
+    if (t.role === "manager") {
+      const note = coachNotes[turn++];
+      out.push("", `YOU (turn ${turn}): ${t.text}`);
+      if (note?.verdict) {
+        out.push(`   Coach: ${note.verdict}. ${note.why}`);
+        if (note.tryInstead) out.push(`   Try instead: "${note.tryInstead}"`);
+      }
+    } else {
+      out.push("", `${name.toUpperCase()}: ${t.text}`);
+    }
+  }
+
+  if (d) {
+    const yesNo = (v) => (v ? "Yes" : "Not yet");
+    out.push(
+      "",
+      "",
+      "DEBRIEF",
+      line,
+      d.overall,
+      "",
+      `Uncovered the real issue: ${d.uncoveredRealIssue ? (d.uncoveredOnTurn ? `Yes, on turn ${d.uncoveredOnTurn}` : "Yes") : "Not yet"}`,
+      `   ${d.realIssueNote}`,
+      `Agreed a plan: ${yesNo(d.planAgreed)} · Follow-up agreed: ${yesNo(d.followUpAgreed)}`,
+      `   ${d.planNote}`,
+      `Followed company policy: ${d.policyAligned ? "Yes" : "Not fully"}`,
+      `   ${d.policyNote || ""}`,
+      "",
+      "What you did well:",
+      ...(d.strengths || []).map((s) => `  - ${s}`),
+      "",
+      "Where to grow:",
+      ...(d.growthAreas || []).map((s) => `  - ${s}`),
+      "",
+      "Skill scores (average, 1-5):"
+    );
+    for (const [key, label] of Object.entries(SKILLS)) {
+      const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
+      const avg = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "not used";
+      out.push(`  - ${label}: ${avg}`);
+    }
+  }
+  return out.join("\n") + "\n";
+}

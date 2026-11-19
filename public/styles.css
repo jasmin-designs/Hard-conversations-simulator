@@ -262,5 +262,6 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
   body { background: #fff; }
   .debrief-actions, .toast { display: none !important; }
   .card, .outcome { box-shadow: none; border: 1px solid var(--line); }
-  details.transcript-review { display: none; }
+  details.transcript-review summary { list-style: none; font-size: 1.05rem; }
+  details.transcript-review summary::after { content: ": full conversation"; }
 }
