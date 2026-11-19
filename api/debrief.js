@@ -13,7 +13,6 @@ const DEBRIEF_SCHEMA = {
     "strengths",
     "growthAreas",
     "uncoveredRealIssue",
-    "uncoveredOnTurn",
     "realIssueNote",
     "planAgreed",
     "followUpAgreed",
@@ -26,8 +25,7 @@ const DEBRIEF_SCHEMA = {
     strengths: { type: "array", items: { type: "string" }, description: "Exactly two strengths." },
     growthAreas: { type: "array", items: { type: "string" }, description: "Exactly two growth areas." },
     uncoveredRealIssue: { type: "boolean" },
-    uncoveredOnTurn: { type: "integer", description: "Manager turn number when the real issue surfaced; 0 if never." },
-    realIssueNote: { type: "string", description: "One sentence on how the real issue came out, or what blocked it." },
+    realIssueNote: { type: "string", description: "One sentence on how the real issue came out (quote the manager's words that opened it up, with a timing word like 'about halfway through'), or what blocked it. No turn numbers." },
     planAgreed: { type: "boolean", description: "A concrete plan was agreed." },
     followUpAgreed: { type: "boolean", description: "A specific follow-up (time or check-in) was agreed." },
     planNote: { type: "string", description: "One sentence describing the plan, or what was missing." },
@@ -43,8 +41,13 @@ export default handler(async (body) => {
 
   if (DEMO_MODE) return demoDebrief(transcript);
 
+  // Label each set of scores with what the manager said, instead of a number.
+  const managerLines = transcript.filter((t) => t.role === "manager").map((t) => t.text);
   const scoreLines = turnScores
-    .map((s, i) => `Turn ${i + 1}: ${JSON.stringify(s && typeof s === "object" ? s : {})}`)
+    .map((s, i) => {
+      const said = (managerLines[i] || "").slice(0, 80);
+      return `When the manager said "${said}${said.length === 80 ? "…" : ""}": ${JSON.stringify(s && typeof s === "object" ? s : {})}`;
+    })
     .join("\n");
 
   return askClaude({
@@ -54,7 +57,7 @@ export default handler(async (body) => {
         role: "user",
         content: `${COACH_DEBRIEF_RULES}\n\nSkill keys: ${JSON.stringify(SKILLS)}\n\nTranscript:\n\n${asScript(
           transcript
-        )}\n\nPer-turn scores:\n${scoreLines || "(none)"}`,
+        )}\n\nScores, in order:\n${scoreLines || "(none)"}`,
       },
     ],
     effort: "medium",

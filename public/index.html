@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Hard Conversations Simulator</title>
-    <meta name="description" content="Practice a difficult feedback conversation with an AI employee and get live coaching after every turn." />
+    <meta name="description" content="Practice a difficult feedback conversation with an AI employee and get live coaching as you go." />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231f4e5f'/><path d='M8 11h16v9H14l-4 3v-3H8z' fill='white'/></svg>" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -21,7 +21,7 @@
         <h1>Practice the conversation before it's real.</h1>
         <p class="lede">
           Talk with an AI employee who reacts the way people do: open when you're curious and specific,
-          guarded when you're vague or accusatory. A coach reviews every turn you take.
+          guarded when you're vague or accusatory. A coach reviews everything you say.
         </p>
       </section>
 
@@ -67,7 +67,7 @@
         <ol>
           <li><strong>Start the call.</strong> You're the manager, so you speak first. Use the mic or type.</li>
           <li><strong>Jordan responds in character</strong> and reads replies aloud.</li>
-          <li><strong>Your coach</strong> posts a short note after each of your turns.</li>
+          <li><strong>Your coach</strong> posts a short note after each thing you say.</li>
           <li><strong>End the call</strong> for a debrief on what worked and what to try next.</li>
         </ol>
       </section>
@@ -130,11 +130,11 @@
               <span>Try instead</span>
             </label>
           </div>
-          <p class="muted">Feedback on each of your turns appears here.</p>
+          <p class="muted">Feedback on what you say appears here.</p>
         </header>
         <div class="coach-feed" id="coach-feed" aria-live="polite">
           <div class="coach-empty" id="coach-empty">
-            <p>Open the conversation. Your coach will weigh in after your first turn.</p>
+            <p>Open the conversation. Your coach will weigh in after you speak.</p>
           </div>
         </div>
       </aside>
@@ -203,13 +203,13 @@
 
         <section class="card" id="debrief-tries-card">
           <h3>Try instead: phrasings to practice</h3>
-          <p class="muted">Your coach's alternative phrasings for the turns that could have gone better.</p>
+          <p class="muted">Your coach's alternative phrasings for the moments that could have gone better.</p>
           <div class="tries" id="debrief-tries"></div>
         </section>
 
         <section class="card">
           <h3>Skill scores</h3>
-          <p class="muted">Average of your coach's 1–5 scores across the turns that used each skill.</p>
+          <p class="muted">Average of your coach's 1–5 scores across the moments that used each skill.</p>
           <div class="skills" id="debrief-skills"></div>
         </section>
 

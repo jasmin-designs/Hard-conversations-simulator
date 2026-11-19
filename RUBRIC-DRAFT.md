@@ -47,8 +47,5 @@ Each level is tied to a line in the manager toolkit (`public/toolkit.js`), so th
 2. Should learners see the rubric? Suggested: a "How skills are scored" link on the debrief only, not before the call, so it doesn't become a cheat sheet.
 3. Keep or delete the `progress-view` draft (skill progress instead of averages)? Current leaning: keep averages, plus the written debrief, plus this rubric.
 
-## Related idea: stop saying "turn"
-"Turn" feels like game or tech language. It appears on the coach cards ("Turn 1"), the debrief result ("on turn 6"), the "Try instead" list, the transcript review, and the debrief header ("13 turns"). Options:
-- **Quote what they said** (suggested): "Uncovered the real issue: Yes, when you asked 'What's been making it harder?'" Coach cards just show the quote, and the header says "13 messages".
-- Message 1, 2, 3
-- Response 1, 2, 3
+## Done: stopped saying "turn"
+The app now quotes what the learner said, with plain timing words ("about halfway through"), instead of turn numbers.

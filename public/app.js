@@ -408,8 +408,7 @@ function addPendingNote(turn, said) {
   for (const n of $("coach-feed").querySelectorAll(".note")) n.classList.remove("latest");
   const el = document.createElement("article");
   el.className = "note pending latest";
-  el.innerHTML = `<div class="note-top"><span class="note-turn"></span></div><p class="note-said"></p><p>Coach is reviewing…</p>`;
-  el.querySelector(".note-turn").textContent = `Turn ${turn}`;
+  el.innerHTML = `<p class="note-said"></p><p>Coach is reviewing…</p>`;
   el.querySelector(".note-said").textContent = `“${said.length > 140 ? said.slice(0, 140) + "…" : said}”`;
   $("coach-feed").prepend(el);
   return { status: "pending", turn, said, el, scores: {} };
@@ -420,10 +419,9 @@ function fillNote(note, fb) {
   const el = note.el;
   el.classList.remove("pending");
   el.innerHTML = `
-    <div class="note-top"><span class="note-turn"></span><span class="chip"></span></div>
+    <div class="note-top"><span class="note-turn">You said</span><span class="chip"></span></div>
     <p class="note-said"></p>
     <p class="note-why"></p>`;
-  el.querySelector(".note-turn").textContent = `Turn ${note.turn}`;
   const chip = el.querySelector(".chip");
   chip.textContent = fb.verdict;
   chip.classList.add(fb.verdict.split(" ")[0]);
@@ -444,7 +442,7 @@ function fillNote(note, fb) {
 function failNote(note, message) {
   note.status = "error";
   note.el.classList.add("pending");
-  note.el.lastElementChild.textContent = `Coach feedback unavailable for this turn. (${message})`;
+  note.el.lastElementChild.textContent = `Coach feedback isn't available for this one. (${message})`;
 }
 
 // ---------- Text-to-speech (Jordan's voice) ----------
@@ -587,13 +585,13 @@ function renderDebrief(d) {
   $("debrief-body").hidden = false;
 
   const turns = coachNotes.length;
-  $("debrief-meta").textContent = `${turns} turn${turns === 1 ? "" : "s"} · ${durationText}`;
+  $("debrief-meta").textContent = `${durationText} · you spoke ${turns} time${turns === 1 ? "" : "s"}`;
   $("debrief-overall").textContent = d.overall;
 
   setOutcome(
     "outcome-issue",
     d.uncoveredRealIssue ? "yes" : "no",
-    d.uncoveredRealIssue ? (d.uncoveredOnTurn ? `Yes, on turn ${d.uncoveredOnTurn}` : "Yes") : "Not yet",
+    d.uncoveredRealIssue ? "Yes" : "Not yet",
     d.realIssueNote
   );
   const planState = d.planAgreed && d.followUpAgreed ? "yes" : d.planAgreed ? "partial" : "no";
@@ -622,7 +620,7 @@ function renderDebrief(d) {
     item.className = "try-item";
     const turnEl = document.createElement("span");
     turnEl.className = "try-turn";
-    turnEl.textContent = `Turn ${n.turn} · ${n.verdict}`;
+    turnEl.textContent = n.verdict;
     const said = document.createElement("p");
     said.className = "try-said";
     said.textContent = `You said: “${n.said}”`;
@@ -662,7 +660,7 @@ function renderDebrief(d) {
     who.className = "review-who";
     if (t.role === "manager") {
       const note = coachNotes[turn++];
-      who.textContent = `You · turn ${turn}`;
+      who.textContent = "You";
       if (note?.verdict) {
         const chip = document.createElement("span");
         chip.className = `chip ${note.verdict.split(" ")[0]}`;
@@ -743,7 +741,7 @@ function buildTranscript(d) {
     `Scenario: ${SCENARIO.title}`,
     SCENARIO.summary,
     `Date: ${new Date().toLocaleString()}`,
-    `Length: ${coachNotes.length} turns, ${durationText}`,
+    `Length: ${durationText}, you spoke ${coachNotes.length} times`,
     "",
     "CONVERSATION",
     line,
@@ -753,7 +751,7 @@ function buildTranscript(d) {
   for (const t of transcript) {
     if (t.role === "manager") {
       const note = coachNotes[turn++];
-      out.push("", `YOU (turn ${turn}): ${t.text}`);
+      out.push("", `YOU: ${t.text}`);
       if (note?.verdict) {
         out.push(`   Coach: ${note.verdict}. ${note.why}`);
         if (note.tryInstead) out.push(`   Try instead: "${note.tryInstead}"`);
@@ -772,7 +770,7 @@ function buildTranscript(d) {
       line,
       d.overall,
       "",
-      `Uncovered the real issue: ${d.uncoveredRealIssue ? (d.uncoveredOnTurn ? `Yes, on turn ${d.uncoveredOnTurn}` : "Yes") : "Not yet"}`,
+      `Uncovered the real issue: ${d.uncoveredRealIssue ? "Yes" : "Not yet"}`,
       `   ${d.realIssueNote}`,
       `Agreed a plan: ${yesNo(d.planAgreed)} · Follow-up agreed: ${yesNo(d.followUpAgreed)}`,
       `   ${d.planNote}`,
