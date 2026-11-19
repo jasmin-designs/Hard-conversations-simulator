@@ -64,33 +64,47 @@ export const POLICY_LIBRARY = {
       owner: "Human Resources",
       appliesTo: "Employees whose roles allow flexible work",
       effective: "January 1, 2024",
-      revised: "August 18, 2025",
+      revised: "November 12, 2026",
       title: "Flexible Work Arrangements",
       purpose:
-        "Describes the flexible work options available and who may approve them.",
+        "Describes the flexible work options available, who may approve them, and how they must be documented.",
       sections: [
         {
-          heading: "Adjusted hours",
+          heading: "Types of arrangements",
           points: [
-            "Managers may approve an adjusted start and end time, provided the employee works the core hours of 10:00 a.m. to 3:00 p.m.",
+            "Adjusted hours: a different start and end time, provided the employee works the core hours of 10:00 a.m. to 3:00 p.m.",
+            "Remote work: working from home on set days where the role allows.",
+            "Temporary adjustments: changes to deadlines or workload for a limited period.",
           ],
         },
         {
-          heading: "Remote work",
-          points: ["Managers may approve up to two remote workdays per week where the role allows."],
-        },
-        {
-          heading: "Temporary adjustments",
+          heading: "Manager approval",
           points: [
-            "Managers may approve temporary adjustments to deadlines or workload for up to four weeks.",
-            "Adjustments longer than four weeks require HR review.",
+            "The employee's direct manager may approve: adjusted hours within core hours; up to two remote workdays per week; and temporary adjustments of up to four weeks.",
+            "Managers must notify HR of any arrangement they approve within five business days, using the Flexible Work Arrangement form.",
           ],
         },
         {
-          heading: "Documentation and review",
+          heading: "Department head and HR approval",
           points: [
-            "All arrangements must be documented in writing.",
+            "The following require approval from both the department head and HR: hours outside the core hours; more than two remote workdays per week; temporary adjustments longer than four weeks; and any extension of an existing arrangement beyond its end date.",
+            "Managers may not promise these arrangements before they are approved.",
+            "Requests connected to a health condition or family circumstances are handled as accommodation requests under HR-305.",
+          ],
+        },
+        {
+          heading: "Documentation",
+          points: [
+            "Every arrangement must be documented in writing on the Flexible Work Arrangement form, including its start date, end date or review date, and the approver.",
+            "The form must be signed by the employee and the approver, and a copy filed with HR.",
+            "An arrangement takes effect only once it has been approved and documented.",
+          ],
+        },
+        {
+          heading: "Review",
+          points: [
             "Arrangements are reviewed at least every three months, or sooner if business needs change.",
+            "Either the employee or the manager may request a review at any time.",
           ],
         },
       ],
