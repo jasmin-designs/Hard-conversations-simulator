@@ -50,6 +50,7 @@ export function parseCoach(text) {
   };
 
   let verdict = field("verdict").replace(/[*.]/g, "").trim();
+  if (/warm/i.test(verdict)) return { verdict: "Warm-up", why: "", tryInstead: "", scores: {} };
   if (/strong/i.test(verdict)) verdict = "Strong";
   else if (/needs/i.test(verdict)) verdict = "Needs work";
   else if (/okay|ok/i.test(verdict)) verdict = "Okay";

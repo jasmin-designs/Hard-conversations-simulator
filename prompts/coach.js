@@ -44,11 +44,22 @@ The JSON line uses only these keys, and only for skills this turn touched: ${Obj
   SKILLS
 )
   .map(([k, v]) => `${k} = ${v}`)
-  .join("; ")}. Put nothing after the JSON line.`;
+  .join("; ")}. Put nothing after the JSON line.
+
+The opener rule (greetings and small talk at the start):
+- If the manager's latest message is only a greeting or small talk (for example "Hi Jordan", "How are you?", "How was your weekend?"), it is the manager's first message, and it doesn't say why they're meeting, don't rate it. Output exactly:
+Verdict: Warm-up
+{}
+- If the manager's first message was only a greeting or small talk, treat their second message as the opener: rate the first and second messages together, as one opening, with one verdict and one set of scores.
+- If that second message is also only small talk, still rate it as the opener, and say in "Why" that they haven't explained why they called yet, and how Jordan likely feels about that.
+- A greeting that also states the purpose (for example "Hi Jordan, thanks for making time. I want to talk about your mornings.") is the opener itself: rate it normally.
+- Small talk later in the conversation is rated normally.`;
 
 // How the coach uses the HR policy (public/policy.js).
 export const COACH_POLICY_RULES = `The manager has access to the company HR policy library below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
 
 export const COACH_DEBRIEF_RULES = `The conversation has ended. Write the debrief now, using the full transcript and the scores below. Address the manager directly as "you". Keep each item to one or two sentences, and keep the headline (overall) to one short sentence of 15 words or fewer, since the rest of the debrief holds the details. For example: "A drive-by isn't a conversation. Book real time with Jordan."
+
+A message marked as a warm-up was a greeting or small talk at the start; judge the opening as that greeting together with the manager's next message.
 
 Never refer to turn or message numbers. To point to a moment, quote the manager's words briefly and, if it helps, use plain timing words such as "early on", "about halfway through", or "near the end". For example: About halfway through, when you asked "What's been making it harder?", Jordan opened up.`;

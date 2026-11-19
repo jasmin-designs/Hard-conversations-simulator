@@ -418,10 +418,27 @@ function fillNote(note, fb) {
   Object.assign(note, fb, { status: "done" });
   const el = note.el;
   el.classList.remove("pending");
+
+  // A greeting at the start: no rating yet.
+  if (fb.verdict === "Warm-up") {
+    el.classList.add("warmup");
+    el.innerHTML = `<div class="note-top"><span class="note-turn">You said</span><span class="chip Warm-up">Warm-up</span></div><p class="note-said"></p><p class="note-why">👋 Warm-up noted. Your coach will rate your opener together with what you say next.</p>`;
+    el.querySelector(".note-said").textContent = `“${note.said}”`;
+    return;
+  }
+
+  // The message after a warm-up is rated together with it, as the opener.
+  const prev = coachNotes[coachNotes.indexOf(note) - 1];
+  const isOpener = prev?.verdict === "Warm-up";
+  if (isOpener && !note.combined) {
+    note.combined = true;
+    note.said = `${prev.said} … ${note.said}`;
+  }
   el.innerHTML = `
-    <div class="note-top"><span class="note-turn">You said</span><span class="chip"></span></div>
+    <div class="note-top"><span class="note-turn"></span><span class="chip"></span></div>
     <p class="note-said"></p>
     <p class="note-why"></p>`;
+  el.querySelector(".note-turn").textContent = isOpener ? "Your opener" : "You said";
   const chip = el.querySelector(".chip");
   chip.textContent = fb.verdict;
   chip.classList.add(fb.verdict.split(" ")[0]);

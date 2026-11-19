@@ -202,6 +202,8 @@ input:focus-visible + .switch { outline: 3px solid var(--accent); outline-offset
 .chip.Strong { background: var(--strong-bg); color: var(--strong); }
 .chip.Okay { background: var(--okay-bg); color: var(--okay); }
 .chip.Needs { background: var(--needs-bg); color: var(--needs); }
+.chip.Warm-up { background: var(--bg); color: var(--ink-soft); }
+.note.warmup { border-style: dashed; }
 
 /* ============ Debrief ============ */
 .debrief { max-width: 860px; margin: 0 auto; padding: 28px 16px 64px; display: grid; gap: 22px; }
