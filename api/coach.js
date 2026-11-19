@@ -1,7 +1,8 @@
 // AI #2: the coach. Reviews the manager's most recent turn.
 // Returns { verdict, why, tryInstead, scores } where scores is the hidden JSON.
 
-import { COACH_PROMPT, COACH_TURN_RULES, SKILLS } from "../prompts/coach.js";
+import { COACH_PROMPT, COACH_TURN_RULES, COACH_POLICY_RULES, SKILLS } from "../prompts/coach.js";
+import { policyAsText } from "../public/policy.js";
 import { askClaude, readTranscript, asScript, handler, DEMO_MODE } from "../lib/claude.js";
 import { demoCoach } from "../lib/demo.js";
 
@@ -10,7 +11,7 @@ export default handler(async (body) => {
   const text = DEMO_MODE
     ? demoCoach(transcript)
     : await askClaude({
-        system: `${COACH_PROMPT}\n\n${COACH_TURN_RULES}`,
+        system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>\n\n${COACH_TURN_RULES}`,
         messages: [
           {
             role: "user",

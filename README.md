@@ -22,6 +22,8 @@ The browser never sees your API key. It only sends the conversation to your own 
 1. `api/employee.js` sends the conversation to Claude with **Prompt 1**, and Claude replies as Jordan.
 2. `api/coach.js` sends the conversation to Claude with **Prompt 2**, and Claude returns the verdict, the "why", a "try instead", and the hidden scores.
 
+**The policy job aid.** Learners can open a short company policy guide from the start screen and during the call, as a real manager would have HR guidance at hand. The coach also reads the policy, so its feedback and the debrief can say whether the manager's approach fits it. Jordan never sees the policy. To adapt it for another company, edit `public/policy.js`.
+
 When the learner clicks **End call**, `api/debrief.js` sends the whole transcript plus every hidden score to the coach, which writes the debrief. The skill bars on the debrief screen average those hidden scores. Jordan's openness level stays inside Jordan's head; it's never sent to the screen.
 
 ### Where things live
@@ -30,6 +32,7 @@ When the learner clicks **End call**, `api/debrief.js` sends the whole transcrip
 prompts/employee.js   ← Prompt 1 (Jordan). Edit this to change Jordan.
 prompts/coach.js      ← Prompt 2 (the coach). Edit this to change the coaching.
 public/scenario.js    ← The scenario text on the start screen.
+public/policy.js      ← The company policy job aid (fictional "Northwind Logistics").
 public/index.html     ← The three screens (start, call, debrief).
 public/styles.css     ← Colors, fonts, layout.
 public/app.js         ← Screen behavior, mic, and voice.
@@ -95,8 +98,8 @@ The `.env` file is already listed in `.gitignore`, so it is never uploaded to Gi
 
 ## Good to know
 
-- **Voice input** (the mic button) uses the browser's built-in speech recognition. It works in **Chrome, Edge, and Safari**. Firefox users can type. The browser asks for microphone permission the first time.
+- **Voice input** (the mic button) uses the browser's built-in speech recognition. On computers it works in **Chrome, Edge, and Safari**. On iPhones it only works in **Safari**. Firefox users can type. The browser asks for microphone permission the first time.
 - **Jordan's voice** uses the computer's built-in voices, so it sounds different on a Mac, Windows, or a phone. Learners can mute it with the **Voice on/off** button.
-- **Cost:** each learner turn makes two short AI calls, and the debrief makes one more. A typical 8-turn practice call costs a few cents.
+- **Cost:** each learner turn makes two AI calls, and the debrief makes one more. A typical 8-turn practice call costs roughly 10–40 cents. To lower it, set the `MODEL` variable to `claude-sonnet-5-5` (about half the cost).
 - **Limits:** each message is capped at 1,500 characters and each conversation at 60 messages, so nobody can run up a large bill through your site.
 - **Adding a scenario later:** change `public/scenario.js` (what the learner sees) and `prompts/employee.js` (how the employee behaves). Claude Code can turn this into a scenario picker whenever you're ready.

@@ -1,6 +1,7 @@
 // The end-of-call debrief, written by the coach from the transcript and scores.
 
-import { COACH_PROMPT, COACH_DEBRIEF_RULES, SKILLS } from "../prompts/coach.js";
+import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, SKILLS } from "../prompts/coach.js";
+import { policyAsText } from "../public/policy.js";
 import { askClaude, readTranscript, asScript, handler, DEMO_MODE } from "../lib/claude.js";
 import { demoDebrief } from "../lib/demo.js";
 
@@ -17,6 +18,8 @@ const DEBRIEF_SCHEMA = {
     "planAgreed",
     "followUpAgreed",
     "planNote",
+    "policyAligned",
+    "policyNote",
     "overall",
   ],
   properties: {
@@ -28,6 +31,8 @@ const DEBRIEF_SCHEMA = {
     planAgreed: { type: "boolean", description: "A concrete plan was agreed." },
     followUpAgreed: { type: "boolean", description: "A specific follow-up (time or check-in) was agreed." },
     planNote: { type: "string", description: "One sentence describing the plan, or what was missing." },
+    policyAligned: { type: "boolean", description: "The manager's approach and plan fit the company policy job aid." },
+    policyNote: { type: "string", description: "One sentence on how the approach fit the policy, or what it missed (e.g. involving HR, written summary, check-in)." },
     overall: { type: "string", description: "A one-sentence overall takeaway." },
   },
 };
@@ -43,7 +48,7 @@ export default handler(async (body) => {
     .join("\n");
 
   return askClaude({
-    system: COACH_PROMPT,
+    system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>`,
     messages: [
       {
         role: "user",

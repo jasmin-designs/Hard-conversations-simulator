@@ -40,10 +40,16 @@
           <strong>Your goal</strong>
           <span id="scenario-goal"></span>
         </div>
+        <div class="start-actions">
         <button class="btn btn-primary btn-lg" id="start-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
           Start call
         </button>
+        <button class="btn btn-ghost btn-lg policy-open" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
+          Review the policy guide
+        </button>
+        </div>
       </article>
 
       <section class="how">
@@ -66,10 +72,16 @@
             <span id="call-name">Jordan</span>
             <span class="call-timer" id="call-timer">00:00</span>
           </div>
+          <div class="call-tools">
+          <button class="icon-btn policy-open" type="button" title="Open the policy guide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
+            Policy
+          </button>
           <button class="icon-btn" id="voice-toggle" aria-pressed="true" title="Read Jordan's replies aloud">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
             <span id="voice-label">Voice on</span>
           </button>
+          </div>
         </header>
 
         <div class="stage">
@@ -151,6 +163,14 @@
               <p class="muted outcome-note"></p>
             </div>
           </div>
+          <div class="outcome" id="outcome-policy">
+            <span class="outcome-icon" aria-hidden="true"></span>
+            <div>
+              <h3>Followed company policy</h3>
+              <p class="outcome-value"></p>
+              <p class="muted outcome-note"></p>
+            </div>
+          </div>
         </section>
 
         <section class="two-col">
@@ -181,6 +201,22 @@
         </div>
       </div>
     </main>
+
+    <!-- ======================= POLICY JOB AID ======================= -->
+    <dialog class="policy-dialog" id="policy-dialog" aria-labelledby="policy-title">
+      <header class="policy-head">
+        <div>
+          <p class="eyebrow" id="policy-company"></p>
+          <h2 id="policy-title"></h2>
+        </div>
+        <button class="close-btn" type="button" id="policy-close" aria-label="Close policy guide">✕</button>
+      </header>
+      <div class="policy-body">
+        <p class="policy-intro" id="policy-intro"></p>
+        <div id="policy-sections"></div>
+        <p class="policy-fine">Fictional company policy, written for practice purposes.</p>
+      </div>
+    </dialog>
 
     <div class="toast" id="toast" role="alert" hidden></div>
 

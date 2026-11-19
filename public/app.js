@@ -3,6 +3,7 @@
 // it only talks to this site's own /api/... addresses.
 
 import { SCENARIO } from "./scenario.js";
+import { POLICY } from "./policy.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
 const SKILLS = {
@@ -40,6 +41,32 @@ for (const d of SCENARIO.details) {
   $("scenario-details").append(li);
 }
 $("message").placeholder = `Say something to ${name}…`;
+
+// ---------- Policy job aid ----------
+$("policy-company").textContent = POLICY.company;
+$("policy-title").textContent = POLICY.title;
+$("policy-intro").textContent = POLICY.intro;
+for (const section of POLICY.sections) {
+  const div = document.createElement("section");
+  div.className = `policy-section${/HR/.test(section.heading) ? " hr" : ""}`;
+  const h = document.createElement("h3");
+  h.textContent = section.heading;
+  const ul = document.createElement("ul");
+  for (const point of section.points) {
+    const li = document.createElement("li");
+    li.textContent = point;
+    ul.append(li);
+  }
+  div.append(h, ul);
+  $("policy-sections").append(div);
+}
+for (const btn of document.querySelectorAll(".policy-open")) {
+  btn.addEventListener("click", () => $("policy-dialog").showModal());
+}
+$("policy-close").addEventListener("click", () => $("policy-dialog").close());
+$("policy-dialog").addEventListener("click", (e) => {
+  if (e.target === $("policy-dialog")) $("policy-dialog").close(); // tap outside to close
+});
 
 function show(screen) {
   for (const id of ["start-screen", "call-screen", "debrief-screen"]) $(id).hidden = id !== screen;
@@ -399,6 +426,13 @@ function renderDebrief(d) {
     planState,
     { yes: "Yes", partial: "Plan, but no follow-up", no: "Not yet" }[planState],
     d.planNote
+  );
+
+  setOutcome(
+    "outcome-policy",
+    d.policyAligned ? "yes" : "no",
+    d.policyAligned ? "Yes" : "Not fully",
+    d.policyNote
   );
 
   fillList("debrief-strengths", d.strengths);

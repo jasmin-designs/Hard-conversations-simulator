@@ -7,7 +7,7 @@
 export const SCENARIO = {
   id: "jordan-lateness",
   employeeName: "Jordan",
-  employeeRole: "Project Coordinator · 3 years on the team",
+  employeeRole: "Project Coordinator, Northwind Logistics · 3 years on the team",
   title: "Lateness and missed deadlines",
   summary:
     "Jordan has been late four times in two weeks and missed two deadlines.",
