@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hard Conversations Simulator</title>
+    <meta name="description" content="Practice a difficult feedback conversation with an AI employee and get live coaching after every turn." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231f4e5f'/><path d='M8 11h16v9H14l-4 3v-3H8z' fill='white'/></svg>" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ======================= START SCREEN ======================= -->
+    <main id="start-screen" class="screen start">
+      <header class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Hard Conversations Simulator</span>
+      </header>
+
+      <section class="hero">
+        <p class="eyebrow">Manager practice · Performance feedback</p>
+        <h1>Practice the conversation before it's real.</h1>
+        <p class="lede">
+          Talk with an AI employee who reacts the way people do: open when you're curious and specific,
+          guarded when you're vague or accusatory. A coach reviews every turn you take.
+        </p>
+      </section>
+
+      <article class="scenario-card">
+        <div class="scenario-head">
+          <div class="avatar avatar-sm" id="start-avatar" aria-hidden="true"></div>
+          <div>
+            <p class="scenario-label">Scenario</p>
+            <h2 id="scenario-title"></h2>
+            <p class="muted" id="scenario-role"></p>
+          </div>
+        </div>
+        <p class="scenario-summary" id="scenario-summary"></p>
+        <ul class="scenario-details" id="scenario-details"></ul>
+        <div class="scenario-goal">
+          <strong>Your goal</strong>
+          <span id="scenario-goal"></span>
+        </div>
+        <button class="btn btn-primary btn-lg" id="start-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+          Start call
+        </button>
+      </article>
+
+      <section class="how">
+        <h3>How it works</h3>
+        <ol>
+          <li><strong>Start the call.</strong> You're the manager, so you speak first. Use the mic or type.</li>
+          <li><strong>Jordan responds in character</strong> and reads replies aloud.</li>
+          <li><strong>Your coach</strong> posts a short note after each of your turns.</li>
+          <li><strong>End the call</strong> for a debrief on what worked and what to try next.</li>
+        </ol>
+      </section>
+    </main>
+
+    <!-- ======================= CALL SCREEN ======================= -->
+    <main id="call-screen" class="screen call" hidden>
+      <section class="call-panel" aria-label="Call with Jordan">
+        <header class="call-bar">
+          <div class="call-who">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="call-name">Jordan</span>
+            <span class="call-timer" id="call-timer">00:00</span>
+          </div>
+          <button class="icon-btn" id="voice-toggle" aria-pressed="true" title="Read Jordan's replies aloud">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+            <span id="voice-label">Voice on</span>
+          </button>
+        </header>
+
+        <div class="stage">
+          <div class="avatar avatar-lg" id="call-avatar" aria-hidden="true"></div>
+          <p class="stage-status" id="stage-status" aria-live="polite">Connected. You start the conversation.</p>
+        </div>
+
+        <div class="transcript" id="transcript" aria-live="polite" aria-label="Conversation transcript"></div>
+
+        <form class="composer" id="composer" autocomplete="off">
+          <button type="button" class="mic-btn" id="mic-btn" title="Tap to speak, tap again to send" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg>
+            <span class="sr-only">Speak</span>
+          </button>
+          <label for="message" class="sr-only">What you say to Jordan</label>
+          <input id="message" type="text" maxlength="1500" placeholder="Say something to Jordan…" />
+          <button type="submit" class="btn btn-primary" id="send-btn">Send</button>
+        </form>
+        <p class="mic-note" id="mic-note" hidden></p>
+
+        <footer class="call-controls">
+          <button class="btn btn-danger" id="end-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1a1 1 0 0 1-.56.9 11.5 11.5 0 0 0-2.66 1.85 1 1 0 0 1-1.41 0L.29 13.08a1 1 0 0 1 0-1.41A16.9 16.9 0 0 1 12 7c4.57 0 8.71 1.8 11.71 4.67a1 1 0 0 1 0 1.41l-2.48 2.49a1 1 0 0 1-1.41 0 11.3 11.3 0 0 0-2.67-1.85 1 1 0 0 1-.56-.9v-3.1A15 15 0 0 0 12 9z"/></svg>
+            End call
+          </button>
+        </footer>
+      </section>
+
+      <aside class="coach-panel" aria-label="Coach feedback">
+        <header class="coach-head">
+          <h2>Coach</h2>
+          <p class="muted">Feedback on each of your turns appears here.</p>
+        </header>
+        <div class="coach-feed" id="coach-feed" aria-live="polite">
+          <div class="coach-empty" id="coach-empty">
+            <p>Open the conversation. Your coach will weigh in after your first turn.</p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ======================= DEBRIEF SCREEN ======================= -->
+    <main id="debrief-screen" class="screen debrief" hidden>
+      <header class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Hard Conversations Simulator</span>
+      </header>
+
+      <div class="debrief-loading" id="debrief-loading">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Your coach is writing your debrief…</p>
+      </div>
+
+      <div class="debrief-error" id="debrief-error" hidden>
+        <p id="debrief-error-text"></p>
+        <button class="btn btn-primary" id="debrief-retry">Try again</button>
+      </div>
+
+      <div id="debrief-body" hidden>
+        <section class="debrief-hero">
+          <p class="eyebrow">Debrief · <span id="debrief-meta"></span></p>
+          <h1 id="debrief-overall"></h1>
+        </section>
+
+        <section class="outcomes">
+          <div class="outcome" id="outcome-issue">
+            <span class="outcome-icon" aria-hidden="true"></span>
+            <div>
+              <h3>Uncovered the real issue</h3>
+              <p class="outcome-value"></p>
+              <p class="muted outcome-note"></p>
+            </div>
+          </div>
+          <div class="outcome" id="outcome-plan">
+            <span class="outcome-icon" aria-hidden="true"></span>
+            <div>
+              <h3>Agreed a plan with follow-up</h3>
+              <p class="outcome-value"></p>
+              <p class="muted outcome-note"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="two-col">
+          <div class="card">
+            <h3>What you did well</h3>
+            <ul class="pill-list good" id="debrief-strengths"></ul>
+          </div>
+          <div class="card">
+            <h3>Where to grow</h3>
+            <ul class="pill-list grow" id="debrief-growth"></ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Skill scores</h3>
+          <p class="muted">Average of your coach's 1–5 scores across the turns that used each skill.</p>
+          <div class="skills" id="debrief-skills"></div>
+        </section>
+
+        <details class="card transcript-review">
+          <summary>Review the full conversation</summary>
+          <div id="debrief-transcript"></div>
+        </details>
+
+        <div class="debrief-actions">
+          <button class="btn btn-primary btn-lg" id="again-btn">Practice again</button>
+          <button class="btn btn-ghost btn-lg" id="print-btn">Save as PDF</button>
+        </div>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" role="alert" hidden></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
