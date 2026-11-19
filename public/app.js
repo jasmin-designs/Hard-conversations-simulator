@@ -678,12 +678,7 @@ function renderDebrief(d) {
     if (note?.why) {
       const c = document.createElement("p");
       c.className = "review-coach";
-      c.textContent = `Coach: ${note.why}`;
-      if (note.tryInstead) {
-        const tip = document.createElement("em");
-        tip.textContent = ` Try instead: “${note.tryInstead}”`;
-        c.append(tip);
-      }
+      c.textContent = `Coach: ${note.why}`; // "Try instead" lives in its own card above
       line.append(c);
     }
     review.append(line);
@@ -754,7 +749,6 @@ function buildTranscript(d) {
       out.push("", `YOU: ${t.text}`);
       if (note?.verdict) {
         out.push(`   Coach: ${note.verdict}. ${note.why}`);
-        if (note.tryInstead) out.push(`   Try instead: "${note.tryInstead}"`);
       }
     } else {
       out.push("", `${name.toUpperCase()}: ${t.text}`);
@@ -783,6 +777,15 @@ function buildTranscript(d) {
       "Where to grow:",
       ...(d.growthAreas || []).map((s) => `  - ${s}`),
       "",
+      ...(coachNotes.some((n) => n.tryInstead)
+        ? [
+            "Try instead: phrasings to practice:",
+            ...coachNotes
+              .filter((n) => n.tryInstead)
+              .flatMap((n) => [`  - You said: "${n.said}"`, `    Try instead: "${n.tryInstead}"`]),
+            "",
+          ]
+        : []),
       "Skill scores (average, 1-5):"
     );
     for (const [key, label] of Object.entries(SKILLS)) {
