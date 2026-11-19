@@ -481,6 +481,19 @@ function renderDebrief(d) {
     const p = document.createElement("p");
     p.textContent = t.text;
     line.append(who, p);
+    // The coach's note for this turn, under what you said.
+    const note = t.role === "manager" ? coachNotes[turn - 1] : null;
+    if (note?.why) {
+      const c = document.createElement("p");
+      c.className = "review-coach";
+      c.textContent = `Coach: ${note.why}`;
+      if (note.tryInstead) {
+        const tip = document.createElement("em");
+        tip.textContent = ` Try instead: “${note.tryInstead}”`;
+        c.append(tip);
+      }
+      line.append(c);
+    }
     review.append(line);
   }
 }

@@ -209,6 +209,8 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
 .review-line { padding: 8px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
 .review-line:last-child { border-bottom: 0; }
 .review-who { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; }
+.review-coach { font-size: 0.88rem; color: var(--ink-soft); border-left: 3px solid var(--line); padding-left: 10px; margin-top: 2px; }
+.review-coach em { font-style: normal; color: var(--brand); font-weight: 600; }
 .debrief-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ============ Policy job aid ============ */
@@ -262,6 +264,9 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
   body { background: #fff; }
   .debrief-actions, .toast { display: none !important; }
   .card, .outcome { box-shadow: none; border: 1px solid var(--line); }
-  details.transcript-review summary { list-style: none; font-size: 1.05rem; }
-  details.transcript-review summary::after { content: ": full conversation"; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } /* keep bars and badges */
+  details.transcript-review summary { list-style: none; font-size: 0; }
+  details.transcript-review summary::-webkit-details-marker { display: none; }
+  details.transcript-review summary::before { content: "Full conversation"; font-size: 1.05rem; }
+  .card, .outcome, .review-line { break-inside: avoid; }
 }
