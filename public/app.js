@@ -310,7 +310,11 @@ if (!SpeechRecognition) {
   };
   recognition.onerror = (e) => {
     if (e.error === "not-allowed" || e.error === "service-not-allowed") {
-      toast("Microphone access was blocked. Allow it in your browser's address bar, or type instead.");
+      // Reset the mic button right away (some browsers never fire "end" here).
+      listening = false;
+      $("mic-btn").setAttribute("aria-pressed", "false");
+      $("message").placeholder = `Say something to ${name}…`;
+      toast("Microphone access is blocked. Allow it in your browser or phone settings, or type instead.");
     } else if (e.error !== "no-speech" && e.error !== "aborted") {
       toast(`Voice input stopped (${e.error}). You can type instead.`);
     }
