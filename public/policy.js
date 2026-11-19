@@ -23,14 +23,6 @@ export const POLICY = {
       ],
     },
     {
-      heading: "In the conversation",
-      points: [
-        "Talk privately and early. Don't wait for a pattern to become a problem.",
-        "Name specific dates and the impact on the team or the work.",
-        "Ask what's going on. Don't ask about medical details or diagnose.",
-      ],
-    },
-    {
       heading: "Options you can approve yourself",
       points: [
         "A shifted start and end time, as long as the employee works core hours, 10:00–3:00.",
@@ -42,6 +34,7 @@ export const POLICY = {
       heading: "Bring in HR (don't decide alone)",
       points: [
         "Ongoing caregiving, family, or health needs may qualify for protected leave or a formal accommodation. Say: \"HR can walk you through your options.\"",
+        "Don't ask about medical details or try to diagnose. If the employee shares health or family information, keep it confidential.",
         "Don't promise leave, approve unpaid time off, or share the employee's situation with the team.",
         "HR Partner line: ext. 4400 · hr@northwind.example",
       ],
