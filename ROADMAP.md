@@ -87,7 +87,7 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 - [ ] An iPhone + Chrome message: "For voice input on iPhone, open this page in Safari"
 - [ ] A friendlier message when the API credit runs out
 - [ ] Demo mode switched on by a special link (`?demo`) instead of for the whole site
-- [ ] Re-render the promo video with the new policy library design
+- [x] Re-render the promo video with the new policy library design
 - [ ] A one-page "How this scales for an organization" write-up for the portfolio
 - [ ] A portfolio case study: the problem, design decisions, how it works, and what's next
 - [ ] A playground copy of the project for experimenting safely

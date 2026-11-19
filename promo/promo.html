@@ -39,9 +39,9 @@
 
   .policy-sheet { position: absolute; left: 240px; right: 240px; top: 90px; background: #fff; border-radius: 20px;
     box-shadow: 0 30px 80px rgba(10,20,30,.4); overflow: hidden; display: flex; flex-direction: column; }
-  .policy-sheet .policy-body { padding: 14px 22px; gap: 12px; }
-  .policy-sheet .policy-section ul { font-size: 15px; }
-  .scrim { background: rgba(16,24,32,.5); }
+  .policy-sheet .policy-body { padding: 14px 22px 22px; gap: 10px; }
+  .policy-sheet .policy-doc { gap: 10px; font-size: 15px; }
+    .scrim { background: rgba(16,24,32,.5); }
 
   /* Scene 4: debrief */
   .stage4 { padding: 40px 80px; display: grid; gap: 18px; align-content: start; }
@@ -85,7 +85,7 @@
     <div class="cp">
       <div class="call-bar">
         <div class="call-who"><span class="live-dot"></span><span>Jordan</span><span class="call-timer" id="timer">00:00</span></div>
-        <div class="call-tools"><span class="icon-btn">Policy</span><span class="icon-btn">Voice on</span></div>
+        <div class="call-tools"><span class="icon-btn">Policies</span><span class="icon-btn">Voice on</span></div>
       </div>
       <div class="head"><div class="avatar avatar-sm" id="jordan-avatar">J</div><p>Jordan · Project Coordinator, Northwind Logistics</p></div>
       <div class="msgs">
@@ -99,7 +99,7 @@
       <div class="composer"><span class="mic-btn"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg></span><input disabled placeholder="Say something to Jordan…" /><span class="btn btn-primary">Send</span></div>
     </div>
     <div class="coach">
-      <header class="coach-head"><h2>Coach</h2><p class="muted">Feedback on each of your turns.</p></header>
+      <header class="coach-head"><div class="coach-title-row"><h2>Coach</h2><span class="mini-switch"><input type="checkbox" checked disabled /><span class="switch"></span><span>Try instead</span></span></div><p class="muted">Feedback on each of your turns.</p></header>
       <div class="feed">
         <article class="note latest" data-in="17.7" data-out="99">
           <div class="note-top"><span class="note-turn">Turn 2</span><span class="chip Strong">Strong</span></div>
@@ -116,11 +116,22 @@
 
   <div class="layer scrim" data-in="19.3" data-out="22.8" data-dy="0"></div>
   <div class="policy-sheet" data-in="19.4" data-out="22.8" data-dy="60">
-    <header class="policy-head"><div><p class="eyebrow">Northwind Logistics</p><h2>Attendance &amp; Flexibility: Manager Quick Guide</h2></div><span class="close-btn" style="display:grid;place-items:center">✕</span></header>
+    <header class="policy-head"><div><p class="eyebrow">Northwind Logistics · HR Policy Library</p><h2>HR-210 Flexible Work Arrangements</h2></div><span class="close-btn" style="display:grid;place-items:center">✕</span></header>
     <div class="policy-body">
-      <section class="policy-section"><h3>Options you can approve yourself</h3><ul><li>A shifted start and end time, as long as the employee works core hours, 10:00–3:00.</li><li>Up to 2 remote days per week, where the role allows.</li></ul></section>
-      <section class="policy-section hr"><h3>Bring in HR (don't decide alone)</h3><ul><li>Ongoing caregiving, family, or health needs may qualify for protected leave. Say: "HR can walk you through your options."</li><li>Don't promise leave or approve unpaid time off yourself.</li></ul></section>
-      <section class="policy-section"><h3>Document and follow up</h3><ul><li>Send a short written summary within 1 business day, and set a check-in within 2 weeks.</li></ul></section>
+      <span class="back-link">← All policies</span>
+      <article class="policy-doc">
+        <h3>Northwind Logistics Policy HR-210: Flexible Work Arrangements</h3>
+        <table>
+          <tr><th>Policy owner</th><td>Human Resources</td></tr>
+          <tr><th>Applies to</th><td>Employees whose roles allow flexible work</td></tr>
+          <tr><th>Effective date</th><td>January 1, 2024</td></tr>
+        </table>
+        <h4>2. Manager approval</h4>
+        <p><span class="clause-num">2.1</span>The employee's direct manager may approve: adjusted hours within core hours; up to two remote workdays per week; and temporary adjustments of up to four weeks.</p>
+        <p><span class="clause-num">2.2</span>Managers must notify HR of any arrangement they approve within five business days.</p>
+        <h4>3. Department head and HR approval</h4>
+        <p><span class="clause-num">3.1</span>Hours outside the core hours, more than two remote workdays, or adjustments longer than four weeks require department head and HR approval.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -157,7 +168,7 @@
 <!-- ============ CAPTIONS ============ -->
 <div class="caption" data-in="9.0" data-out="13.9" data-dy="12">Jordan responds in character: <b>open or guarded</b>, depending on your approach.</div>
 <div class="caption" data-in="14.1" data-out="19.0" data-dy="12">A <b>coach</b> gives instant feedback after every turn.</div>
-<div class="caption" data-in="19.4" data-out="22.8" data-dy="12">A <b>policy job aid</b> supports decisions in the moment.</div>
+<div class="caption" data-in="19.4" data-out="22.8" data-dy="12">An <b>HR policy library</b> is there when decisions come up.</div>
 <div class="caption" data-in="23.6" data-out="31.7" data-dy="12">The <b>debrief</b> scores six feedback skills, and whether the real issue surfaced.</div>
 
 <script>
@@ -180,7 +191,7 @@
       el.style.transform = dy ? `${base}translateY(${(1 - a) * dy}px)` : base || "";
       el.style.visibility = a <= 0.001 ? "hidden" : "visible";
       // Chat bubbles take no space until they appear (and after they go), like a real chat.
-      if (el.classList.contains("bubble")) el.style.display = a <= 0.001 ? "none" : "";
+      if (el.classList.contains("bubble") || el.classList.contains("note")) el.style.display = a <= 0.001 ? "none" : "";
     }
     for (const f of fills) f.style.width = `${(+f.dataset.fill / 5) * 100 * ease((t - +f.dataset.at) / 1.2)}%`;
     for (const n of nums) {
