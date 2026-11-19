@@ -84,6 +84,11 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 
 ## Smaller ideas parked for later
 
+- [ ] **Skill scoring rubric (Jasmin):** describe what a 1, 3, and 5 look like for each of the six skills, so the coach scores against her descriptions instead of its own judgment
+- [ ] Calibration test: run a few scripted conversations (harsh, vague, excellent) and check the scores match an expert's
+- [ ] Show progress on the debrief, not just averages (for example, "open questions improved from 2 to 5")
+- [ ] Turn on the access code in Vercel (`ACCESS_CODE`) and add the LinkedIn address in `public/contact.js`
+
 - [ ] An iPhone + Chrome message: "For voice input on iPhone, open this page in Safari"
 - [ ] A friendlier message when the API credit runs out
 - [ ] Demo mode switched on by a special link (`?demo`) instead of for the whole site
