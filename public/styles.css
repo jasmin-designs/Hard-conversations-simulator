@@ -91,6 +91,9 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
 .prep-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 16px; }
 .prep-row .btn { padding: 8px 14px; font-size: 0.95rem; }
 
+.access-note { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 0.95rem; }
+.access-note a { color: var(--brand); font-weight: 600; }
+
 /* On/off switches for "Try instead" */
 .switch-row, .mini-switch { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
 .switch-row strong { display: block; font-weight: 600; }

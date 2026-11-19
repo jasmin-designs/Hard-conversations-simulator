@@ -5,6 +5,7 @@
 import { SCENARIO } from "./scenario.js";
 import { POLICY_LIBRARY } from "./policy.js";
 import { TOOLKIT } from "./toolkit.js";
+import { CONTACT } from "./contact.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
 const SKILLS = {
@@ -195,7 +196,54 @@ function show(screen) {
   window.scrollTo(0, 0);
 }
 
-$("start-btn").addEventListener("click", () => {
+// ---------- Access code (only when ACCESS_CODE is set in Vercel) ----------
+let accessRequired = false;
+fetch("/api/access")
+  .then((r) => r.json())
+  .then((d) => {
+    accessRequired = Boolean(d.required);
+    if (!accessRequired) return;
+    const note = $("access-note");
+    note.append("🔒 Message " + CONTACT.name + " on ");
+    if (CONTACT.linkedinUrl) {
+      const a = document.createElement("a");
+      a.href = CONTACT.linkedinUrl;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "LinkedIn";
+      note.append(a);
+    } else {
+      note.append("LinkedIn");
+    }
+    note.append(" for an access code to try the live conversation.");
+    note.hidden = false;
+  })
+  .catch(() => {});
+
+// Ask for the code before the call starts, not in the middle of it.
+async function haveAccess() {
+  if (!accessRequired) return true;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let code = sessionGet("accessCode");
+    if (!code || attempt > 0) {
+      code = window.prompt(
+        attempt > 0 ? "That code didn't work. Please try again:" : "Enter your access code to start the live conversation:"
+      );
+      if (!code) return false;
+      code = code.trim();
+    }
+    const r = await fetch("/api/access", { method: "POST", headers: { "x-access-code": code } }).catch(() => null);
+    if (r?.ok) {
+      sessionSet("accessCode", code);
+      return true;
+    }
+  }
+  toast(`That code didn't work. Message ${CONTACT.name} for a current access code.`);
+  return false;
+}
+
+$("start-btn").addEventListener("click", async () => {
+  if (!(await haveAccess())) return;
   resetConversation();
   // Browsers only allow speech that starts from a click, so "unlock" it now.
   if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(""));

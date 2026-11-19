@@ -74,7 +74,7 @@ Every later change you push to GitHub redeploys the site automatically.
 
 | Name | What it does |
 |---|---|
-| `ACCESS_CODE` | Requires a password before anyone can use the AI. Useful if you share the link widely and want to control cost. Visitors are asked for the code once. |
+| `ACCESS_CODE` | Requires a code before the live conversation starts. Visitors can still explore the start screen, HR policies, and manager toolkit; a note asks them to message Jasmin on LinkedIn for a code. To make "LinkedIn" a link, add your profile address in `public/contact.js`. |
 | `MODEL` | Which Claude model to use. Default: `claude-opus-5-5`. |
 | `DEMO_MODE` | Set to `1` to use canned replies (no AI, no cost). Handy for a demo that can't fail. |
 
