@@ -47,6 +47,6 @@ The JSON line uses only these keys, and only for skills this turn touched: ${Obj
   .join("; ")}. Put nothing after the JSON line.`;
 
 // How the coach uses the HR policy (public/policy.js).
-export const COACH_POLICY_RULES = `The manager has access to the company HR policy below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
+export const COACH_POLICY_RULES = `The manager has access to the company HR policy library below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
 
 export const COACH_DEBRIEF_RULES = `The conversation has ended. Write the debrief now, using the full transcript and the per-turn scores below. Number manager turns starting at 1. Address the manager directly as "you". Keep each item to one or two sentences.`;

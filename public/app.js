@@ -3,7 +3,7 @@
 // it only talks to this site's own /api/... addresses.
 
 import { SCENARIO } from "./scenario.js";
-import { POLICY } from "./policy.js";
+import { POLICY_LIBRARY } from "./policy.js";
 import { TOOLKIT } from "./toolkit.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
@@ -43,19 +43,16 @@ for (const d of SCENARIO.details) {
 }
 $("message").placeholder = `Say something to ${name}…`;
 
-// ---------- HR policy and manager toolkit ----------
+// ---------- HR policy library and manager toolkit ----------
 // One pop-up window shows either guide. Buttons say which with data-guide="policy" or "toolkit".
-const GUIDES = { policy: POLICY, toolkit: TOOLKIT };
+// The policy library has one tab per policy; the toolkit is a single page.
+const GUIDES = { policy: POLICY_LIBRARY, toolkit: TOOLKIT };
 
-function openGuide(guide) {
-  $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
-  $("guide-title").textContent = guide.title;
-  $("guide-intro").textContent = guide.intro;
-  $("guide-footnote").textContent = guide.footnote || "";
+function renderSections(sections) {
   $("guide-sections").replaceChildren();
-  for (const section of guide.sections) {
+  for (const section of sections) {
     const div = document.createElement("section");
-    div.className = `policy-section${section.highlight ? " highlight" : ""}`;
+    div.className = "policy-section";
     const h = document.createElement("h3");
     h.textContent = section.heading;
     const ul = document.createElement("ul");
@@ -68,6 +65,36 @@ function openGuide(guide) {
     $("guide-sections").append(div);
   }
   $("guide-dialog").querySelector(".policy-body").scrollTop = 0;
+}
+
+function showPolicy(library, index) {
+  const p = library.policies[index];
+  $("guide-title").textContent = `${p.number} · ${p.title}`;
+  $("guide-intro").textContent = `Purpose: ${p.purpose}`;
+  [...$("guide-tabs").children].forEach((tab, i) => tab.setAttribute("aria-selected", String(i === index)));
+  renderSections(p.sections);
+}
+
+function openGuide(guide) {
+  $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
+  $("guide-footnote").textContent = guide.footnote || "";
+  $("guide-tabs").replaceChildren();
+  if (guide.policies) {
+    guide.policies.forEach((p, i) => {
+      const tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "guide-tab";
+      tab.setAttribute("role", "tab");
+      tab.textContent = `${p.number} ${p.tab}`;
+      tab.addEventListener("click", () => showPolicy(guide, i));
+      $("guide-tabs").append(tab);
+    });
+    showPolicy(guide, 0);
+  } else {
+    $("guide-title").textContent = guide.title;
+    $("guide-intro").textContent = guide.intro;
+    renderSections(guide.sections);
+  }
   $("guide-dialog").showModal();
 }
 for (const btn of document.querySelectorAll("[data-guide]")) {

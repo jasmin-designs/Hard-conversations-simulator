@@ -18,7 +18,7 @@ export const TOOLKIT = {
       points: [
         "Gather the facts: specific dates, times, and missed deadlines.",
         "Be clear on the impact on the team, the work, or customers.",
-        "Review the HR policy so you know which options you can offer and when to involve HR.",
+        "Review the HR policy library so you know which options you can offer and when to involve HR.",
         "Choose a private time, soon. Don't wait for a pattern to become a problem.",
       ],
     },
@@ -36,13 +36,12 @@ export const TOOLKIT = {
     },
     {
       heading: "Phrases that help",
-      highlight: true,
       points: [
         "\"I wanted to check in about a couple of things I've noticed, and hear how you're doing.\"",
         "\"On Tuesday and Thursday you arrived around 9:30, and the client prep ran late.\"",
         "\"Help me understand what's been happening.\"",
-        "\"That sounds like a lot to carry. Thank you for telling me.\"",
-        "\"What would make mornings more workable for you?\"",
+        "\"Thank you for telling me. I appreciate you being open with me.\"",
+        "\"What would help you get back on track?\"",
         "\"Let's check in next Friday and see how it's going.\"",
       ],
     },
@@ -51,8 +50,8 @@ export const TOOLKIT = {
       points: [
         "\"You're always late.\" (vague and labeling)",
         "\"This can't keep happening, or there will be consequences.\" (jumps to threats)",
-        "\"Is it a health thing?\" (asks for medical details)",
-        "\"Take whatever time you need.\" (promises leave you can't approve)",
+        "\"Everyone else manages to get here on time.\" (compares and shames)",
+        "\"Don't worry about it, it's fine.\" (skips the issue and the plan)",
       ],
     },
     {

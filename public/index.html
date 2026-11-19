@@ -48,7 +48,7 @@
         </div>
         <div class="prep-row">
           <span class="muted">Prepare with:</span>
-          <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policy</button>
+          <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policies</button>
           <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
         </div>
       </article>
@@ -74,9 +74,9 @@
             <span class="call-timer" id="call-timer">00:00</span>
           </div>
           <div class="call-tools">
-          <button class="icon-btn" type="button" data-guide="policy" title="Open the HR policy">
+          <button class="icon-btn" type="button" data-guide="policy" title="Open the HR policy library">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
-            Policy
+            Policies
           </button>
           <button class="icon-btn" id="voice-toggle" aria-pressed="true" title="Read Jordan's replies aloud">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
@@ -214,6 +214,7 @@
         <div>
           <p class="eyebrow" id="guide-eyebrow"></p>
           <h2 id="guide-title"></h2>
+          <div class="guide-tabs" id="guide-tabs" role="tablist" aria-label="Policies"></div>
         </div>
         <button class="close-btn" type="button" id="guide-close" aria-label="Close">✕</button>
       </header>
