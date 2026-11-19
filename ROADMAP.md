@@ -13,6 +13,7 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 - **Scenario:** Lateness and missed deadlines (Jordan, Project Coordinator, Northwind Logistics)
 - **The employee (AI #1):** a hidden backstory (new caregiver for a parent) and a hidden openness level from 1 to 5
 - **The coach (AI #2):** feedback after every turn (Strong / Okay / Needs work, why, and try instead), plus hidden 1–5 scores on six skills
+- **Optional "Try instead":** learners can hide suggestions during the call and get them all in the debrief, to find their own way first
 - **HR policy library:** four plain policy documents (HR-104 Attendance, HR-210 Flexible Work, HR-305 Leave and Accommodations, HR-410 EAP), available before and during the call
 - **Manager toolkit:** conversation how-to, available before and after the call, but **hidden during it**
 - **Debrief:** whether the real issue came out, whether a plan and follow-up were agreed, whether company policy was followed, two strengths, two growth areas, skill scores, a full transcript, a PDF, and a text download
@@ -29,6 +30,7 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 4. **The openness level stays hidden.** No mood meter. Learners read the person, not a gauge.
 5. **Success means real-world outcomes:** the real issue surfaced, a plan was agreed with follow-up, and company policy was followed. Not saying the right words.
 6. **Adding a scenario should be mostly writing, not code.**
+7. **Let learners choose their level of support.** For example, "Try instead" can be hidden during the call, and is always in the debrief.
 
 ---
 

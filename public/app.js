@@ -173,6 +173,23 @@ $("guide-dialog").addEventListener("click", (e) => {
   if (e.target === $("guide-dialog")) $("guide-dialog").close(); // tap outside to close
 });
 
+// ---------- "Try instead" on/off ----------
+// On by default. Remembered on this device. Suggestions always appear in the debrief.
+let showTips = true;
+try { showTips = localStorage.getItem("showTips") !== "off"; } catch { /* storage unavailable: keep default */ }
+function applyTips() {
+  document.body.classList.toggle("tips-off", !showTips);
+  for (const box of document.querySelectorAll(".tips-toggle")) box.checked = showTips;
+}
+for (const box of document.querySelectorAll(".tips-toggle")) {
+  box.addEventListener("change", () => {
+    showTips = box.checked;
+    try { localStorage.setItem("showTips", showTips ? "on" : "off"); } catch { /* fine */ }
+    applyTips();
+  });
+}
+applyTips();
+
 function show(screen) {
   for (const id of ["start-screen", "call-screen", "debrief-screen"]) $(id).hidden = id !== screen;
   window.scrollTo(0, 0);
@@ -369,7 +386,10 @@ function fillNote(note, fb) {
     t.className = "note-try";
     t.innerHTML = "<strong>Try instead</strong>";
     t.append(document.createTextNode(`“${fb.tryInstead}”`));
-    el.append(t);
+    const saved = document.createElement("p");
+    saved.className = "note-saved";
+    saved.textContent = "💡 Suggestion saved for your debrief.";
+    el.append(t, saved);
   }
 }
 
@@ -544,6 +564,27 @@ function renderDebrief(d) {
   );
 
   fillList("debrief-strengths", d.strengths);
+
+  // Every "Try instead" from the call, whether or not it was shown during it.
+  const tries = coachNotes.filter((n) => n.tryInstead);
+  $("debrief-tries").replaceChildren();
+  $("debrief-tries-card").hidden = tries.length === 0;
+  for (const n of tries) {
+    const item = document.createElement("div");
+    item.className = "try-item";
+    const turnEl = document.createElement("span");
+    turnEl.className = "try-turn";
+    turnEl.textContent = `Turn ${n.turn} · ${n.verdict}`;
+    const said = document.createElement("p");
+    said.className = "try-said";
+    said.textContent = `You said: “${n.said}”`;
+    const next = document.createElement("p");
+    next.className = "try-new";
+    next.innerHTML = "<strong>Try instead: </strong>";
+    next.append(document.createTextNode(`“${n.tryInstead}”`));
+    item.append(turnEl, said, next);
+    $("debrief-tries").append(item);
+  }
   fillList("debrief-growth", d.growthAreas);
 
   // Skill averages from the coach's hidden per-turn scores.

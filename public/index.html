@@ -51,6 +51,14 @@
           <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policies</button>
           <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
         </div>
+        <label class="switch-row">
+          <input type="checkbox" class="tips-toggle" role="switch" />
+          <span class="switch" aria-hidden="true"></span>
+          <span>
+            <strong>Show "Try instead" suggestions during the call</strong>
+            <span class="muted switch-help">Prefer to find your own way? Turn this off. Suggestions always come with your debrief.</span>
+          </span>
+        </label>
       </article>
 
       <section class="how">
@@ -113,7 +121,14 @@
 
       <aside class="coach-panel" aria-label="Coach feedback">
         <header class="coach-head">
-          <h2>Coach</h2>
+          <div class="coach-title-row">
+            <h2>Coach</h2>
+            <label class="mini-switch" title="Show or hide 'Try instead' suggestions">
+              <input type="checkbox" class="tips-toggle" role="switch" />
+              <span class="switch" aria-hidden="true"></span>
+              <span>Try instead</span>
+            </label>
+          </div>
           <p class="muted">Feedback on each of your turns appears here.</p>
         </header>
         <div class="coach-feed" id="coach-feed" aria-live="polite">
@@ -183,6 +198,12 @@
             <h3>Where to grow</h3>
             <ul class="pill-list grow" id="debrief-growth"></ul>
           </div>
+        </section>
+
+        <section class="card" id="debrief-tries-card">
+          <h3>Try instead: phrasings to practice</h3>
+          <p class="muted">Your coach's alternative phrasings for the turns that could have gone better.</p>
+          <div class="tries" id="debrief-tries"></div>
         </section>
 
         <section class="card">
