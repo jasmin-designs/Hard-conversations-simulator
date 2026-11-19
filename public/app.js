@@ -635,19 +635,44 @@ function renderDebrief(d) {
   }
   fillList("debrief-growth", d.growthAreas);
 
-  // Skill averages from the coach's hidden per-turn scores.
+  // Skill progress: each score in turn order, the trend, and where you ended up.
   const skills = $("debrief-skills");
   skills.replaceChildren();
   for (const [key, label] of Object.entries(SKILLS)) {
-    const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
-    const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+    const points = skillPoints(key);
     const row = document.createElement("div");
-    row.className = `skill${avg === null ? " untouched" : ""}`;
-    row.innerHTML = `<span class="skill-name"></span><div class="skill-bar"><div class="skill-fill"></div></div><span class="skill-num"></span>`;
-    row.querySelector(".skill-name").textContent = label;
-    row.querySelector(".skill-fill").style.width = avg === null ? "0" : `${(avg / 5) * 100}%`;
-    row.querySelector(".skill-num").textContent = avg === null ? "—" : avg.toFixed(1);
-    if (avg === null) row.title = "Not used in this conversation";
+    row.className = `skill-progress${points.length ? "" : " untouched"}`;
+
+    const nameEl = document.createElement("span");
+    nameEl.className = "skill-name";
+    nameEl.textContent = label;
+
+    const path = document.createElement("div");
+    path.className = "score-path";
+    points.forEach((p, i) => {
+      if (i > 0) {
+        const arrow = document.createElement("span");
+        arrow.className = "score-arrow";
+        arrow.textContent = "→";
+        arrow.setAttribute("aria-hidden", "true");
+        path.append(arrow);
+      }
+      const dot = document.createElement("span");
+      dot.className = `score-dot s${p.score}`;
+      dot.textContent = p.score;
+      dot.title = `Turn ${p.turn}: ${p.score} out of 5`;
+      const t = document.createElement("small");
+      t.textContent = `T${p.turn}`;
+      dot.append(t);
+      path.append(dot);
+    });
+
+    const trend = document.createElement("span");
+    const tr = skillTrend(points);
+    trend.className = `trend ${tr.cls}`;
+    trend.textContent = tr.label;
+
+    row.append(nameEl, path, trend);
     skills.append(row);
   }
 
@@ -690,6 +715,23 @@ function renderDebrief(d) {
     }
     review.append(line);
   }
+}
+
+// Every score a skill got, with its turn number, in order.
+function skillPoints(key) {
+  return coachNotes
+    .map((n) => ({ turn: n.turn, score: n.scores?.[key] }))
+    .filter((p) => typeof p.score === "number");
+}
+
+// Compare the first and last scores.
+function skillTrend(points) {
+  if (points.length === 0) return { cls: "none", label: "Not used" };
+  if (points.length === 1) return { cls: "once", label: "Used once" };
+  const change = points.at(-1).score - points[0].score;
+  if (change > 0) return { cls: "up", label: "↗ Improved" };
+  if (change < 0) return { cls: "down", label: "↘ Dropped" };
+  return { cls: "steady", label: "→ Steady" };
 }
 
 function setOutcome(id, state, value, note) {
@@ -785,12 +827,13 @@ function buildTranscript(d) {
       "Where to grow:",
       ...(d.growthAreas || []).map((s) => `  - ${s}`),
       "",
-      "Skill scores (average, 1-5):"
+      "Skill progress (1-5, in turn order):"
     );
     for (const [key, label] of Object.entries(SKILLS)) {
-      const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
-      const avg = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "not used";
-      out.push(`  - ${label}: ${avg}`);
+      const points = skillPoints(key);
+      const path = points.length ? points.map((p) => `${p.score} (turn ${p.turn})`).join(" -> ") : "not used";
+      const trend = points.length > 1 ? `  [${skillTrend(points).label.replace(/[^A-Za-z ]/g, "").trim()}]` : "";
+      out.push(`  - ${label}: ${path}${trend}`);
     }
   }
   return out.join("\n") + "\n";
