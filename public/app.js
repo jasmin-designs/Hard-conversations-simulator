@@ -635,44 +635,31 @@ function renderDebrief(d) {
   }
   fillList("debrief-growth", d.growthAreas);
 
-  // Skill progress: each score in turn order, the trend, and where you ended up.
+  // Skill progress: a label (Improved / Steady / Dropped...) and a one-line summary.
   const skills = $("debrief-skills");
   skills.replaceChildren();
   for (const [key, label] of Object.entries(SKILLS)) {
     const points = skillPoints(key);
+    const tr = skillTrend(points);
     const row = document.createElement("div");
     row.className = `skill-progress${points.length ? "" : " untouched"}`;
-
+    const head = document.createElement("div");
+    head.className = "skill-head";
     const nameEl = document.createElement("span");
     nameEl.className = "skill-name";
     nameEl.textContent = label;
-
-    const path = document.createElement("div");
-    path.className = "score-path";
-    points.forEach((p, i) => {
-      if (i > 0) {
-        const arrow = document.createElement("span");
-        arrow.className = "score-arrow";
-        arrow.textContent = "→";
-        arrow.setAttribute("aria-hidden", "true");
-        path.append(arrow);
-      }
-      const dot = document.createElement("span");
-      dot.className = `score-dot s${p.score}`;
-      dot.textContent = p.score;
-      dot.title = `Turn ${p.turn}: ${p.score} out of 5`;
-      const t = document.createElement("small");
-      t.textContent = `T${p.turn}`;
-      dot.append(t);
-      path.append(dot);
-    });
-
     const trend = document.createElement("span");
-    const tr = skillTrend(points);
     trend.className = `trend ${tr.cls}`;
     trend.textContent = tr.label;
-
-    row.append(nameEl, path, trend);
+    head.append(nameEl, trend);
+    row.append(head);
+    const summary = d.skillSummaries?.[key];
+    if (points.length && summary) {
+      const p = document.createElement("p");
+      p.className = "skill-summary";
+      p.textContent = summary;
+      row.append(p);
+    }
     skills.append(row);
   }
 
@@ -827,13 +814,12 @@ function buildTranscript(d) {
       "Where to grow:",
       ...(d.growthAreas || []).map((s) => `  - ${s}`),
       "",
-      "Skill progress (1-5, in turn order):"
+      "Skill progress:"
     );
     for (const [key, label] of Object.entries(SKILLS)) {
-      const points = skillPoints(key);
-      const path = points.length ? points.map((p) => `${p.score} (turn ${p.turn})`).join(" -> ") : "not used";
-      const trend = points.length > 1 ? `  [${skillTrend(points).label.replace(/[^A-Za-z ]/g, "").trim()}]` : "";
-      out.push(`  - ${label}: ${path}${trend}`);
+      const tr = skillTrend(skillPoints(key)).label.replace(/[^A-Za-z ]/g, "").trim();
+      const summary = d.skillSummaries?.[key];
+      out.push(`  - ${label}: ${tr}${summary ? `. ${summary}` : ""}`);
     }
   }
   return out.join("\n") + "\n";

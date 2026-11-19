@@ -240,17 +240,14 @@ input:focus-visible + .switch { outline: 3px solid var(--accent); outline-offset
 .skill.untouched { color: var(--ink-soft); }
 
 /* Skill progress */
-.skill-progress { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) 110px; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.skill-progress { padding: 10px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
 .skill-progress:last-child { border-bottom: 0; }
 .skill-progress.untouched { color: var(--ink-soft); }
-.score-path { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.score-dot { position: relative; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 12px; }
-.score-dot small { position: absolute; top: 36px; font-size: 0.65rem; font-weight: 600; color: var(--ink-soft); }
-.score-dot.s1, .score-dot.s2 { background: var(--needs-bg); color: var(--needs); }
-.score-dot.s3 { background: var(--okay-bg); color: var(--okay); }
-.score-dot.s4, .score-dot.s5 { background: var(--strong-bg); color: var(--strong); }
-.score-arrow { color: var(--ink-soft); margin-bottom: 12px; }
-.trend { font-size: 0.85rem; font-weight: 650; text-align: right; }
+.skill-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.skill-name { font-weight: 600; }
+.skill-progress.untouched .skill-name { font-weight: 500; }
+.skill-summary { color: var(--ink-soft); font-size: 0.95rem; }
+.trend { font-size: 0.85rem; font-weight: 650; white-space: nowrap; }
 .trend.up { color: var(--strong); }
 .trend.down { color: var(--needs); }
 .trend.steady, .trend.once, .trend.none { color: var(--ink-soft); }
@@ -325,8 +322,6 @@ input:focus-visible + .switch { outline: 3px solid var(--accent); outline-offset
   .call-tools .icon-btn { padding: 7px 10px; }
   .policy-dialog { width: 100vw; max-width: 100vw; max-height: 92dvh; margin: auto 0 0; border-radius: 20px 20px 0 0; }
   .skill { grid-template-columns: minmax(0, 1fr) 80px 44px; }
-  .skill-progress { grid-template-columns: minmax(0, 1fr) auto; }
-  .skill-progress .score-path { grid-column: 1 / -1; grid-row: 2; }
   .bubble { max-width: 90%; }
   .btn-lg { width: 100%; }
 }
