@@ -89,6 +89,7 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 - [ ] Show progress on the debrief, not just averages. A draft exists on the `progress-view` branch; current leaning is to keep averages and add the rubric instead (see `RUBRIC-DRAFT.md`)
 - [x] Stop saying "turn" in the app: moments are now quoted ("when you asked…") with plain timing words
 - [ ] Turn on the access code in Vercel (`ACCESS_CODE`) and add the LinkedIn address in `public/contact.js`
+- [ ] **One-time (limited-use) access codes:** each person gets their own code that works for a set number of conversations (for example, 1 for a recruiter, 3 for a friend). This needs a small free database on Vercel to remember used codes, and it shows who used their code and when. Build it together with turning on access codes. (A gentler option: the browser remembers a finished call, but that's easy to get around.)
 
 - [ ] An iPhone + Chrome message: "For voice input on iPhone, open this page in Safari"
 - [ ] A friendlier message when the API credit runs out
