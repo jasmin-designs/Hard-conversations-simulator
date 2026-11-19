@@ -84,9 +84,10 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 
 ## Smaller ideas parked for later
 
-- [ ] **Skill scoring rubric (Jasmin):** describe what a 1, 3, and 5 look like for each of the six skills, so the coach scores against her descriptions instead of its own judgment
+- [ ] **Skill scoring rubric (Jasmin):** a draft built from the manager toolkit is in `RUBRIC-DRAFT.md`, ready to review
 - [ ] Calibration test: run a few scripted conversations (harsh, vague, excellent) and check the scores match an expert's
-- [ ] Show progress on the debrief, not just averages (for example, "open questions improved from 2 to 5")
+- [ ] Show progress on the debrief, not just averages. A draft exists on the `progress-view` branch; current leaning is to keep averages and add the rubric instead (see `RUBRIC-DRAFT.md`)
+- [ ] Stop saying "turn" in the app (see `RUBRIC-DRAFT.md` for the options)
 - [ ] Turn on the access code in Vercel (`ACCESS_CODE`) and add the LinkedIn address in `public/contact.js`
 
 - [ ] An iPhone + Chrome message: "For voice input on iPhone, open this page in Safari"
