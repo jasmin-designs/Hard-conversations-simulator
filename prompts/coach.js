@@ -58,6 +58,9 @@ Verdict: Warm-up
 // How the coach uses the HR policy (public/policy.js).
 export const COACH_POLICY_RULES = `The manager has access to the company HR policy library below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
 
+// How the coach uses the "Know your employee" profile (public/profile.js).
+export const COACH_PROFILE_RULES = `The employee is Jordan; use she/her. The manager can read the profile below. When it's clearly relevant, briefly note whether the manager adapted their approach to what they know about Jordan (for example, keeping it private, direct, and respectful, or drawing on their good relationship). This is an observation only: never score it, and don't mention it when it isn't relevant.`;
+
 export const COACH_DEBRIEF_RULES = `The conversation has ended. Write the debrief now, using the full transcript and the scores below. Address the manager directly as "you". Keep each item to one or two sentences, and keep the headline (overall) to one short sentence of 15 words or fewer, since the rest of the debrief holds the details. For example: "A drive-by isn't a conversation. Book real time with Jordan."
 
 In "policyNote", say whether the manager checked the HR policies (see "Policy library use"). If they didn't open the policies, or skipped one that applied, name one or two options or rules from the policies they could have used. Opening a policy is not required; the point is whether they spoke from it.

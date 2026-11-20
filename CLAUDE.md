@@ -11,9 +11,11 @@ This project belongs to Jasmin, an instructional designer (not a developer). It'
 - Live site: hard-conversations-simulator.vercel.app (Vercel auto-deploys on every push to `main`)
 - GitHub: jasmin-designs/Hard-conversations-simulator
 - Prompts: `prompts/employee.js` (Prompt 1, Jasmin's text, kept word for word) and `prompts/coach.js` (Prompt 2, likewise). App-specific technical notes are kept separate and clearly labeled.
-- Policies: `public/policy.js` (plain policy documents, shared with the coach). Toolkit: `public/toolkit.js` (hidden during the call).
+- Policies: `public/policy.js` (plain policy documents, shared with the coach). Toolkit: `public/toolkit.js` (generic, hidden during the call). Profile: `public/profile.js` (Jordan, she/her; shared with Jordan's AI and the coach).
+- Look: `public/theme.css` (Ocean & Citrus) loads after `public/styles.css`.
 - Test without spending money: `npm run demo`, then drive it with Playwright.
 
 ## Design rules (from ROADMAP.md)
 - Nothing in the policies or toolkit may hint at a scenario's hidden backstory: no highlighting, and sensitive items only appear inside neutral lists.
 - The toolkit stays hidden during the call. The openness level is never shown.
+- The toolkit stays generic (no scenario details). The profile never hints at the backstory. The coach notes adapting to Jordan's style but never scores it.

@@ -77,3 +77,12 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .call-settings[open] .chev { transform: rotate(180deg); }
 .call-settings[open] summary { margin-bottom: 4px; }
 .call-settings .switch-row { margin-top: 12px; }
+
+/* ---- Three preparation cards: icon on top so titles fit ---- */
+@media (min-width: 641px) {
+  .prep-card { grid-template-columns: 1fr; grid-template-rows: auto; align-content: start; gap: 8px; }
+  .prep-icon { grid-row: auto; width: 44px; height: 44px; }
+  .prep-status { grid-column: 1; }
+}
+/* Pop-up labels in ocean blue (orange stays in the header only) */
+.policy-dialog .eyebrow { color: var(--brand); }

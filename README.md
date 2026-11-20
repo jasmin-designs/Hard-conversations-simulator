@@ -33,7 +33,8 @@ prompts/employee.js   ← Prompt 1 (Jordan). Edit this to change Jordan.
 prompts/coach.js      ← Prompt 2 (the coach). Edit this to change the coaching.
 public/scenario.js    ← The scenario text on the start screen.
 public/policy.js      ← The HR policy library (fictional "Northwind Logistics"): four separate policies.
-public/toolkit.js     ← The manager toolkit: how to have the conversation.
+public/toolkit.js     ← The manager toolkit: generic how-to for any performance conversation.
+public/profile.js     ← "Know your employee": what the manager knows about Jordan (she/her).
 public/index.html     ← The three screens (start, call, debrief).
 public/styles.css     ← Colors, fonts, layout.
 public/app.js         ← Screen behavior, mic, and voice.

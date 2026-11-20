@@ -5,6 +5,7 @@
 import { SCENARIO } from "./scenario.js";
 import { POLICY_LIBRARY } from "./policy.js";
 import { TOOLKIT } from "./toolkit.js";
+import { PROFILE } from "./profile.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
 const SKILLS = {
@@ -46,7 +47,7 @@ $("message").placeholder = `Say something to ${name}…`;
 // ---------- HR policy library and manager toolkit ----------
 // One pop-up window shows either guide. Buttons say which with data-guide="policy" or "toolkit".
 // The policy library opens as a list of policies; the toolkit is a single page.
-const GUIDES = { policy: POLICY_LIBRARY, toolkit: TOOLKIT };
+const GUIDES = { policy: POLICY_LIBRARY, toolkit: TOOLKIT, profile: PROFILE };
 
 function renderSections(sections) {
   $("guide-sections").replaceChildren();
@@ -158,6 +159,7 @@ function showPolicyDoc(library, index) {
 
 function openGuide(guide) {
   if (guide === TOOLKIT && phase() === "before") prepLog.toolkitBefore = true;
+  if (guide === PROFILE && phase() === "before") prepLog.profileBefore = true;
   $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
   $("guide-footnote").textContent = guide.footnote || "";
   if (guide.policies) {
@@ -227,7 +229,7 @@ applyCoach();
 
 // ---------- What the learner looked at (for the debrief) ----------
 // Which HR policies were opened, and when: before, during, or after the call.
-let prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false };
+let prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false, profileBefore: false };
 function phase() {
   if (!$("call-screen").hidden) return "during";
   if (!$("debrief-screen").hidden) return "after";
@@ -241,23 +243,22 @@ function logPolicy(number) {
 
 // Mark the preparation cards once they've been opened, and update the reminder.
 function updatePrepCards() {
-  const policyDone = Object.keys(prepLog.policies).length > 0 || prepLog.libraryBefore;
-  const toolkitDone = prepLog.toolkitBefore;
-  const set = (key, done) => {
-    const card = document.querySelector(`.prep-card[data-guide="${key}"]`);
-    card.classList.toggle("done", done);
-    card.querySelector(".prep-status").textContent = done ? "✓ Reviewed" : "Open →";
+  const done = {
+    profile: prepLog.profileBefore,
+    policy: Object.keys(prepLog.policies).length > 0 || prepLog.libraryBefore,
+    toolkit: prepLog.toolkitBefore,
   };
-  set("policy", policyDone);
-  set("toolkit", toolkitDone);
+  for (const [key, isDone] of Object.entries(done)) {
+    const card = document.querySelector(`.prep-card[data-guide="${key}"]`);
+    card.classList.toggle("done", isDone);
+    card.querySelector(".prep-status").textContent = isDone ? "✓ Reviewed" : "Open →";
+  }
+  const names = { profile: "Jordan's profile", policy: "the HR policies", toolkit: "the manager toolkit" };
+  const missing = Object.keys(done).filter((k) => !done[k]).map((k) => names[k]);
   const r = $("prep-reminder");
-  r.hidden = policyDone && toolkitDone;
-  r.textContent =
-    !policyDone && !toolkitDone
-      ? "📋 Tip: you haven't opened the HR policies or the manager toolkit yet."
-      : !policyDone
-        ? "📋 Tip: you haven't opened the HR policies yet."
-        : "📋 Tip: you haven't opened the manager toolkit yet.";
+  r.hidden = missing.length === 0;
+  const list = missing.length > 1 ? `${missing.slice(0, -1).join(", ")} or ${missing.at(-1)}` : missing[0];
+  r.textContent = `📋 Tip: you haven't opened ${list} yet.`;
 }
 
 function show(screen) {
@@ -745,7 +746,7 @@ function fillList(id, items = []) {
 }
 
 $("again-btn").addEventListener("click", () => {
-  prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false };
+  prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false, profileBefore: false };
   updatePrepCards();
   show("start-screen");
 });

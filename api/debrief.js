@@ -1,6 +1,7 @@
 // The end-of-call debrief, written by the coach from the transcript and scores.
 
-import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, SKILLS } from "../prompts/coach.js";
+import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, COACH_PROFILE_RULES, SKILLS } from "../prompts/coach.js";
+import { profileAsText } from "../public/profile.js";
 import { policyAsText, POLICY_LIBRARY } from "../public/policy.js";
 import { askClaude, readTranscript, asScript, handler, DEMO_MODE } from "../lib/claude.js";
 import { demoDebrief } from "../lib/demo.js";
@@ -67,7 +68,7 @@ export default handler(async (body) => {
     .join("\n");
 
   return askClaude({
-    system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>`,
+    system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>\n\n${COACH_PROFILE_RULES}\n\n<profile>\n${profileAsText()}\n</profile>`,
     messages: [
       {
         role: "user",

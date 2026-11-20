@@ -1,6 +1,6 @@
 // AI #1: Jordan. Receives the conversation so far and returns Jordan's next line.
 
-import { EMPLOYEE_PROMPT, EMPLOYEE_OUTPUT_RULES } from "../prompts/employee.js";
+import { EMPLOYEE_PROMPT, EMPLOYEE_BACKGROUND, EMPLOYEE_OUTPUT_RULES } from "../prompts/employee.js";
 import { askClaude, readTranscript, handler, DEMO_MODE, RequestError } from "../lib/claude.js";
 import { demoEmployee } from "../lib/demo.js";
 
@@ -23,7 +23,7 @@ export default handler(async (body) => {
   if (messages[0].role === "assistant") messages.unshift({ role: "user", content: "(The call connects.)" });
 
   const reply = await askClaude({
-    system: `${EMPLOYEE_PROMPT}\n\n${EMPLOYEE_OUTPUT_RULES}`,
+    system: `${EMPLOYEE_PROMPT}\n\n${EMPLOYEE_BACKGROUND}\n\n${EMPLOYEE_OUTPUT_RULES}`,
     messages,
     effort: "low",
     maxTokens: 2000,
