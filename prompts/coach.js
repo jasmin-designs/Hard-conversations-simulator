@@ -60,6 +60,8 @@ export const COACH_POLICY_RULES = `The manager has access to the company HR poli
 
 export const COACH_DEBRIEF_RULES = `The conversation has ended. Write the debrief now, using the full transcript and the scores below. Address the manager directly as "you". Keep each item to one or two sentences, and keep the headline (overall) to one short sentence of 15 words or fewer, since the rest of the debrief holds the details. For example: "A drive-by isn't a conversation. Book real time with Jordan."
 
+In "policyNote", say whether the manager checked the HR policies (see "Policy library use"). If they didn't open the policies, or skipped one that applied, name one or two options or rules from the policies they could have used. Opening a policy is not required; the point is whether they spoke from it.
+
 A message marked as a warm-up was a greeting or small talk at the start; judge the opening as that greeting together with the manager's next message.
 
 Never refer to turn or message numbers. To point to a moment, quote the manager's words briefly and, if it helps, use plain timing words such as "early on", "about halfway through", or "near the end". For example: About halfway through, when you asked "What's been making it harder?", Jordan opened up.`;

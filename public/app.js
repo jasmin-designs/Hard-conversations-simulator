@@ -70,6 +70,8 @@ function renderSections(sections) {
 
 // The policy library: a plain list of policies...
 function showPolicyIndex(library) {
+  if (phase() === "before") prepLog.libraryBefore = true;
+  if (phase() === "during") prepLog.libraryDuring = true;
   $("guide-title").textContent = "All policies";
   $("guide-intro").textContent = "";
   const ul = document.createElement("ul");
@@ -99,6 +101,7 @@ function showPolicyIndex(library) {
 // ...and each policy as a plain document with numbered clauses.
 function showPolicyDoc(library, index) {
   const p = library.policies[index];
+  logPolicy(p.number);
   $("guide-title").textContent = `${p.number} ${p.title}`;
   $("guide-intro").textContent = "";
 
@@ -155,6 +158,7 @@ function showPolicyDoc(library, index) {
 }
 
 function openGuide(guide) {
+  if (guide === TOOLKIT && phase() === "before") prepLog.toolkitBefore = true;
   $("guide-eyebrow").textContent = `${guide.company} · ${guide.label}`;
   $("guide-footnote").textContent = guide.footnote || "";
   if (guide.policies) {
@@ -190,6 +194,39 @@ for (const box of document.querySelectorAll(".tips-toggle")) {
   });
 }
 applyTips();
+
+// ---------- Coach on/off during the call ----------
+// On by default. Off = the coach still reviews everything silently, and it all shows in the debrief.
+let showCoach = true;
+try { showCoach = localStorage.getItem("showCoach") !== "off"; } catch { /* keep default */ }
+function applyCoach() {
+  document.body.classList.toggle("coach-off", !showCoach);
+  for (const box of document.querySelectorAll(".coach-toggle")) box.checked = showCoach;
+  $("coach-btn").setAttribute("aria-pressed", String(showCoach));
+  $("coach-label").textContent = showCoach ? "Coach on" : "Coach off";
+}
+function setCoach(on) {
+  showCoach = on;
+  try { localStorage.setItem("showCoach", on ? "on" : "off"); } catch { /* fine */ }
+  applyCoach();
+}
+for (const box of document.querySelectorAll(".coach-toggle")) box.addEventListener("change", () => setCoach(box.checked));
+$("coach-btn").addEventListener("click", () => setCoach(!showCoach));
+applyCoach();
+
+// ---------- What the learner looked at (for the debrief) ----------
+// Which HR policies were opened, and when: before, during, or after the call.
+let prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false };
+function phase() {
+  if (!$("call-screen").hidden) return "during";
+  if (!$("debrief-screen").hidden) return "after";
+  return "before";
+}
+function logPolicy(number) {
+  const when = phase();
+  if (when === "after") return;
+  prepLog.policies[number] = prepLog.policies[number] === "before" ? "before" : when;
+}
 
 function show(screen) {
   for (const id of ["start-screen", "call-screen", "debrief-screen"]) $(id).hidden = id !== screen;
@@ -584,6 +621,7 @@ async function loadDebrief() {
     const data = await api("/api/debrief", {
       transcript,
       turnScores: coachNotes.map((n) => n.scores || {}),
+      policyUse: policyUse(),
     });
     renderDebrief(data);
   } catch (err) {
@@ -625,6 +663,13 @@ function renderDebrief(d) {
     d.policyAligned ? "Yes" : "Not fully",
     d.policyNote
   );
+  // Which policies they actually opened (counted by the app, not the AI).
+  const policyBox = $("outcome-policy").querySelector(".outcome-note").parentElement;
+  policyBox.querySelector(".policy-check")?.remove();
+  const check = document.createElement("p");
+  check.className = "policy-check";
+  check.textContent = policyUseText(policyUse());
+  policyBox.append(check);
 
   fillList("debrief-strengths", d.strengths);
 
@@ -718,7 +763,23 @@ function fillList(id, items = []) {
   }
 }
 
-$("again-btn").addEventListener("click", () => show("start-screen"));
+$("again-btn").addEventListener("click", () => {
+  prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false };
+  show("start-screen");
+});
+
+// A plain summary of which policies were opened, and when.
+function policyUse() {
+  const before = Object.keys(prepLog.policies).filter((k) => prepLog.policies[k] === "before");
+  const during = Object.keys(prepLog.policies).filter((k) => prepLog.policies[k] === "during");
+  return { before, during, toolkitBefore: prepLog.toolkitBefore };
+}
+function policyUseText(u) {
+  const parts = [];
+  if (u.before.length) parts.push(`${u.before.join(", ")} before the call`);
+  if (u.during.length) parts.push(`${u.during.join(", ")} during the call`);
+  return parts.length ? `📋 Policies you opened: ${parts.join("; ")}.` : "📋 You didn't open any HR policies.";
+}
 $("print-btn").addEventListener("click", () => window.print());
 
 // Show the full conversation in the PDF, then put things back afterwards.
@@ -787,6 +848,7 @@ function buildTranscript(d) {
       `   ${d.planNote}`,
       `Followed company policy: ${d.policyAligned ? "Yes" : "Not fully"}`,
       `   ${d.policyNote || ""}`,
+      `   ${policyUseText(policyUse()).replace("📋 ", "")}`,
       "",
       "What you did well:",
       ...(d.strengths || []).map((s) => `  - ${s}`),

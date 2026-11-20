@@ -1,7 +1,7 @@
 // The end-of-call debrief, written by the coach from the transcript and scores.
 
 import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, SKILLS } from "../prompts/coach.js";
-import { policyAsText } from "../public/policy.js";
+import { policyAsText, POLICY_LIBRARY } from "../public/policy.js";
 import { askClaude, readTranscript, asScript, handler, DEMO_MODE } from "../lib/claude.js";
 import { demoDebrief } from "../lib/demo.js";
 
@@ -45,6 +45,18 @@ export default handler(async (body) => {
 
   if (DEMO_MODE) return demoDebrief(transcript);
 
+  // Which HR policies the learner opened (counted by the app). Only known policy numbers are kept.
+  const known = new Set(POLICY_LIBRARY.policies.map((p) => p.number));
+  const use = body.policyUse && typeof body.policyUse === "object" ? body.policyUse : {};
+  const clean = (list) => (Array.isArray(list) ? list.filter((n) => known.has(n)) : []);
+  const before = clean(use.before);
+  const during = clean(use.during);
+  const policyUseLine =
+    before.length || during.length
+      ? `Opened before the call: ${before.join(", ") || "none"}. Opened during the call: ${during.join(", ") || "none"}.`
+      : "The manager did not open any HR policies, before or during the call.";
+  const toolkitLine = use.toolkitBefore ? "The manager reviewed the manager toolkit before the call." : "The manager did not open the manager toolkit before the call.";
+
   // Label each set of scores with what the manager said, instead of a number.
   const managerLines = transcript.filter((t) => t.role === "manager").map((t) => t.text);
   const scoreLines = turnScores
@@ -61,7 +73,7 @@ export default handler(async (body) => {
         role: "user",
         content: `${COACH_DEBRIEF_RULES}\n\nSkill keys: ${JSON.stringify(SKILLS)}\n\nTranscript:\n\n${asScript(
           transcript
-        )}\n\nScores, in order:\n${scoreLines || "(none)"}`,
+        )}\n\nPolicy library use (counted by the app): ${policyUseLine} ${toolkitLine}\n\nScores, in order:\n${scoreLines || "(none)"}`,
       },
     ],
     effort: "medium",

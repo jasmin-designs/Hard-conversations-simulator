@@ -88,7 +88,17 @@ svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
 .scenario-goal { background: var(--brand-soft); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; }
 .scenario-goal strong { color: var(--brand); font-size: 0.85rem; }
 .start-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.prep-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 16px; }
+.before-start { display: grid; gap: 14px; border-top: 1px solid var(--line); padding-top: 16px; }
+.before-start h3 { font-size: 1rem; }
+.prep-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.start-actions { padding-top: 4px; }
+
+/* Coach hidden during the call: the call fills the screen */
+.coach-off .coach-panel { display: none; }
+.coach-off .call { grid-template-columns: minmax(0, 1fr); }
+.coach-off .tips-row { display: none; }
+.icon-btn#coach-btn[aria-pressed="false"] { color: var(--call-soft); }
+.policy-check { margin-top: 6px; font-size: 0.85rem; color: var(--ink); }
 .prep-row .btn { padding: 8px 14px; font-size: 0.95rem; }
 
 .access-note { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 0.95rem; }

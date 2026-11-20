@@ -34,6 +34,14 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 
 ---
 
+## Next up (from Steve's user test, November 2026)
+
+- [ ] **Natural voice for Jordan (priority):** replace the robotic built-in browser voice with a natural-sounding voice service. This needs a voice service account and key, and adds a few cents per conversation.
+- [ ] **Classroom (blended) version and facilitator guide:** about 10 minutes of framing (best practices: listening, open questions), then about 30 minutes where everyone practises with Jordan, then a group debrief on common themes. Peers share what worked, and the class discusses "who checked the policies?". Steve found in person better than online, because of learning from peers.
+- [ ] **Class view for instructors:** everyone uses one class code; the instructor sees themes across the class (lowest skill, how many uncovered the real issue, how many opened the policies). Builds on the access codes and the learning data dashboard.
+- [x] Coach panel on/off during the call (on by default); the coach still reviews everything silently when it's off
+- [x] The debrief notes which HR policies the learner opened, before or during the call, and the coach names options they missed
+
 ## Phase 1: The library structure
 
 - [ ] A home screen with a **scenario library** (cards showing the person, the situation, and the difficulty)
@@ -84,7 +92,7 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 
 ## Smaller ideas parked for later
 
-- [ ] **Start screen order:** move "Prepare with: HR policies · Manager toolkit" above the **Start call** button, so learners prepare before they start
+- [x] **Start screen order:** How it works → scenario → Before you start (policies, toolkit, switches) → Start call last
 
 - [ ] **Skill scoring rubric (Jasmin):** a draft built from the manager toolkit is in `RUBRIC-DRAFT.md`, ready to review
 - [ ] Calibration test: run a few scripted conversations (harsh, vague, excellent) and check the scores match an expert's

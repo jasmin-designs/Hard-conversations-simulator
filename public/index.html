@@ -25,6 +25,17 @@
         </p>
       </section>
 
+      <section class="how">
+        <h3>How it works</h3>
+        <ol>
+          <li><strong>Prepare (optional).</strong> Review the HR policies and the manager toolkit, as you would before a real conversation.</li>
+          <li><strong>Start the call.</strong> You're the manager, so you speak first. Use the mic or type.</li>
+          <li><strong>Jordan responds in character</strong> and reads replies aloud.</li>
+          <li><strong>Your coach</strong> reviews everything you say. See notes live, or save them all for the end.</li>
+          <li><strong>End the call</strong> for a debrief on what worked and what to try next.</li>
+        </ol>
+      </section>
+
       <article class="scenario-card">
         <div class="scenario-head">
           <div class="avatar avatar-sm" id="start-avatar" aria-hidden="true"></div>
@@ -40,19 +51,22 @@
           <strong>Your goal</strong>
           <span id="scenario-goal"></span>
         </div>
-        <div class="start-actions">
-        <button class="btn btn-primary btn-lg" id="start-btn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
-          Start call
-        </button>
-        </div>
+        <div class="before-start">
+          <h3>Before you start</h3>
         <div class="prep-row">
           <span class="muted">Prepare with:</span>
           <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policies</button>
           <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
         </div>
-        <p class="access-note" id="access-note" hidden></p>
         <label class="switch-row">
+          <input type="checkbox" class="coach-toggle" role="switch" />
+          <span class="switch" aria-hidden="true"></span>
+          <span>
+            <strong>Show the coach during the call</strong>
+            <span class="muted switch-help">Turn this off to have the conversation as you would in real life. Your coach still reviews everything, and it all comes with your debrief.</span>
+          </span>
+        </label>
+        <label class="switch-row tips-row">
           <input type="checkbox" class="tips-toggle" role="switch" />
           <span class="switch" aria-hidden="true"></span>
           <span>
@@ -60,17 +74,15 @@
             <span class="muted switch-help">Prefer to find your own way? Turn this off. Suggestions always come with your debrief.</span>
           </span>
         </label>
+        </div>
+        <p class="access-note" id="access-note" hidden></p>
+        <div class="start-actions">
+        <button class="btn btn-primary btn-lg" id="start-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+          Start call
+        </button>
+        </div>
       </article>
-
-      <section class="how">
-        <h3>How it works</h3>
-        <ol>
-          <li><strong>Start the call.</strong> You're the manager, so you speak first. Use the mic or type.</li>
-          <li><strong>Jordan responds in character</strong> and reads replies aloud.</li>
-          <li><strong>Your coach</strong> posts a short note after each thing you say.</li>
-          <li><strong>End the call</strong> for a debrief on what worked and what to try next.</li>
-        </ol>
-      </section>
     </main>
 
     <!-- ======================= CALL SCREEN ======================= -->
@@ -86,6 +98,10 @@
           <button class="icon-btn" type="button" data-guide="policy" title="Open the HR policy library">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
             Policies
+          </button>
+          <button class="icon-btn" id="coach-btn" type="button" aria-pressed="true" title="Show or hide the coach">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 5v2h10V9zm0 4v2h7v-2z"/></svg>
+            <span id="coach-label">Coach on</span>
           </button>
           <button class="icon-btn" id="voice-toggle" aria-pressed="true" title="Read Jordan's replies aloud">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
