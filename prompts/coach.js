@@ -65,6 +65,12 @@ Verdict: Warm-up
 // How the coach uses the HR policy (public/policy.js).
 export const COACH_POLICY_RULES = `The manager has access to the company HR policy library below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
 
+// What counts as "uncovering the real issue" in this scenario.
+// Given to the DEBRIEF coach only (after the call), never to the live coach,
+// so it can't nudge learners during the conversation. It's a definition of
+// success, not the full backstory, to avoid hindsight bias.
+export const COACH_REAL_ISSUE = `Marking rule for "uncovered the real issue": it counts as uncovered only when Jordan says she is caring for a family member and that this is affecting her mornings or work. A vague hint without that (for example, "stuff at home") counts as not yet uncovered. Judge the manager on how well they created the conditions for Jordan to share (tone, open questions, listening, acknowledging feelings), not on whether they guessed specifics. Don't reveal details Jordan didn't share.`;
+
 // The employee's pronouns, for all coach feedback.
 export const COACH_PRONOUNS = `The employee is Jordan; use she/her.`;
 

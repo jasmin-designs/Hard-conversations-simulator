@@ -1,6 +1,6 @@
 // The end-of-call debrief, written by the coach from the transcript and scores.
 
-import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, COACH_PRONOUNS, COACH_PROFILE_RULES, SKILLS } from "../prompts/coach.js";
+import { COACH_PROMPT, COACH_DEBRIEF_RULES, COACH_POLICY_RULES, COACH_PRONOUNS, COACH_PROFILE_RULES, COACH_REAL_ISSUE, SKILLS } from "../prompts/coach.js";
 import { profileAsText } from "../public/profile.js";
 import { policyAsText, POLICY_LIBRARY } from "../public/policy.js";
 import { askClaude, readTranscript, asScript, handler, DEMO_MODE } from "../lib/claude.js";
@@ -25,7 +25,7 @@ const DEBRIEF_SCHEMA = {
   properties: {
     strengths: { type: "array", items: { type: "string" }, description: "Exactly two strengths." },
     growthAreas: { type: "array", items: { type: "string" }, description: "Exactly two growth areas." },
-    uncoveredRealIssue: { type: "boolean" },
+    uncoveredRealIssue: { type: "boolean", description: "Apply the marking rule for the real issue." },
     realIssueNote: { type: "string", description: "One sentence on how the real issue came out (quote the manager's words that opened it up, with a timing word like 'about halfway through'), or what blocked it. No turn numbers." },
     planAgreed: { type: "boolean", description: "A concrete plan was agreed." },
     followUpAgreed: { type: "boolean", description: "A specific follow-up (time or check-in) was agreed." },
@@ -68,7 +68,7 @@ export default handler(async (body) => {
     .join("\n");
 
   return askClaude({
-    system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>\n\n${COACH_PRONOUNS} ${COACH_PROFILE_RULES}\n\n<profile>\n${profileAsText()}\n</profile>`,
+    system: `${COACH_PROMPT}\n\n${COACH_POLICY_RULES}\n\n<policy>\n${policyAsText()}\n</policy>\n\n${COACH_REAL_ISSUE}\n\n${COACH_PRONOUNS} ${COACH_PROFILE_RULES}\n\n<profile>\n${profileAsText()}\n</profile>`,
     messages: [
       {
         role: "user",
