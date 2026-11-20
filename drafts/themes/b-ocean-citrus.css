@@ -1,0 +1,23 @@
+/* Option B: Ocean & Citrus. Fresh and modern. Headings: Space Grotesk. Body: DM Sans. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap");
+:root {
+  --bg: #f1f8fb; --surface: #ffffff; --ink: #0f2a36; --ink-soft: #4d6773; --line: #d6e7ee;
+  --brand: #0b5c7a; --brand-soft: #def2f8; --accent: #f5a524;
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.02em; }
+.hero { background: #0b5c7a; color: #fff; border-radius: 24px; padding: 36px 32px; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: #f5a524; opacity: .9; }
+.hero::before { content: ""; position: absolute; right: 90px; bottom: -70px; width: 140px; height: 140px; border-radius: 50%; background: #7fd1c7; opacity: .85; }
+.hero > * { position: relative; z-index: 1; max-width: 70%; }
+.hero .lede { color: #d9eef5; }
+.hero .eyebrow { color: #ffd27a; }
+.brand { color: var(--brand); }
+.brand-mark { background: var(--accent); }
+.avatar { background: linear-gradient(140deg, #2a9bb8, #0b5c7a); }
+.scenario-card { border-left: 6px solid var(--accent); }
+.how li::marker { color: var(--brand); font-weight: 700; }
+.step-num { background: var(--accent); color: #0f2a36; }
+.prep-card { background: #fff8e8; border-color: #f6d488; }
+.prep-icon { background: var(--accent); color: #0f2a36; }
+.btn-primary { background: var(--brand); }

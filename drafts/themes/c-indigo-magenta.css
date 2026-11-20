@@ -1,0 +1,25 @@
+/* Option C: Indigo & Magenta. Confident and energetic. Headings: DM Serif Display. Body: Plus Jakarta Sans. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+:root {
+  --bg: #ffffff; --surface: #ffffff; --ink: #16152e; --ink-soft: #57566e; --line: #e6e5f2;
+  --brand: #2f2b8f; --brand-soft: #eceafd; --accent: #e0457b;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+h1, h2, .scenario-head h2 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; letter-spacing: 0; }
+h3 { font-weight: 800; }
+body { background: radial-gradient(circle at 85% 0%, #fde6ef 0, transparent 35%), radial-gradient(circle at 0% 30%, #e9e7ff 0, transparent 40%), #ffffff; }
+.hero h1 { color: var(--brand); }
+.hero h1::after { content: ""; display: block; width: 90px; height: 6px; border-radius: 6px; background: var(--accent); margin-top: 14px; }
+.hero .eyebrow { color: var(--accent); }
+.brand { color: var(--brand); }
+.brand-mark { background: var(--brand); }
+.avatar { background: linear-gradient(140deg, #e0457b, #2f2b8f); }
+.scenario-card { box-shadow: 0 12px 40px rgba(47, 43, 143, 0.12); border: 1px solid var(--line); }
+.how { background: var(--brand); color: #fff; border-radius: 20px; padding: 22px 24px; }
+.how ol, .how strong { color: #fff; }
+.how ol { color: #d9d7ff; }
+.step-num { background: var(--accent); }
+.prep-card { background: #f6f5ff; border-color: #d4d1fb; }
+.prep-icon { background: var(--accent); }
+.btn-primary { background: var(--brand); }
+.btn-primary:hover:not(:disabled) { background: #221f70; }

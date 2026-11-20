@@ -1,0 +1,21 @@
+/* Option A: Plum & Coral. Bold and warm. Headings: Fraunces (serif). Body: Inter. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+:root {
+  --bg: #faf7ff; --surface: #ffffff; --ink: #24142e; --ink-soft: #625470; --line: #e7def1;
+  --brand: #5b2a86; --brand-soft: #f0e7fb; --accent: #ff6b5a;
+  font-family: "Inter", system-ui, sans-serif;
+}
+h1, h2, h3, .scenario-head h2 { font-family: "Fraunces", Georgia, serif; letter-spacing: -0.01em; }
+.hero { background: linear-gradient(135deg, #5b2a86 0%, #8e3b9e 55%, #ff6b5a 100%); color: #fff; border-radius: 24px; padding: 36px 32px; }
+.hero .lede { color: #f6ecff; }
+.hero .eyebrow { color: #ffd3cc; }
+.brand { color: var(--brand); }
+.brand-mark { background: linear-gradient(135deg, #5b2a86, #ff6b5a); }
+.avatar { background: linear-gradient(140deg, #ff8a7a, #8e3b9e); }
+.scenario-card { border-top: 6px solid var(--accent); }
+.how li::marker { color: var(--accent); font-weight: 700; }
+.step-num { background: var(--accent); }
+.prep-icon { background: linear-gradient(135deg, #5b2a86, #8e3b9e); }
+.prep-card { border-color: #d9c6ee; }
+.btn-primary { background: var(--accent); }
+.btn-primary:hover:not(:disabled) { background: #ec5747; }
