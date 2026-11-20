@@ -686,14 +686,32 @@ function renderDebrief(d) {
     const turnEl = document.createElement("span");
     turnEl.className = "try-turn";
     turnEl.textContent = n.verdict;
+    // What you said (shortened; tap to see it all), why, then the suggestion.
+    const clean = n.said.replace(/^["“”\s]+|["“”\s]+$/g, "");
+    const short = clean.length > 140 ? clean.slice(0, 140).replace(/\s+\S*$/, "") + "…" : clean;
     const said = document.createElement("p");
     said.className = "try-said";
-    said.textContent = `You said: “${n.said}”`;
+    said.textContent = `You said: “${short}”`;
+    if (short !== clean) {
+      said.title = "Tap to see everything you said";
+      said.classList.add("expandable");
+      said.addEventListener("click", () => {
+        const full = said.dataset.full === "1";
+        said.textContent = `You said: “${full ? short : clean}”`;
+        said.dataset.full = full ? "0" : "1";
+      });
+    }
+    const why = document.createElement("p");
+    why.className = "try-why";
+    why.innerHTML = "<strong>Why: </strong>";
+    why.append(document.createTextNode(n.why || ""));
     const next = document.createElement("p");
     next.className = "try-new";
     next.innerHTML = "<strong>Try instead: </strong>";
     next.append(document.createTextNode(`“${n.tryInstead}”`));
-    item.append(turnEl, said, next);
+    item.append(turnEl, said);
+    if (n.why) item.append(why);
+    item.append(next);
     $("debrief-tries").append(item);
   }
   fillList("debrief-growth", d.growthAreas);
@@ -903,7 +921,7 @@ function buildTranscript(d) {
     const tries = coachNotes.filter((n) => n.tryInstead);
     if (tries.length) {
       out.push("", "Try instead: phrasings to practice:");
-      for (const n of tries) out.push(`  - You said: "${n.said}"`, `    Try instead: "${n.tryInstead}"`);
+      for (const n of tries) out.push(`  - You said: "${n.said}"`, ...(n.why ? [`    Why: ${n.why}`] : []), `    Try instead: "${n.tryInstead}"`);
     }
   }
   return out.join("\n") + "\n";

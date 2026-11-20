@@ -90,6 +90,12 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .moment-score.s3 { background: var(--okay-bg); color: var(--okay); }
 .moment-score.s4, .moment-score.s5 { background: var(--strong-bg); color: var(--strong); }
 
+/* ---- Phrasings to practice: why line, expandable quote ---- */
+.try-why { font-size: 0.92rem; }
+.try-why strong { color: var(--ink); }
+.try-said.expandable { cursor: pointer; }
+.try-said.expandable:hover { color: var(--ink); }
+
 /* ---- Call settings box (start screen) ---- */
 .call-settings { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); }
 .call-settings summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }
