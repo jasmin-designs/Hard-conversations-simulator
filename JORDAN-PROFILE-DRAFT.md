@@ -90,7 +90,7 @@ A third card in **Step 1, Prepare**. It must not hint at the hidden backstory.
 > **Know your employee: Jordan**
 > - **Role:** Project Coordinator, 3 years on the team. Manages project timelines and prepares materials for client meetings.
 > - **Track record:** Strong performance reviews every year. Reliable with deadlines, and teammates often go to Jordan for help.
-> - **Communication style:** Quiet in group meetings, more open one-on-one. Responds well to direct, respectful feedback; tends to go quiet if criticized in front of others.
+> - **Communication style:** Quiet in group meetings, more open one-on-one. Appreciates honesty. Takes a little time to open up; if she feels judged, she gets brief and guarded.
 > - **What Jordan values:** Being trusted with responsibility, and doing careful, reliable work.
 > - **Your working relationship:** Good. You meet for monthly 1:1s, and the conversation sometimes drifts to personal topics, like weekend plans, but stays surface level.
 

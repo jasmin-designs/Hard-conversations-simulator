@@ -1,8 +1,8 @@
 // ============================================================
 //  "KNOW YOUR EMPLOYEE" PROFILE
 //  What the manager already knows about Jordan from working together.
-//  Shown in Step 1, Prepare. The coach also reads it, to note (not score)
-//  whether the manager adapted to Jordan's style.
+//  Shown in Step 1, Prepare. Jordan's AI knows the same facts, and the
+//  debrief may mention it once (never scored).
 //  Must never hint at the hidden backstory (nothing about home, family,
 //  health, or mornings).
 // ============================================================
@@ -23,7 +23,7 @@ export const PROFILE = {
     },
     {
       heading: "Communication style",
-      points: ["Quiet in group meetings, more open one-on-one. Responds well to direct, respectful feedback; tends to go quiet if criticized in front of others."],
+      points: ["Quiet in group meetings, more open one-on-one. Appreciates honesty. Takes a little time to open up; if she feels judged, she gets brief and guarded."],
     },
     {
       heading: "What she values",

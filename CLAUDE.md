@@ -18,4 +18,4 @@ This project belongs to Jasmin, an instructional designer (not a developer). It'
 ## Design rules (from ROADMAP.md)
 - Nothing in the policies or toolkit may hint at a scenario's hidden backstory: no highlighting, and sensitive items only appear inside neutral lists.
 - The toolkit stays hidden during the call. The openness level is never shown.
-- The toolkit stays generic (no scenario details). The profile never hints at the backstory. The coach notes adapting to Jordan's style but never scores it.
+- The toolkit stays generic (no scenario details). The profile never hints at the backstory. The profile is mentioned at most once in the debrief (never scored, never during the call).

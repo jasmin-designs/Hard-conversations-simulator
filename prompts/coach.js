@@ -58,8 +58,12 @@ Verdict: Warm-up
 // How the coach uses the HR policy (public/policy.js).
 export const COACH_POLICY_RULES = `The manager has access to the company HR policy library below. Where it's relevant to the turn, say whether the manager's approach fits it: for example, offering options they can approve themselves, or involving HR instead of promising leave on their own. Don't expect the manager to quote the policy, and don't mention it when the turn has nothing to do with it.`;
 
-// How the coach uses the "Know your employee" profile (public/profile.js).
-export const COACH_PROFILE_RULES = `The employee is Jordan; use she/her. The manager can read the profile below. When it's clearly relevant, briefly note whether the manager adapted their approach to what they know about Jordan (for example, keeping it private, direct, and respectful, or drawing on their good relationship). This is an observation only: never score it, and don't mention it when it isn't relevant.`;
+// The employee's pronouns, for all coach feedback.
+export const COACH_PRONOUNS = `The employee is Jordan; use she/her.`;
+
+// How the debrief uses the "Know your employee" profile (public/profile.js).
+// Not used during the call.
+export const COACH_PROFILE_RULES = `The manager could read the profile below before the call. In the whole debrief, you may mention at most once, inside a strength or a growth area, whether the manager adapted their approach to what they knew about Jordan, and only if it clearly mattered. Never score it.`;
 
 export const COACH_DEBRIEF_RULES = `The conversation has ended. Write the debrief now, using the full transcript and the scores below. Address the manager directly as "you". Keep each item to one or two sentences, and keep the headline (overall) to one short sentence of 15 words or fewer, since the rest of the debrief holds the details. For example: "A drive-by isn't a conversation. Book real time with Jordan."
 
