@@ -31,6 +31,7 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 5. **Success means real-world outcomes:** the real issue surfaced, a plan was agreed with follow-up, and company policy was followed. Not saying the right words.
 6. **Adding a scenario should be mostly writing, not code.**
 7. **Let learners choose their level of support.** For example, "Try instead" can be hidden during the call, and is always in the debrief.
+8. **Learners uncover the real issue themselves.** The debrief never reveals the backstory; if it wasn't uncovered, it recommends practicing again.
 
 ---
 

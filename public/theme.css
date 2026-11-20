@@ -68,6 +68,12 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .outcome { border-top-color: var(--brand); }
 
 
+/* ---- "Practice again" nudge when the real issue wasn't uncovered ---- */
+.try-again { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: var(--brand-soft); border: 2px solid #b8dde9; border-radius: var(--radius); padding: 18px 20px; }
+.try-again h3 { font-size: 1.05rem; color: var(--brand); margin-bottom: 4px; }
+.try-again p { color: var(--ink); max-width: 60ch; }
+
 /* ---- Call settings box (start screen) ---- */
 .call-settings { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); }
 .call-settings summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }

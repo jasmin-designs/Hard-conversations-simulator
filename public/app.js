@@ -664,6 +664,9 @@ function renderDebrief(d) {
   check.textContent = policyUseText(policyUse());
   policyBox.append(check);
 
+  // No reveal: if the real issue wasn't uncovered, encourage another try.
+  $("try-again").hidden = Boolean(d.uncoveredRealIssue);
+
   fillList("debrief-strengths", d.strengths);
 
   // Every "Try instead" from the call, whether or not it was shown during it.
@@ -756,6 +759,7 @@ function fillList(id, items = []) {
   }
 }
 
+$("try-again-btn").addEventListener("click", () => $("again-btn").click());
 $("again-btn").addEventListener("click", () => {
   prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false, profileBefore: false };
   updatePrepCards();
@@ -838,6 +842,7 @@ function buildTranscript(d) {
       "",
       `Uncovered the real issue: ${d.uncoveredRealIssue ? "Yes" : "Not yet"}`,
       `   ${d.realIssueNote}`,
+      ...(d.uncoveredRealIssue ? [] : ["   Jordan didn't share what's really going on this time. We highly recommend practicing again with a different approach."]),
       `Agreed a plan: ${yesNo(d.planAgreed)} · Follow-up agreed: ${yesNo(d.followUpAgreed)}`,
       `   ${d.planNote}`,
       `Followed company policy: ${d.policyAligned ? "Yes" : "Not fully"}`,
