@@ -38,6 +38,7 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 
 - [ ] **Natural voice for Jordan (priority):** replace the robotic built-in browser voice with a natural-sounding voice service. This needs a voice service account and key, and adds a few cents per conversation.
 - [ ] **Classroom (blended) version and facilitator guide:** about 10 minutes of framing (best practices: listening, open questions), then about 30 minutes where everyone practises with Jordan, then a group debrief on common themes. Peers share what worked, and the class discusses "who checked the policies?". Steve found in person better than online, because of learning from peers.
+- [ ] **Jordan personality variations and employee profile:** draft ideas in `JORDAN-PROFILE-DRAFT.md`, to discuss (guarded, chatty, quiet, or defensive Jordan; a "Know your employee" prep card; consistent hidden details; Jordan's pronouns)
 - [ ] **Class view for instructors:** everyone uses one class code; the instructor sees themes across the class (lowest skill, how many uncovered the real issue, how many opened the policies). Builds on the access codes and the learning data dashboard.
 - [x] Coach panel on/off during the call (on by default); the coach still reviews everything silently when it's off
 - [x] The debrief notes which HR policies the learner opened, before or during the call, and the coach names options they missed
