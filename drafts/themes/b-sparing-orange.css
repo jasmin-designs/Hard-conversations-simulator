@@ -1,0 +1,8 @@
+/* Option B add-on: brand orange used sparingly (only the header circles and the logo).
+   Amber stays reserved for feedback ("Okay", "Where to grow", "Try instead"). */
+.step-num { background: var(--brand); color: #fff; }
+.prep-card { background: var(--brand-soft); border-color: #b8dde9; }
+.prep-icon { background: var(--brand); color: #fff; }
+.scenario-card { border-left: 0; border-top: 5px solid var(--brand); }
+.start .eyebrow:not(.hero .eyebrow), .debrief .eyebrow { color: var(--brand); }
+.outcome { border-top-color: var(--brand); }
