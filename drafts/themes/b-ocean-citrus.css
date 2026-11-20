@@ -21,3 +21,28 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .prep-card { background: #fff8e8; border-color: #f6d488; }
 .prep-icon { background: var(--accent); color: #0f2a36; }
 .btn-primary { background: var(--brand); }
+
+/* ---- Call screen ---- */
+:root { --call-bg: #0a3a4e; --call-surface: #134d65; --call-ink: #eef7fa; --call-soft: #9cc3d1; }
+.bubble.manager { background: #f5a524; color: #0f2a36; }
+.bubble.manager .who { opacity: .75; }
+.avatar-lg.speaking::before { border-color: rgba(245, 165, 36, .9); }
+.live-dot { background: #7fd1c7; box-shadow: 0 0 0 4px rgba(127, 209, 199, .2); }
+.composer input:focus { border-color: #f5a524; }
+.btn-danger { background: #d9534f; }
+.coach-head h2 { color: var(--brand); }
+.note.latest { border-color: #f6d488; box-shadow: 0 0 0 3px #fff4d6; }
+.note-try { background: #fff8e8; }
+.note-try strong { color: #b26f00; }
+
+/* ---- Debrief ---- */
+.debrief-hero h1 { color: var(--brand); }
+.outcome { border-top: 4px solid var(--accent); }
+.skill-fill { background: var(--brand); }
+.try-new { background: #fff8e8; }
+.try-new strong { color: #b26f00; }
+
+/* ---- Contrast fixes ---- */
+.composer .btn-primary { background: #f5a524; color: #0f2a36; }
+.composer .btn-primary:hover:not(:disabled) { background: #e8961a; }
+.start .eyebrow:not(.hero .eyebrow), .debrief .eyebrow { color: #a86400; }
