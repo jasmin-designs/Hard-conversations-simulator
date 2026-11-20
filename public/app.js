@@ -677,43 +677,11 @@ function renderDebrief(d) {
   fillList("debrief-strengths", d.strengths);
 
   // Every "Try instead" from the call, whether or not it was shown during it.
-  const tries = coachNotes.filter((n) => n.tryInstead);
-  $("debrief-tries").replaceChildren();
-  $("debrief-tries-card").hidden = tries.length === 0;
-  for (const n of tries) {
-    const item = document.createElement("div");
-    item.className = "try-item";
-    const turnEl = document.createElement("span");
-    turnEl.className = "try-turn";
-    turnEl.textContent = n.verdict;
-    // What you said (shortened; tap to see it all), why, then the suggestion.
-    const clean = n.said.replace(/^["“”\s]+|["“”\s]+$/g, "");
-    const short = clean.length > 140 ? clean.slice(0, 140).replace(/\s+\S*$/, "") + "…" : clean;
-    const said = document.createElement("p");
-    said.className = "try-said";
-    said.textContent = `You said: “${short}”`;
-    if (short !== clean) {
-      said.title = "Tap to see everything you said";
-      said.classList.add("expandable");
-      said.addEventListener("click", () => {
-        const full = said.dataset.full === "1";
-        said.textContent = `You said: “${full ? short : clean}”`;
-        said.dataset.full = full ? "0" : "1";
-      });
-    }
-    const why = document.createElement("p");
-    why.className = "try-why";
-    why.innerHTML = "<strong>Why: </strong>";
-    why.append(document.createTextNode(n.why || ""));
-    const next = document.createElement("p");
-    next.className = "try-new";
-    next.innerHTML = "<strong>Try instead: </strong>";
-    next.append(document.createTextNode(`“${n.tryInstead}”`));
-    item.append(turnEl, said);
-    if (n.why) item.append(why);
-    item.append(next);
-    $("debrief-tries").append(item);
-  }
+  // "Try instead" lives inside the conversation review (with its context).
+  // This line points to it and opens it.
+  const tryCount = coachNotes.filter((n) => n.tryInstead).length;
+  $("tries-link").hidden = tryCount === 0;
+  $("tries-link").textContent = `💡 ${tryCount} phrasing${tryCount === 1 ? "" : "s"} to practice. See ${tryCount === 1 ? "it" : "them"} in your conversation below.`;
   fillList("debrief-growth", d.growthAreas);
 
   // Skill averages from the coach's hidden per-turn scores.
@@ -790,8 +758,16 @@ function renderDebrief(d) {
     if (note?.why) {
       const c = document.createElement("p");
       c.className = "review-coach";
-      c.textContent = `Coach: ${note.why}`; // "Try instead" lives in its own card above
+      c.innerHTML = "<strong>Why: </strong>";
+      c.append(document.createTextNode(note.why));
       line.append(c);
+    }
+    if (note?.tryInstead) {
+      const tip = document.createElement("p");
+      tip.className = "try-new review-try";
+      tip.innerHTML = "<strong>Try instead: </strong>";
+      tip.append(document.createTextNode(`“${note.tryInstead}”`));
+      line.append(tip);
     }
     review.append(line);
   }
@@ -814,6 +790,12 @@ function fillList(id, items = []) {
 }
 
 $("try-again-btn").addEventListener("click", () => $("again-btn").click());
+$("tries-link").addEventListener("click", () => {
+  const review = $("debrief-transcript").parentElement;
+  review.open = true;
+  const first = review.querySelector(".review-try");
+  (first || review).scrollIntoView({ behavior: "smooth", block: "center" });
+});
 $("again-btn").addEventListener("click", () => {
   prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false, profileBefore: false };
   updatePrepCards();
