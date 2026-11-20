@@ -47,3 +47,8 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .composer .btn-primary { background: #7fd1c7; color: #0a3a4e; }
 .composer .btn-primary:hover:not(:disabled) { background: #6cc4b9; }
 .start .eyebrow:not(.hero .eyebrow), .debrief .eyebrow { color: #a86400; }
+
+/* ---- Call-bar buttons: mint = on, grey = off, Policies white ---- */
+.call-tools .icon-btn { color: #ffffff; }
+#coach-btn[aria-pressed="true"], #voice-toggle[aria-pressed="true"] { color: #7fd1c7; }
+#coach-btn[aria-pressed="false"], #voice-toggle[aria-pressed="false"] { color: #7f9fac; }
