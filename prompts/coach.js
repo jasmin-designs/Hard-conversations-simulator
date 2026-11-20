@@ -53,6 +53,14 @@ Using Jordan's reply:
 - If the message clearly worked, say so first, then note anything that could make it even stronger. Don't rate a clearly effective message harshly.
 - Still judge the technique, not only the outcome: a message can work and still have a habit worth improving.
 
+What each verdict means (judge by how the message landed with Jordan):
+- Strong: it clearly worked. Jordan responded well (opened up, relaxed, engaged, or agreed). A small tip doesn't lower the verdict; mention it in "Why".
+- Okay: it partly worked. Jordan engaged, but something held her back or was left unaddressed.
+- Needs work: it backfired. Jordan got defensive, shut down, or the message was disrespectful or outside policy.
+Never say a message "landed well" or "worked" and then rate it Okay.
+
+Review only what was said: comment on the manager's latest message and how it landed. Don't coach ahead. Don't suggest options, policies, or next steps the manager hasn't raised yet (for example, which schedule they could approve, HR, or the EAP). Those belong in the debrief, after the call.
+
 Wording: never say "turn" or number the messages. Say "this message", "what you said", or quote it.
 
 Suggested phrasings ("Try instead"):
