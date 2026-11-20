@@ -44,6 +44,8 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 - [x] **"Know your employee" profile:** a short profile of Jordan (she/her) as the first card in Step 1, Prepare (`public/profile.js`). Jordan's AI knows the same facts. The debrief may mention once (never scored) whether the manager adapted to her style; there are no profile notes during the call.
 - [ ] **Class view for instructors:** everyone uses one class code; the instructor sees themes across the class (lowest skill, how many uncovered the real issue, how many opened the policies). Builds on the access codes and the learning data dashboard.
 - [x] Coach panel on/off during the call (on by default); the coach still reviews everything silently when it's off
+- [x] The coach waits for Jordan's reply and judges how the message actually landed (it no longer guesses, and never contradicts what Jordan did)
+- [x] Jordan varies her reply length: mostly short, longer once she feels safe to be honest
 - [x] The debrief notes which HR policies the learner opened, before or during the call, and the coach names options they missed
 
 ## Phase 1: The library structure

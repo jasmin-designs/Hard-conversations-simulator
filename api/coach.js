@@ -15,7 +15,7 @@ export default handler(async (body) => {
         messages: [
           {
             role: "user",
-            content: `Conversation so far:\n\n${asScript(transcript)}\n\nGive feedback on the manager's most recent turn.`,
+            content: `Conversation so far:\n\n${asScript(transcript)}\n\nGive feedback on the manager's most recent message. Any reply from Jordan after it shows how it actually landed.`,
           },
         ],
         effort: "low",

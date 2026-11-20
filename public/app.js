@@ -335,19 +335,27 @@ function sendTurn(raw) {
   addBubble("manager", text);
   const turn = transcript.filter((t) => t.role === "manager").length;
 
-  // AI #2: the coach reviews this turn (runs at the same time as Jordan's reply).
+  // The coach's card appears now, but the coach waits for Jordan's reply,
+  // so it can see how the message actually landed.
   const note = addPendingNote(turn, text);
   coachNotes.push(note);
+
+  // AI #1: Jordan replies, then AI #2 (the coach) reviews.
+  getReply(note);
+}
+
+// AI #2: the coach reviews the manager's message together with Jordan's reply.
+function runCoach(note) {
+  if (!note || note.requested) return;
+  note.requested = true;
+  note.el.lastElementChild.textContent = "Coach is reviewing…";
   const req = api("/api/coach", { transcript: transcript.slice() })
     .then((fb) => fillNote(note, fb))
     .catch((err) => failNote(note, err.message));
   coachRequests.push(req);
-
-  // AI #1: Jordan replies.
-  getReply();
 }
 
-async function getReply() {
+async function getReply(note) {
   busy = true;
   $("send-btn").disabled = true;
   $("mic-btn").disabled = true;
@@ -363,11 +371,12 @@ async function getReply() {
     setStatus("");
     $("call-avatar").className = "avatar avatar-lg";
     speak(reply);
+    runCoach(note);
   } catch (err) {
     typing.remove();
     $("call-avatar").className = "avatar avatar-lg";
     setStatus("");
-    addRetry(err.message);
+    addRetry(err.message, note);
   } finally {
     busy = false;
     $("send-btn").disabled = false;
@@ -395,7 +404,7 @@ function addBubble(role, text, { typing = false } = {}) {
   return b;
 }
 
-function addRetry(message) {
+function addRetry(message, note) {
   const b = document.createElement("div");
   b.className = "bubble employee typing";
   b.textContent = `${message} `;
@@ -403,7 +412,7 @@ function addRetry(message) {
   btn.className = "btn btn-ghost";
   btn.style.cssText = "color:#eef3f5;box-shadow:inset 0 0 0 1.5px #9db0ba;padding:4px 12px;margin-top:6px";
   btn.textContent = "Retry";
-  btn.onclick = () => { b.remove(); getReply(); };
+  btn.onclick = () => { b.remove(); getReply(note); };
   b.append(document.createElement("br"), btn);
   $("transcript").append(b);
   b.scrollIntoView({ block: "end" });
@@ -415,7 +424,7 @@ function addPendingNote(turn, said) {
   for (const n of $("coach-feed").querySelectorAll(".note")) n.classList.remove("latest");
   const el = document.createElement("article");
   el.className = "note pending latest";
-  el.innerHTML = `<p class="note-said"></p><p>Coach is reviewing…</p>`;
+  el.innerHTML = `<p class="note-said"></p><p>Coach will review once Jordan responds…</p>`;
   el.querySelector(".note-said").textContent = `“${said.length > 140 ? said.slice(0, 140) + "…" : said}”`;
   $("coach-feed").prepend(el);
   return { status: "pending", turn, said, el, scores: {} };
@@ -587,6 +596,8 @@ function endCall() {
   }
   const lastEmployeePending = busy;
   if (lastEmployeePending) toast(`Ending the call before ${name} replied.`);
+  // Anything the coach hasn't reviewed yet (Jordan never replied) gets reviewed now.
+  for (const n of coachNotes) runCoach(n);
   show("debrief-screen");
   loadDebrief();
 }

@@ -46,6 +46,12 @@ The JSON line uses only these keys, and only for skills this turn touched: ${Obj
   .map(([k, v]) => `${k} = ${v}`)
   .join("; ")}. Put nothing after the JSON line.
 
+Using Jordan's reply:
+- You see Jordan's reply to the manager's latest message (if she has replied). Treat it as evidence of how the message landed.
+- Never contradict what Jordan actually did. If she opened up, don't say she likely felt defensive.
+- If the message clearly worked, say so first, then note anything that could make it even stronger. Don't rate a clearly effective message harshly.
+- Still judge the technique, not only the outcome: a message can work and still have a habit worth improving.
+
 The opener rule (greetings and small talk at the start):
 - If the manager's latest message is only a greeting or small talk (for example "Hi Jordan", "How are you?", "How was your weekend?"), it is the manager's first message, and it doesn't say why they're meeting, don't rate it. Output exactly:
 Verdict: Warm-up
