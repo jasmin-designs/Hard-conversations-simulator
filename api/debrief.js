@@ -21,6 +21,7 @@ const DEBRIEF_SCHEMA = {
     "policyAligned",
     "policyNote",
     "overall",
+    "skillReasons",
   ],
   properties: {
     strengths: { type: "array", items: { type: "string" }, description: "Exactly two strengths." },
@@ -36,6 +37,21 @@ const DEBRIEF_SCHEMA = {
       type: "string",
       description:
         "The headline: one short, punchy sentence of 15 words or fewer with the single biggest takeaway. Not a list of advice; the details belong in the other fields.",
+    },
+    skillReasons: {
+      type: "object",
+      additionalProperties: false,
+      required: Object.keys(SKILLS),
+      properties: Object.fromEntries(
+        Object.keys(SKILLS).map((k) => [
+          k,
+          {
+            type: "string",
+            description:
+              "One plain sentence explaining this skill's scores, addressed to the manager as 'you'. Name what helped and what held the score back, briefly quoting a moment if useful. Empty string if the skill wasn't scored.",
+          },
+        ])
+      ),
     },
   },
 };

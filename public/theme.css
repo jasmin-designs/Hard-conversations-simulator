@@ -76,6 +76,20 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 
 .note-later { font-size: 0.85rem; color: var(--ink-soft); }
 
+/* ---- Clickable skill scores ---- */
+.skill-detail summary { list-style: none; cursor: pointer; border-radius: 8px; padding: 4px 6px; margin: -4px -6px; }
+.skill-detail summary::-webkit-details-marker { display: none; }
+.skill-detail summary:hover { background: var(--bg); }
+.skill-detail summary .skill-name::after { content: " ›"; color: var(--brand); font-weight: 700; }
+.skill-detail[open] summary .skill-name::after { content: " ⌄"; }
+.skill-why { margin: 8px 0 6px; padding: 12px 14px; background: var(--bg); border-radius: 12px; display: grid; gap: 8px; font-size: 0.92rem; }
+.skill-why ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.skill-why li { display: flex; gap: 10px; align-items: baseline; color: var(--ink-soft); }
+.moment-score { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
+.moment-score.s1, .moment-score.s2 { background: var(--needs-bg); color: var(--needs); }
+.moment-score.s3 { background: var(--okay-bg); color: var(--okay); }
+.moment-score.s4, .moment-score.s5 { background: var(--strong-bg); color: var(--strong); }
+
 /* ---- Call settings box (start screen) ---- */
 .call-settings { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); }
 .call-settings summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }

@@ -699,19 +699,48 @@ function renderDebrief(d) {
   fillList("debrief-growth", d.growthAreas);
 
   // Skill averages from the coach's hidden per-turn scores.
+  // Tap a skill to see why: the coach's one-line reason, and each scored moment.
   const skills = $("debrief-skills");
   skills.replaceChildren();
   for (const [key, label] of Object.entries(SKILLS)) {
-    const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
+    const scored = coachNotes.filter((n) => typeof n.scores?.[key] === "number");
+    const vals = scored.map((n) => n.scores[key]);
     const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
-    const row = document.createElement("div");
+    const row = document.createElement(avg === null ? "div" : "summary");
     row.className = `skill${avg === null ? " untouched" : ""}`;
     row.innerHTML = `<span class="skill-name"></span><div class="skill-bar"><div class="skill-fill"></div></div><span class="skill-num"></span>`;
     row.querySelector(".skill-name").textContent = label;
     row.querySelector(".skill-fill").style.width = avg === null ? "0" : `${(avg / 5) * 100}%`;
     row.querySelector(".skill-num").textContent = avg === null ? "—" : avg.toFixed(1);
-    if (avg === null) row.title = "Not used in this conversation";
-    skills.append(row);
+    if (avg === null) {
+      row.title = "Not used in this conversation";
+      skills.append(row);
+      continue;
+    }
+    const details = document.createElement("details");
+    details.className = "skill-detail";
+    const body = document.createElement("div");
+    body.className = "skill-why";
+    const reason = d.skillReasons?.[key];
+    if (reason) {
+      const p = document.createElement("p");
+      p.textContent = reason;
+      body.append(p);
+    }
+    const ul = document.createElement("ul");
+    for (const n of scored) {
+      const li = document.createElement("li");
+      const num = document.createElement("span");
+      num.className = `moment-score s${n.scores[key]}`;
+      num.textContent = n.scores[key];
+      const said = document.createElement("span");
+      said.textContent = `“${n.said.length > 120 ? n.said.slice(0, 120) + "…" : n.said}”`;
+      li.append(num, said);
+      ul.append(li);
+    }
+    body.append(ul);
+    details.append(row, body);
+    skills.append(details);
   }
 
   // Full transcript with the coach's verdict beside each of your turns.
@@ -792,6 +821,7 @@ let reviewWasOpen = false;
 window.addEventListener("beforeprint", () => {
   reviewWasOpen = $("debrief-transcript").parentElement.open;
   $("debrief-transcript").parentElement.open = true;
+  for (const d of document.querySelectorAll(".skill-detail")) d.open = true;
 });
 window.addEventListener("afterprint", () => {
   $("debrief-transcript").parentElement.open = reviewWasOpen;
@@ -868,6 +898,7 @@ function buildTranscript(d) {
       const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
       const avg = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "not used";
       out.push(`  - ${label}: ${avg}`);
+      if (d.skillReasons?.[key]) out.push(`      ${d.skillReasons[key]}`);
     }
     const tries = coachNotes.filter((n) => n.tryInstead);
     if (tries.length) {
