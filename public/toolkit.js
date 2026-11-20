@@ -29,7 +29,7 @@ export const TOOLKIT = {
       points: [
         "Open with your purpose: say why you're meeting, and that you want to hear their side.",
         "Describe the situation, the behavior, and its impact. Stick to facts, without labels.",
-        "Ask an open question, then listen more than you talk.",
+        "Ask an open, gentle question, then listen more than you talk. Invite, don't pry: they don't have to share anything personal.",
         "Acknowledge feelings before moving to solutions.",
         "Stay on one topic. Don't stack up unrelated issues.",
         "Build the plan together: ask what would help, then offer options within policy.",
@@ -49,7 +49,8 @@ export const TOOLKIT = {
       heading: "Phrases that help",
       points: [
         "\"I'd like to talk about something I've noticed, and hear your perspective.\"",
-        "\"Help me understand what's been going on.\"",
+        "\"How have things been going for you lately?\"",
+        "\"You don't have to share anything personal, but if something's making work harder, I'd like to help.\"",
         "\"Thank you for telling me.\"",
         "\"What would help?\"",
         "\"Let's check in on [day] to see how it's going.\"",
