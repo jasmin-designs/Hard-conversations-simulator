@@ -174,6 +174,7 @@ for (const btn of document.querySelectorAll("[data-guide]")) {
   btn.addEventListener("click", () => openGuide(GUIDES[btn.dataset.guide]));
 }
 $("guide-close").addEventListener("click", () => $("guide-dialog").close());
+$("guide-dialog").addEventListener("close", updatePrepCards);
 $("guide-dialog").addEventListener("click", (e) => {
   if (e.target === $("guide-dialog")) $("guide-dialog").close(); // tap outside to close
 });
@@ -226,6 +227,27 @@ function logPolicy(number) {
   const when = phase();
   if (when === "after") return;
   prepLog.policies[number] = prepLog.policies[number] === "before" ? "before" : when;
+}
+
+// Mark the preparation cards once they've been opened, and update the reminder.
+function updatePrepCards() {
+  const policyDone = Object.keys(prepLog.policies).length > 0 || prepLog.libraryBefore;
+  const toolkitDone = prepLog.toolkitBefore;
+  const set = (key, done) => {
+    const card = document.querySelector(`.prep-card[data-guide="${key}"]`);
+    card.classList.toggle("done", done);
+    card.querySelector(".prep-status").textContent = done ? "✓ Reviewed" : "Open →";
+  };
+  set("policy", policyDone);
+  set("toolkit", toolkitDone);
+  const r = $("prep-reminder");
+  r.hidden = policyDone && toolkitDone;
+  r.textContent =
+    !policyDone && !toolkitDone
+      ? "📋 Tip: you haven't opened the HR policies or the manager toolkit yet."
+      : !policyDone
+        ? "📋 Tip: you haven't opened the HR policies yet."
+        : "📋 Tip: you haven't opened the manager toolkit yet.";
 }
 
 function show(screen) {
@@ -765,6 +787,7 @@ function fillList(id, items = []) {
 
 $("again-btn").addEventListener("click", () => {
   prepLog = { policies: {}, libraryBefore: false, libraryDuring: false, toolkitBefore: false };
+  updatePrepCards();
   show("start-screen");
 });
 

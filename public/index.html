@@ -52,12 +52,26 @@
           <span id="scenario-goal"></span>
         </div>
         <div class="before-start">
-          <h3>Before you start</h3>
-        <div class="prep-row">
-          <span class="muted">Prepare with:</span>
-          <button class="btn btn-ghost" type="button" data-guide="policy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> HR policies</button>
-          <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
-        </div>
+          <h3><span class="step-num">Step 1</span> Prepare</h3>
+          <p class="muted prep-intro">Real managers check the rules and plan their approach first. Take a few minutes to do the same.</p>
+          <div class="prep-cards">
+            <button class="prep-card" type="button" data-guide="policy">
+              <span class="prep-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg></span>
+              <span class="prep-text">
+                <strong>Review the HR policies</strong>
+                <span>What you can approve, and when to involve HR.</span>
+              </span>
+              <span class="prep-status" data-status="policy">Open →</span>
+            </button>
+            <button class="prep-card" type="button" data-guide="toolkit">
+              <span class="prep-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg></span>
+              <span class="prep-text">
+                <strong>Read the manager toolkit</strong>
+                <span>How to plan and have the conversation.</span>
+              </span>
+              <span class="prep-status" data-status="toolkit">Open →</span>
+            </button>
+          </div>
         <label class="switch-row">
           <input type="checkbox" class="coach-toggle" role="switch" />
           <span class="switch" aria-hidden="true"></span>
@@ -77,10 +91,12 @@
         </div>
         <p class="access-note" id="access-note" hidden></p>
         <div class="start-actions">
+        <h3 class="start-heading"><span class="step-num">Step 2</span> Have the conversation</h3>
         <button class="btn btn-primary btn-lg" id="start-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
           Start call
         </button>
+        <p class="prep-reminder" id="prep-reminder">📋 Tip: you haven't opened the HR policies or the manager toolkit yet.</p>
         </div>
       </article>
     </main>
