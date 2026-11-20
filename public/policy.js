@@ -16,7 +16,7 @@
 
 export const POLICY_LIBRARY = {
   company: "Northwind Logistics",
-  label: "HR Policy Library",
+  label: "HR policy library",
   footnote: "Fictional company policies, written for practice purposes.",
   policies: [
     {

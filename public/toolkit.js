@@ -8,7 +8,7 @@
 
 export const TOOLKIT = {
   company: "Northwind Logistics",
-  label: "Manager Toolkit",
+  label: "Manager toolkit",
   title: "Conversations About Attendance and Deadlines",
   intro:
     "Lead with curiosity. The policy sets the boundaries; this toolkit helps you have the conversation inside them.",

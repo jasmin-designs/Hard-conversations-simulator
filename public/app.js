@@ -5,7 +5,6 @@
 import { SCENARIO } from "./scenario.js";
 import { POLICY_LIBRARY } from "./policy.js";
 import { TOOLKIT } from "./toolkit.js";
-import { CONTACT } from "./contact.js";
 
 // Same six skills as prompts/coach.js (labels shown on the debrief).
 const SKILLS = {
@@ -255,54 +254,7 @@ function show(screen) {
   window.scrollTo(0, 0);
 }
 
-// ---------- Access code (only when ACCESS_CODE is set in Vercel) ----------
-let accessRequired = false;
-fetch("/api/access")
-  .then((r) => r.json())
-  .then((d) => {
-    accessRequired = Boolean(d.required);
-    if (!accessRequired) return;
-    const note = $("access-note");
-    note.append("🔒 Message " + CONTACT.name + " on ");
-    if (CONTACT.linkedinUrl) {
-      const a = document.createElement("a");
-      a.href = CONTACT.linkedinUrl;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.textContent = "LinkedIn";
-      note.append(a);
-    } else {
-      note.append("LinkedIn");
-    }
-    note.append(" for an access code to try the live conversation.");
-    note.hidden = false;
-  })
-  .catch(() => {});
-
-// Ask for the code before the call starts, not in the middle of it.
-async function haveAccess() {
-  if (!accessRequired) return true;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    let code = sessionGet("accessCode");
-    if (!code || attempt > 0) {
-      code = window.prompt(
-        attempt > 0 ? "That code didn't work. Please try again:" : "Enter your access code to start the live conversation:"
-      );
-      if (!code) return false;
-      code = code.trim();
-    }
-    const r = await fetch("/api/access", { method: "POST", headers: { "x-access-code": code } }).catch(() => null);
-    if (r?.ok) {
-      sessionSet("accessCode", code);
-      return true;
-    }
-  }
-  toast(`That code didn't work. Message ${CONTACT.name} for a current access code.`);
-  return false;
-}
-
-$("start-btn").addEventListener("click", async () => {
-  if (!(await haveAccess())) return;
+$("start-btn").addEventListener("click", () => {
   resetConversation();
   // Browsers only allow speech that starts from a click, so "unlock" it now.
   if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(""));
@@ -339,27 +291,11 @@ function setStatus(text) {
 }
 
 // ---------- Talking to the server ----------
-async function api(path, body, retried = false) {
-  const headers = { "Content-Type": "application/json" };
-  const code = sessionGet("accessCode");
-  if (code) headers["x-access-code"] = code;
-  const res = await fetch(path, { method: "POST", headers, body: JSON.stringify(body) });
+async function api(path, body) {
+  const res = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   const data = await res.json().catch(() => ({}));
-  if (res.status === 401 && data.code === "access_code_required" && !retried) {
-    const entered = window.prompt("This simulator needs an access code. Enter it to continue:");
-    if (entered) {
-      sessionSet("accessCode", entered.trim());
-      return api(path, body, true);
-    }
-  }
   if (!res.ok) throw new Error(data.error || `Request failed (${res.status}).`);
   return data;
-}
-function sessionGet(k) {
-  try { return sessionStorage.getItem(k); } catch { return null; }
-}
-function sessionSet(k, v) {
-  try { sessionStorage.setItem(k, v); } catch { /* private mode: fine */ }
 }
 
 function toast(text) {
@@ -616,7 +552,19 @@ if (!SpeechRecognition) {
 }
 
 // ---------- End call and debrief ----------
+// Ask before ending, so one accidental tap doesn't end the conversation.
 $("end-btn").addEventListener("click", () => {
+  const managerTurns = transcript.filter((t) => t.role === "manager").length;
+  if (managerTurns === 0) return endCall();
+  $("confirm-dialog").showModal();
+});
+$("confirm-keep").addEventListener("click", () => $("confirm-dialog").close());
+$("confirm-end").addEventListener("click", () => {
+  $("confirm-dialog").close();
+  endCall();
+});
+
+function endCall() {
   if (listening) recognition.abort();
   stopSpeaking();
   clearInterval(timerId);
@@ -629,7 +577,7 @@ $("end-btn").addEventListener("click", () => {
   if (lastEmployeePending) toast(`Ending the call before ${name} replied.`);
   show("debrief-screen");
   loadDebrief();
-});
+}
 
 let durationText = "";
 async function loadDebrief() {

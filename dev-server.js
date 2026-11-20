@@ -23,7 +23,6 @@ const routes = {
   "/api/employee": (await import("./api/employee.js")).default,
   "/api/coach": (await import("./api/coach.js")).default,
   "/api/debrief": (await import("./api/debrief.js")).default,
-  "/api/access": (await import("./api/access.js")).default,
 };
 
 const types = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml" };

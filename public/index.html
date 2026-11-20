@@ -76,7 +76,7 @@
           <input type="checkbox" class="coach-toggle" role="switch" />
           <span class="switch" aria-hidden="true"></span>
           <span>
-            <strong>Show the coach during the call</strong>
+            <strong>Coach during the call</strong>
             <span class="muted switch-help">Turn this off to have the conversation as you would in real life. Your coach still reviews everything, and it all comes with your debrief.</span>
           </span>
         </label>
@@ -84,12 +84,11 @@
           <input type="checkbox" class="tips-toggle" role="switch" />
           <span class="switch" aria-hidden="true"></span>
           <span>
-            <strong>Show "Try instead" suggestions during the call</strong>
+            <strong>"Try instead" during the call</strong>
             <span class="muted switch-help">Prefer to find your own way? Turn this off. Suggestions always come with your debrief.</span>
           </span>
         </label>
         </div>
-        <p class="access-note" id="access-note" hidden></p>
         <div class="start-actions">
         <h3 class="start-heading"><span class="step-num">Step 2</span> Have the conversation</h3>
         <button class="btn btn-primary btn-lg" id="start-btn">
@@ -113,7 +112,7 @@
           <div class="call-tools">
           <button class="icon-btn" type="button" data-guide="policy" title="Open the HR policy library">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>
-            Policies
+            HR policies
           </button>
           <button class="icon-btn" id="coach-btn" type="button" aria-pressed="true" title="Show or hide the coach">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 5v2h10V9zm0 4v2h7v-2z"/></svg>
@@ -252,12 +251,12 @@
 
         <div class="debrief-actions">
           <button class="btn btn-primary btn-lg" id="again-btn">Practice again</button>
-          <button class="btn btn-ghost btn-lg" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
-          <button class="btn btn-ghost btn-lg" id="download-btn">
+          <button class="btn btn-ghost" type="button" data-guide="toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg> Manager toolkit</button>
+          <button class="btn btn-ghost" id="download-btn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4l-5.7-5.7 1.4-1.4 3.3 3.3zM5 18h14v2H5z"/></svg>
             Download transcript
           </button>
-          <button class="btn btn-ghost btn-lg" id="print-btn">Save as PDF</button>
+          <button class="btn btn-ghost" id="print-btn">Save as PDF</button>
         </div>
       </div>
     </main>
@@ -275,6 +274,16 @@
         <p class="policy-intro" id="guide-intro"></p>
         <div id="guide-sections"></div>
         <p class="policy-fine" id="guide-footnote"></p>
+      </div>
+    </dialog>
+
+    <!-- ======================= END CALL? ======================= -->
+    <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+      <h2 id="confirm-title">End the call?</h2>
+      <p class="muted">You'll go to your debrief, and this conversation can't be continued.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-ghost" type="button" id="confirm-keep">Keep talking</button>
+        <button class="btn btn-danger" type="button" id="confirm-end">End call and see debrief</button>
       </div>
     </dialog>
 
