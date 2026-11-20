@@ -460,7 +460,9 @@ function fillNote(note, fb) {
   chip.classList.add(fb.verdict.split(" ")[0]);
   el.querySelector(".note-said").textContent = `“${note.said.length > 140 ? note.said.slice(0, 140) + "…" : note.said}”`;
   el.querySelector(".note-why").textContent = fb.why;
-  if (fb.tryInstead) {
+  // During the call, "Try instead" shows only for Needs work. Okay suggestions
+  // are kept for the debrief ("Phrasings to practice").
+  if (fb.tryInstead && fb.verdict === "Needs work") {
     const t = document.createElement("p");
     t.className = "note-try";
     t.innerHTML = "<strong>Try instead</strong>";
@@ -469,6 +471,11 @@ function fillNote(note, fb) {
     saved.className = "note-saved";
     saved.textContent = "💡 Suggestion saved for your debrief.";
     el.append(t, saved);
+  } else if (fb.tryInstead) {
+    const later = document.createElement("p");
+    later.className = "note-later";
+    later.textContent = "💡 A phrasing to practice is waiting in your debrief.";
+    el.append(later);
   }
 }
 

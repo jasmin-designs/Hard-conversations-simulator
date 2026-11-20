@@ -74,6 +74,8 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 .try-again h3 { font-size: 1.05rem; color: var(--brand); margin-bottom: 4px; }
 .try-again p { color: var(--ink); max-width: 60ch; }
 
+.note-later { font-size: 0.85rem; color: var(--ink-soft); }
+
 /* ---- Call settings box (start screen) ---- */
 .call-settings { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); }
 .call-settings summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }

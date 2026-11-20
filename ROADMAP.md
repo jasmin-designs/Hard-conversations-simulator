@@ -47,6 +47,7 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 - [x] Coach panel on/off during the call (on by default); the coach still reviews everything silently when it's off
 - [x] The coach waits for Jordan's reply and judges how the message actually landed (it no longer guesses, and never contradicts what Jordan did)
 - [x] Verdicts defined by how the message landed (Strong = clearly worked; Okay = partly; Needs work = backfired), and the live coach reviews only what was said, never coaching ahead
+- [x] "Try instead" is one sentence; during the call it appears only for Needs work (Okay suggestions wait for the debrief)
 - [x] Jordan varies her reply length: mostly short, longer once she feels safe to be honest
 - [x] The debrief notes which HR policies the learner opened, before or during the call, and the coach names options they missed
 
