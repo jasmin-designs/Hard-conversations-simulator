@@ -23,6 +23,7 @@ const routes = {
   "/api/employee": (await import("./api/employee.js")).default,
   "/api/coach": (await import("./api/coach.js")).default,
   "/api/debrief": (await import("./api/debrief.js")).default,
+  "/api/voice": (await import("./api/voice.js")).default,
 };
 
 const types = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml" };
@@ -44,6 +45,7 @@ http
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(data));
       };
+      res.send = (data) => res.end(data);
       return route(req, res);
     }
     const file = path.join(root, "public", url.pathname === "/" ? "index.html" : url.pathname);

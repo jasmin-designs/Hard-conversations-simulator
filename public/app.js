@@ -268,8 +268,8 @@ function show(screen) {
 
 $("start-btn").addEventListener("click", () => {
   resetConversation();
-  // Browsers only allow speech that starts from a click, so "unlock" it now.
-  if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+  // Browsers only allow sound that starts from a click, so "unlock" it now.
+  unlockAudio();
   show("call-screen");
   startedAt = Date.now();
   timerId = setInterval(updateTimer, 1000);
@@ -503,7 +503,51 @@ if ("speechSynthesis" in window) {
   $("voice-toggle").hidden = true;
 }
 
-function speak(text) {
+// ---------- Natural voice (ElevenLabs, via /api/voice) ----------
+// If it's set up on the server, Jordan speaks with a natural voice. If not,
+// or if anything fails, the browser's built-in voice is used instead.
+let naturalVoice = false;
+fetch("/api/voice")
+  .then((r) => (r.ok ? r.json() : { enabled: false }))
+  .then((d) => (naturalVoice = Boolean(d.enabled)))
+  .catch(() => {});
+const player = new Audio();
+let speakToken = 0;
+
+// Phones only allow sound that starts from a tap, so unlock the player on "Start call".
+function unlockAudio() {
+  player.muted = true;
+  player.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+  player.play().then(() => { player.pause(); player.muted = false; }).catch(() => { player.muted = false; });
+  if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+}
+
+async function speak(text) {
+  if (!voiceOn) return;
+  const token = ++speakToken;
+  if (naturalVoice) {
+    try {
+      const res = await fetch("/api/voice", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      if (!res.ok) throw new Error(`voice ${res.status}`);
+      const blob = await res.blob();
+      if (token !== speakToken || !voiceOn) return; // something else was said, or voice stopped, meanwhile
+      const avatar = $("call-avatar");
+      if (player.src.startsWith("blob:")) URL.revokeObjectURL(player.src);
+      player.muted = false;
+      player.src = URL.createObjectURL(blob);
+      player.onplay = () => avatar.classList.add("speaking");
+      player.onended = player.onpause = player.onerror = () => avatar.classList.remove("speaking");
+      await player.play();
+      return;
+    } catch (err) {
+      console.warn("Natural voice unavailable, using the built-in voice.", err);
+      if (token !== speakToken) return;
+    }
+  }
+  speakBuiltIn(text);
+}
+
+function speakBuiltIn(text) {
   if (!voiceOn || !("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
@@ -515,6 +559,8 @@ function speak(text) {
   speechSynthesis.speak(u);
 }
 function stopSpeaking() {
+  speakToken++;
+  player.pause();
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   $("call-avatar").classList.remove("speaking");
 }

@@ -75,6 +75,8 @@ Every later change you push to GitHub redeploys the site automatically.
 
 | Name | What it does |
 |---|---|
+| `ELEVENLABS_API_KEY` | Turns on a natural, realistic voice for Jordan (from elevenlabs.io). Without it, Jordan uses the browser's built-in voice. |
+| `ELEVENLABS_VOICE_ID` | Which ElevenLabs voice plays Jordan. Copy the voice ID from your ElevenLabs voice library. |
 | `MODEL` | Which Claude model to use. Default: `claude-opus-5-5`. |
 | `DEMO_MODE` | Set to `1` to use canned replies (no AI, no cost). Handy for a demo that can't fail. |
 
