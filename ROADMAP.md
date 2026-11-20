@@ -84,6 +84,8 @@ And more toolkits: delivering bad news, handling conflict, and difficult reactio
 
 ## Smaller ideas parked for later
 
+- [ ] **Start screen order:** move "Prepare with: HR policies · Manager toolkit" above the **Start call** button, so learners prepare before they start
+
 - [ ] **Skill scoring rubric (Jasmin):** a draft built from the manager toolkit is in `RUBRIC-DRAFT.md`, ready to review
 - [ ] Calibration test: run a few scripted conversations (harsh, vague, excellent) and check the scores match an expert's
 - [ ] Show progress on the debrief, not just averages. A draft exists on the `progress-view` branch; current leaning is to keep averages and add the rubric instead (see `RUBRIC-DRAFT.md`)
