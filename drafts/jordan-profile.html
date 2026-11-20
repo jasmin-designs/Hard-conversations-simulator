@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jordan Character Sheet</title>
+<!-- DRAFT visual of JORDAN-PROFILE-DRAFT.md. Not part of the live simulator. -->
+<link rel="stylesheet" href="../public/styles.css" />
+<style>
+  body { background: var(--bg); }
+  .sheet { max-width: 960px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 18px; }
+  .top { display: flex; gap: 18px; align-items: center; }
+  .top .avatar { width: 84px; height: 84px; font-size: 2.2rem; }
+  .top h1 { font-size: 2rem; }
+  .draft-tag { display: inline-block; background: var(--okay-bg); color: var(--okay); font-weight: 700; font-size: 0.75rem; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+  .zones { display: grid; grid-template-columns: 1fr 1.35fr; gap: 18px; align-items: start; }
+  .zone { border-radius: 18px; padding: 18px; display: grid; gap: 12px; }
+  .zone h2 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+  .zone .sub { font-size: 0.85rem; color: var(--ink-soft); margin-top: -8px; }
+  .visible { background: var(--surface); box-shadow: var(--shadow); }
+  .hidden-z { background: #1d2a33; color: #eef3f5; }
+  .hidden-z .sub { color: #9db0ba; }
+  .item { display: grid; gap: 2px; }
+  .item b { font-size: 0.78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--brand); }
+  .hidden-z .item b { color: #e7a07e; }
+  .item p { font-size: 0.95rem; }
+  .chain { display: grid; gap: 8px; }
+  .step { background: #26363f; border-radius: 12px; padding: 10px 12px; }
+  .step b { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .05em; color: #e7a07e; margin-bottom: 2px; }
+  .step p { font-size: 0.92rem; }
+  .arrow { text-align: center; color: #9db0ba; font-size: 1rem; line-height: 1; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opens { background: #1f3a2c; } .opens b { color: #8fd3a8; }
+  .shuts { background: #3f2622; } .shuts b { color: #f0a594; }
+  .helps { background: var(--surface); box-shadow: var(--shadow); }
+  .help-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .help-row:last-child { border-bottom: 0; }
+  .ptag { font-size: 0.75rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); white-space: nowrap; }
+  .ptag.hr { background: var(--okay-bg); color: var(--okay); }
+  .variants { background: var(--surface); box-shadow: var(--shadow); }
+  .vgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .v { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px; display: grid; gap: 6px; align-content: start; }
+  .v .emoji { font-size: 1.5rem; }
+  .v strong { font-size: 0.98rem; }
+  .v p { font-size: 0.85rem; color: var(--ink-soft); }
+  .v .diff { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .decide { background: var(--okay-bg); border-radius: 14px; padding: 12px 16px; font-size: 0.92rem; }
+  .decide b { color: var(--okay); }
+  .legend { font-size: 0.85rem; color: var(--ink-soft); }
+  @media (max-width: 760px) { .zones, .two { grid-template-columns: 1fr; } .vgrid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top">
+    <div class="avatar">J</div>
+    <div>
+      <p class="eyebrow">Character sheet <span class="draft-tag">Draft</span></p>
+      <h1>Jordan</h1>
+      <p class="muted">Project Coordinator, Northwind Logistics · 3 years on the team</p>
+    </div>
+  </div>
+
+  <div class="zones">
+    <!-- What the manager knows -->
+    <section class="zone visible">
+      <h2>👀 What the manager knows</h2>
+      <p class="sub">Could become a "Know your employee" card in Step 1. No hints at the backstory.</p>
+      <div class="item"><b>Role</b><p>Coordinates project timelines; the go-to person for client prep.</p></div>
+      <div class="item"><b>Track record</b><p>Strong reviews for three years. Often helps teammates.</p></div>
+      <div class="item"><b>Communication style</b><p>Quiet in group meetings, open one-on-one. Likes directness, but shuts down if criticized in front of others.</p></div>
+      <div class="item"><b>Motivated by</b><p>Being trusted. Pride in reliable work.</p></div>
+      <div class="item"><b>Your relationship</b><p>Good, but no real 1:1 in about a month.</p></div>
+      <div class="item"><b>What's changed</b><p>Late 15–30 minutes on four mornings in two weeks. Two internal deadlines missed.</p></div>
+    </section>
+
+    <!-- Hidden backstory -->
+    <section class="zone hidden-z">
+      <h2>🔒 Hidden backstory <span style="font-weight:500;color:#9db0ba;font-size:.85rem">(only the AI knows)</span></h2>
+      <p class="sub">Revealed only when the manager earns trust with genuine, open questions.</p>
+      <div class="chain">
+        <div class="step"><b>The situation</b><p>About two months ago, Jordan's mom moved in after a fall. Jordan is now the main caregiver. The home health aide is often late, and Jordan can't leave until someone's there.</p></div>
+        <div class="arrow">↓</div>
+        <div class="step"><b>How it shows up at work</b><p>Late on mornings the aide is late. Working late at night to catch up, exhausted. Two deadlines slipped. Quietly skipping lunch to make up time.</p></div>
+        <div class="arrow">↓</div>
+        <div class="step"><b>How Jordan feels</b><p>Embarrassed, because Jordan has always been "the reliable one". Worried it'll hurt a hoped-for promotion. Protective of mom's privacy.</p></div>
+      </div>
+      <div class="two">
+        <div class="step opens"><b>Opens up when the manager…</b><p>is specific and calm, asks open questions, listens, acknowledges feelings.</p></div>
+        <div class="step shuts"><b>Shuts down when the manager…</b><p>uses labels ("always late"), threatens consequences, asks medical details, seems rushed.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- What would help -->
+  <section class="zone helps">
+    <h2>🤝 What would actually help Jordan, and which policy covers it</h2>
+    <div>
+      <div class="help-row"><span>A later start, e.g. 9:30 or 10:00, within core hours</span><span class="ptag">HR-210 · manager can approve</span></div>
+      <div class="help-row"><span>One or two remote mornings a week</span><span class="ptag">HR-210 · manager can approve</span></div>
+      <div class="help-row"><span>A lighter workload for a few weeks (longer needs HR)</span><span class="ptag">HR-210 · up to 4 weeks</span></div>
+      <div class="help-row"><span>Caregiver leave or a formal arrangement</span><span class="ptag hr">HR-305 · refer to HR</span></div>
+      <div class="help-row"><span>Eldercare resources and support</span><span class="ptag">HR-410 · EAP</span></div>
+      <div class="help-row"><span>Messaging before start time on bad mornings</span><span class="ptag">HR-104 · notice</span></div>
+    </div>
+    <p class="legend">Classroom question: "Which policies could have helped Jordan?" The answers are all here.</p>
+  </section>
+
+  <!-- Variations -->
+  <section class="zone variants">
+    <h2>⭐ Personality variations <span style="font-weight:500;color:var(--ink-soft);font-size:.85rem">(same backstory, different Jordan)</span></h2>
+    <div class="vgrid">
+      <div class="v"><span class="emoji">🛡️</span><strong>Guarded</strong><p>Short answers, slow to trust. Needs real patience before opening up.</p><span class="diff" style="color:var(--needs)">Harder</span></div>
+      <div class="v"><span class="emoji">😄</span><strong>Chatty and deflecting</strong><p>Friendly and talkative. Jokes and changes the subject when it gets personal.</p><span class="diff" style="color:var(--okay)">Medium</span></div>
+      <div class="v"><span class="emoji">🤫</span><strong>Quiet and apologetic</strong><p>Says sorry a lot, agrees fast, but won't share the real issue unless asked gently.</p><span class="diff" style="color:var(--okay)">Medium</span></div>
+      <div class="v"><span class="emoji">⚡</span><strong>Defensive and direct</strong><p>Pushes back ("I'm still getting my work done"), but opens up if you stay calm and fair.</p><span class="diff" style="color:var(--strong)">Today's Jordan</span></div>
+    </div>
+  </section>
+
+  <div class="decide"><b>To decide:</b> mom, dad, or "a parent" · Jordan's pronouns · which details go into the live prompt · how the backstory plays out with each personality · who picks the personality (learner, instructor, or random)</div>
+</div>
+</body>
+</html>
