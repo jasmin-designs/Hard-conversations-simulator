@@ -2,6 +2,8 @@
 
 *Ideas to discuss later. Nothing here changes the live simulator yet.*
 
+> **Decision (November 2026):** no employee profile card and no personality variations in the current version. Personality variations ("other Jordans") are saved for the wider practice library. The backstory section remains useful as a reference.
+
 ---
 
 ## Jordan's backstory (hidden from learners)
