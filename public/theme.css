@@ -1,0 +1,79 @@
+/* ============================================================
+   THEME: "Ocean & Citrus"
+   Loaded after styles.css. Colors, fonts, and accents live here.
+   - Headings: Space Grotesk. Body: DM Sans (loaded in index.html).
+   - Brand orange is used sparingly (header circles and logo only).
+     Amber stays reserved for feedback ("Okay", "Where to grow", "Try instead").
+   - On the call screen: mint = on/go, coral = end, teal = you, ocean = Jordan.
+   ============================================================ */
+:root {
+  --bg: #f1f8fb; --surface: #ffffff; --ink: #0f2a36; --ink-soft: #4d6773; --line: #d6e7ee;
+  --brand: #0b5c7a; --brand-soft: #def2f8; --accent: #f5a524;
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.02em; }
+.hero { background: #0b5c7a; color: #fff; border-radius: 24px; padding: 36px 32px; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: #f5a524; opacity: .9; }
+.hero::before { content: ""; position: absolute; right: 90px; bottom: -70px; width: 140px; height: 140px; border-radius: 50%; background: #7fd1c7; opacity: .85; }
+.hero > * { position: relative; z-index: 1; max-width: 70%; }
+.hero .lede { color: #d9eef5; }
+.hero .eyebrow { color: #ffd27a; }
+.brand { color: var(--brand); }
+.brand-mark { background: var(--accent); }
+.avatar { background: linear-gradient(140deg, #2a9bb8, #0b5c7a); }
+.scenario-card { border-left: 6px solid var(--accent); }
+.how li::marker { color: var(--brand); font-weight: 700; }
+.step-num { background: var(--accent); color: #0f2a36; }
+.prep-card { background: #fff8e8; border-color: #f6d488; }
+.prep-icon { background: var(--accent); color: #0f2a36; }
+.btn-primary { background: var(--brand); }
+
+/* ---- Call screen ---- */
+:root { --call-bg: #0a3a4e; --call-surface: #134d65; --call-ink: #eef7fa; --call-soft: #9cc3d1; }
+.bubble.manager { background: #1a7a99; color: #ffffff; }
+.bubble.manager .who { opacity: .8; }
+.avatar-lg.speaking::before { border-color: rgba(127, 209, 199, .95); }
+.live-dot { background: #7fd1c7; box-shadow: 0 0 0 4px rgba(127, 209, 199, .2); }
+.composer input:focus { border-color: #7fd1c7; }
+.btn-danger { background: #cf4438; color: #ffffff; }
+.btn-danger:hover { background: #b83b30; }
+.coach-head h2 { color: var(--brand); }
+.note.latest { border-color: #f6d488; box-shadow: 0 0 0 3px #fff4d6; }
+.note-try { background: #fff8e8; }
+.note-try strong { color: #b26f00; }
+
+/* ---- Debrief ---- */
+.debrief-hero h1 { color: var(--brand); }
+.outcome { border-top: 4px solid var(--accent); }
+.skill-fill { background: var(--brand); }
+.try-new { background: #fff8e8; }
+.try-new strong { color: #b26f00; }
+
+/* ---- Contrast fixes ---- */
+.composer .btn-primary { background: #7fd1c7; color: #0a3a4e; }
+.composer .btn-primary:hover:not(:disabled) { background: #6cc4b9; }
+.start .eyebrow:not(.hero .eyebrow), .debrief .eyebrow { color: #a86400; }
+
+/* ---- Call-bar buttons: mint = on, grey = off, Policies white ---- */
+.call-tools .icon-btn { color: #ffffff; }
+#coach-btn[aria-pressed="true"], #voice-toggle[aria-pressed="true"] { color: #7fd1c7; }
+#coach-btn[aria-pressed="false"], #voice-toggle[aria-pressed="false"] { color: #a9c4ce; }
+
+/* ---- Orange used sparingly ---- */
+.step-num { background: var(--brand); color: #fff; }
+.prep-card { background: var(--brand-soft); border-color: #b8dde9; }
+.prep-icon { background: var(--brand); color: #fff; }
+.scenario-card { border-left: 0; border-top: 5px solid var(--brand); }
+.start .eyebrow:not(.hero .eyebrow), .debrief .eyebrow { color: var(--brand); }
+.outcome { border-top-color: var(--brand); }
+
+
+/* ---- Call settings box (start screen) ---- */
+.call-settings { border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); }
+.call-settings summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }
+.call-settings summary::-webkit-details-marker { display: none; }
+.call-settings .settings-state { display: block; font-size: 0.85rem; color: var(--ink-soft); }
+.call-settings .chev { width: 24px; height: 24px; transition: transform 0.15s; color: var(--ink-soft); }
+.call-settings[open] .chev { transform: rotate(180deg); }
+.call-settings[open] summary { margin-bottom: 4px; }
+.call-settings .switch-row { margin-top: 12px; }

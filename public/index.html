@@ -6,7 +6,11 @@
     <title>Hard Conversations Simulator</title>
     <meta name="description" content="Practice a difficult feedback conversation with an AI employee and get live coaching as you go." />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231f4e5f'/><path d='M8 11h16v9H14l-4 3v-3H8z' fill='white'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="theme.css" />
   </head>
   <body>
     <!-- ======================= START SCREEN ======================= -->
@@ -72,22 +76,28 @@
               <span class="prep-status" data-status="toolkit">Open →</span>
             </button>
           </div>
-        <label class="switch-row">
-          <input type="checkbox" class="coach-toggle" role="switch" />
-          <span class="switch" aria-hidden="true"></span>
-          <span>
-            <strong>Coach during the call</strong>
-            <span class="muted switch-help">Turn this off to have the conversation as you would in real life. Your coach still reviews everything, and it all comes with your debrief.</span>
-          </span>
-        </label>
-        <label class="switch-row tips-row">
-          <input type="checkbox" class="tips-toggle" role="switch" />
-          <span class="switch" aria-hidden="true"></span>
-          <span>
-            <strong>"Try instead" during the call</strong>
-            <span class="muted switch-help">Prefer to find your own way? Turn this off. Suggestions always come with your debrief.</span>
-          </span>
-        </label>
+        <details class="call-settings">
+          <summary>
+            <span><strong>Call settings</strong><span class="settings-state" id="settings-state"></span></span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg>
+          </summary>
+          <label class="switch-row">
+            <input type="checkbox" class="coach-toggle" role="switch" />
+            <span class="switch" aria-hidden="true"></span>
+            <span>
+              <strong>Coach during the call</strong>
+              <span class="muted switch-help">Turn this off to have the conversation as you would in real life. Your coach still reviews everything, and it all comes with your debrief.</span>
+            </span>
+          </label>
+          <label class="switch-row tips-row">
+            <input type="checkbox" class="tips-toggle" role="switch" />
+            <span class="switch" aria-hidden="true"></span>
+            <span>
+              <strong>"Try instead" during the call</strong>
+              <span class="muted switch-help">Prefer to find your own way? Turn this off. Suggestions always come with your debrief.</span>
+            </span>
+          </label>
+        </details>
         </div>
         <div class="start-actions">
         <h3 class="start-heading"><span class="step-num">Step 2</span> Have the conversation</h3>

@@ -178,6 +178,15 @@ $("guide-dialog").addEventListener("click", (e) => {
   if (e.target === $("guide-dialog")) $("guide-dialog").close(); // tap outside to close
 });
 
+// Summary line on the "Call settings" box, e.g. "Coach on · 'Try instead' on".
+function updateSettingsState() {
+  const el = document.getElementById("settings-state");
+  if (!el) return;
+  const coach = document.querySelector(".coach-toggle")?.checked ?? true;
+  const tips = document.querySelector(".tips-toggle")?.checked ?? true;
+  el.textContent = coach ? `Coach on · "Try instead" ${tips ? "on" : "off"}` : "Coach off (everything comes with your debrief)";
+}
+
 // ---------- "Try instead" on/off ----------
 // On by default. Remembered on this device. Suggestions always appear in the debrief.
 let showTips = true;
@@ -185,6 +194,7 @@ try { showTips = localStorage.getItem("showTips") !== "off"; } catch { /* storag
 function applyTips() {
   document.body.classList.toggle("tips-off", !showTips);
   for (const box of document.querySelectorAll(".tips-toggle")) box.checked = showTips;
+  updateSettingsState();
 }
 for (const box of document.querySelectorAll(".tips-toggle")) {
   box.addEventListener("change", () => {
@@ -204,6 +214,7 @@ function applyCoach() {
   for (const box of document.querySelectorAll(".coach-toggle")) box.checked = showCoach;
   $("coach-btn").setAttribute("aria-pressed", String(showCoach));
   $("coach-label").textContent = showCoach ? "Coach on" : "Coach off";
+  updateSettingsState();
 }
 function setCoach(on) {
   showCoach = on;
