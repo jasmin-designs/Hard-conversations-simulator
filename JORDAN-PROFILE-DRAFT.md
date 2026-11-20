@@ -81,18 +81,22 @@ Questions to decide:
 
 ---
 
-## 2. What the manager would know (visible to learners)
+## 2. "Know your employee" profile (visible to learners, current version)
 
-Possibly a third card in **Step 1, Prepare**: "Know your employee" (like a profile or 1:1 notes). It must not hint at the hidden backstory.
+A third card in **Step 1, Prepare**. It must not hint at the hidden backstory.
 
-Draft example:
-- **Role and work:** coordinates project timelines; the go-to person for client prep.
-- **Track record:** strong reviews for three years; often helps teammates.
-- **Communication style:** quiet in group meetings, open one-on-one; likes directness, but shuts down if criticized in front of others.
-- **What motivates Jordan:** being trusted; pride in reliable work.
-- **Your relationship:** good, but you haven't had a real 1:1 in about a month.
+**Current wording (in review):**
 
-Possible coach and debrief link: did the manager adapt their approach to what they knew about Jordan?
+> **Know your employee: Jordan**
+> - **Role:** Project Coordinator, 3 years on the team. Manages project timelines and prepares materials for client meetings.
+> - **Track record:** Strong performance reviews every year. Reliable with deadlines, and teammates often go to Jordan for help.
+> - **Communication style:** Quiet in group meetings, more open one-on-one. Responds well to direct, respectful feedback; tends to go quiet if criticized in front of others.
+> - **What Jordan values:** Being trusted with responsibility, and doing careful, reliable work.
+> - **Your working relationship:** Good. You meet for monthly 1:1s, and the conversation sometimes drifts to personal topics, like weekend plans, but stays surface level.
+
+Why: track record and values make the recent change stand out; communication style cues a private, respectful approach; the relationship line shows real rapport while explaining why the manager doesn't already know what's going on. Nothing about home, family, health, or mornings.
+
+Open questions: Jordan's pronouns (name-only for now); whether the coach credits adapting to Jordan's style.
 
 ---
 
