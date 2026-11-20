@@ -23,7 +23,7 @@ export const PROFILE = {
     },
     {
       heading: "Communication style",
-      points: ["Quiet in group meetings, more open one-on-one. Appreciates honesty. Takes a little time to open up; if she feels judged, she gets brief and guarded."],
+      points: ["Quiet in group meetings, more open one-on-one. Appreciates honesty."],
     },
     {
       heading: "What she values",
