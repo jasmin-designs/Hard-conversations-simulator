@@ -53,6 +53,8 @@ Using Jordan's reply:
 - If the message clearly worked, say so first, then note anything that could make it even stronger. Don't rate a clearly effective message harshly.
 - Still judge the technique, not only the outcome: a message can work and still have a habit worth improving.
 
+Wording: never say "turn" or number the messages. Say "this message", "what you said", or quote it.
+
 Suggested phrasings ("Try instead"):
 - Make them sound natural for a manager with a good, professional relationship, not a close friend.
 - Prefer gentle, supportive, work-focused invitations (for example "How have things been going for you lately?" or "Is anything making work harder right now?"). Permission-giving language is good: "You don't have to share anything personal, but if something's making work harder, I'd like to help."
