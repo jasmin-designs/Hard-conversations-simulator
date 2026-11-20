@@ -850,21 +850,17 @@ function buildTranscript(d) {
       "Where to grow:",
       ...(d.growthAreas || []).map((s) => `  - ${s}`),
       "",
-      ...(coachNotes.some((n) => n.tryInstead)
-        ? [
-            "Try instead: phrasings to practice:",
-            ...coachNotes
-              .filter((n) => n.tryInstead)
-              .flatMap((n) => [`  - You said: "${n.said}"`, `    Try instead: "${n.tryInstead}"`]),
-            "",
-          ]
-        : []),
       "Skill scores (average, 1-5):"
     );
     for (const [key, label] of Object.entries(SKILLS)) {
       const vals = coachNotes.map((n) => n.scores?.[key]).filter((v) => typeof v === "number");
       const avg = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "not used";
       out.push(`  - ${label}: ${avg}`);
+    }
+    const tries = coachNotes.filter((n) => n.tryInstead);
+    if (tries.length) {
+      out.push("", "Try instead: phrasings to practice:");
+      for (const n of tries) out.push(`  - You said: "${n.said}"`, `    Try instead: "${n.tryInstead}"`);
     }
   }
   return out.join("\n") + "\n";
