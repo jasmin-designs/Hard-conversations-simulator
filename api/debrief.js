@@ -37,7 +37,7 @@ const DEBRIEF_SCHEMA = {
       description:
         "yes = the approach and plan fit the HR policies. mostly = the approach was sound and nothing went against policy, but a step was missed (for example, the written summary or the EAP). no = something went against policy (for example, promising leave, asking about medical details, or approving something only HR or a department head can approve), or no plan at all.",
     },
-    policyNote: { type: "string", description: "One or two short sentences: what fit the policy, and the single most important thing missed (if any). No lists of every rule." },
+    policyNote: { type: "string", description: "One sentence on how the approach fit the policy, or what it missed (e.g. involving HR, written summary, check-in)." },
     overall: {
       type: "string",
       description:
