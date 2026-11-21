@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Call Mode Mock-up</title>
+<!-- DRAFT mock-up of call mode. Not part of the live simulator. Add ?state=listening|thinking|speaking -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../public/styles.css" />
+<link rel="stylesheet" href="../public/theme.css" />
+<style>
+  html, body { height: 100%; }
+  body { background: var(--bg); }
+  .cm { min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .cm-panel { background: var(--call-bg); color: var(--call-ink); border-radius: 24px; display: grid; grid-template-rows: auto 1fr auto auto; overflow: hidden; min-height: calc(100dvh - 32px); }
+  .cm-top { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; gap: 10px; flex-wrap: wrap; }
+  .cm-who { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+  .cm-tools { display: flex; gap: 8px; }
+  .cm-stage { display: grid; place-content: center; justify-items: center; gap: 18px; padding: 20px; text-align: center; }
+  .cm-avatar { width: 180px; height: 180px; border-radius: 50%; display: grid; place-items: center; font-size: 4rem; font-weight: 700; color: #fff;
+    background: linear-gradient(140deg, #2a9bb8, #0b5c7a); position: relative; }
+  .cm-avatar::before, .cm-avatar::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 3px solid transparent; }
+  .listening .cm-avatar::before { border-color: rgba(127,209,199,.9); animation: breathe 1.4s ease-in-out infinite; }
+  .listening .cm-avatar::after { inset: -28px; border-color: rgba(127,209,199,.35); animation: breathe 1.4s ease-in-out infinite .3s; }
+  .thinking .cm-avatar::before { border-color: rgba(156,195,209,.6); border-style: dashed; animation: spin 5s linear infinite; }
+  .speaking .cm-avatar { box-shadow: 0 0 0 10px rgba(127,209,199,.25), 0 0 0 22px rgba(127,209,199,.12); }
+  @keyframes breathe { 50% { transform: scale(1.06); opacity: .6; } }
+  .cm-status { font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .cm-status .dot { width: 10px; height: 10px; border-radius: 50%; background: #7fd1c7; }
+  .thinking .cm-status .dot { background: #9cc3d1; }
+  .bars { display: flex; gap: 4px; align-items: center; height: 22px; }
+  .bars span { width: 5px; border-radius: 3px; background: #7fd1c7; }
+  .cm-captions { margin: 0 auto; width: min(680px, 100%); padding: 0 20px 18px; display: grid; gap: 8px; }
+  .cap { border-radius: 14px; padding: 10px 14px; font-size: 1.02rem; line-height: 1.45; }
+  .cap small { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .7; margin-bottom: 2px; }
+  .cap.you { background: rgba(255,255,255,.06); color: var(--call-soft); }
+  .cap.jordan { background: rgba(255,255,255,.1); color: #fff; font-size: 1.1rem; }
+  .cap .live { opacity: .55; }
+  .cm-controls { display: flex; justify-content: center; align-items: flex-start; gap: 22px; padding: 6px 16px 24px; }
+  .ctl { display: grid; justify-items: center; gap: 6px; font-size: .8rem; color: var(--call-soft); }
+  .ctl button { width: 60px; height: 60px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--call-surface); color: #fff; }
+  .ctl button svg { width: 26px; height: 26px; }
+  .ctl.end button { width: 72px; height: 72px; background: #cf4438; }
+  .ctl.end button svg { width: 32px; height: 32px; }
+  .cc-on { color: #7fd1c7 !important; }
+  .cm-tools .icon-btn { white-space: nowrap; }
+  .short { display: none; }
+  @media (max-width: 480px) { .long { display: none; } .short { display: inline; } .cm-top { justify-content: center; } }
+  .hint { color: var(--call-soft); font-size: .85rem; }
+</style>
+</head>
+<body>
+<main class="cm">
+  <section class="cm-panel" id="panel">
+    <header class="cm-top">
+      <div class="cm-who"><span class="live-dot"></span><span>Jordan</span><span class="call-timer">02:14</span></div>
+      <div class="cm-tools">
+        <span class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg> <span class="long">HR policies</span><span class="short">Policies</span></span>
+        <span class="icon-btn" style="color:#a9c4ce"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 5v2h10V9zm0 4v2h7v-2z"/></svg> <span class="long">Coach off</span><span class="short">Coach</span></span>
+        <span class="icon-btn cc-on"><b style="font-size:.8rem;border:1.5px solid currentColor;border-radius:4px;padding:0 3px">CC</b> <span class="long">Captions on</span><span class="short">On</span></span>
+      </div>
+    </header>
+
+    <div class="cm-stage">
+      <div class="cm-avatar">J</div>
+      <div class="cm-status" id="status"></div>
+    </div>
+
+    <div class="cm-captions" id="captions"></div>
+
+    <footer class="cm-controls">
+      <div class="ctl"><button aria-label="Mute"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg></button>Mute</div>
+      <div class="ctl end"><button aria-label="End call"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1a1 1 0 0 1-.56.9 11.5 11.5 0 0 0-2.66 1.85 1 1 0 0 1-1.41 0L.29 13.08a1 1 0 0 1 0-1.41A16.9 16.9 0 0 1 12 7c4.57 0 8.71 1.8 11.71 4.67a1 1 0 0 1 0 1.41l-2.48 2.49a1 1 0 0 1-1.41 0 11.3 11.3 0 0 0-2.67-1.85 1 1 0 0 1-.56-.9v-3.1A15 15 0 0 0 12 9z"/></svg></button>End call</div>
+      <div class="ctl"><button aria-label="Type instead"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-9 3h2v2h-2zm0 3h2v2h-2zM8 8h2v2H8zm0 3h2v2H8zm-1 2H5v-2h2zm0-3H5V8h2zm9 7H8v-2h8zm0-4h-2v-2h2zm0-3h-2V8h2zm3 3h-2v-2h2zm0-3h-2V8h2z"/></svg></button>Type</div>
+    </footer>
+  </section>
+</main>
+<script>
+  const state = new URLSearchParams(location.search).get("state") || "listening";
+  const panel = document.getElementById("panel");
+  panel.classList.add(state);
+  const status = {
+    listening: '<span class="bars"><span style="height:8px"></span><span style="height:18px"></span><span style="height:12px"></span><span style="height:22px"></span><span style="height:10px"></span></span> Listening… just talk',
+    thinking: '<span class="dot"></span> Jordan is thinking…',
+    speaking: '<span class="bars"><span style="height:14px"></span><span style="height:22px"></span><span style="height:9px"></span><span style="height:18px"></span><span style="height:12px"></span></span> Jordan is speaking',
+  }[state];
+  document.getElementById("status").innerHTML = status;
+  const caps = {
+    listening: `<div class="cap jordan"><small>Jordan</small>Okay… I mean, I know I've been a little late. I've still been getting my work done, though.</div>
+                <div class="cap you"><small>You (speaking)</small>That's fair, and I know how much you care about your work. <span class="live">I wanted to check in because…</span></div>`,
+    thinking: `<div class="cap you"><small>You</small>That's fair, and I know how much you care about your work. I wanted to check in because I've noticed a few late mornings, and I'd like to hear how things have been going for you.</div>`,
+    speaking: `<div class="cap you"><small>You</small>…I'd like to hear how things have been going for you.</div>
+               <div class="cap jordan"><small>Jordan</small>Um… thanks. Honestly? Mornings have been kind of hard to predict lately.</div>`,
+  }[state];
+  document.getElementById("captions").innerHTML = caps;
+</script>
+</body>
+</html>
