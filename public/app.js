@@ -580,6 +580,14 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 let recognition = null;
 let listening = false;
 let userStopped = false; // true only when the learner taps to finish (or the call ends)
+let restarts = 0; // automatic restarts for the current message
+let sessionStart = 0;
+// iPhones and iPads: Safari's voice input is more reliable one phrase at a time.
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+function startListening() {
+  sessionStart = Date.now();
+  recognition.start();
+}
 let spokenSoFar = ""; // text from earlier listening sessions in this same message
 
 if (!SpeechRecognition) {
@@ -590,7 +598,7 @@ if (!SpeechRecognition) {
   recognition = new SpeechRecognition();
   recognition.lang = "en-US";
   recognition.interimResults = true;
-  recognition.continuous = true;
+  recognition.continuous = !isIOS;
 
   recognition.onresult = (e) => {
     let text = "";
@@ -614,15 +622,24 @@ if (!SpeechRecognition) {
     // Unless the learner tapped to finish, quietly keep listening.
     if (!userStopped && listening && !$("call-screen").hidden) {
       spokenSoFar = $("message").value.trim();
-      try {
-        recognition.start();
+      if (restarts < 30) {
+        restarts++;
+        // If it stopped almost immediately, wait a moment before listening again,
+        // so we don't restart so fast that speech gets missed.
+        const quick = Date.now() - sessionStart < 1200;
+        setTimeout(() => {
+          if (!listening || userStopped || $("call-screen").hidden) return;
+          try {
+            startListening();
+          } catch {
+            stopListeningUI();
+            toast("Voice input paused. Tap the mic to keep going, or type instead.");
+          }
+        }, quick ? 700 : 150);
         return;
-      } catch {
-        /* couldn't restart: fall through and leave the text for the learner */
       }
-      listening = false;
-      $("mic-btn").setAttribute("aria-pressed", "false");
-      $("message").placeholder = `Say something to ${name}…`;
+      stopListeningUI();
+      toast("Voice input paused. Tap the mic to keep going, or type instead.");
       return; // don't send a half-finished message
     }
     listening = false;
@@ -637,11 +654,12 @@ if (!SpeechRecognition) {
       return recognition.stop(); // stop and send
     }
     stopSpeaking(); // don't let the mic hear Jordan
-    $("message").value = "";
-    spokenSoFar = "";
+    // Keep anything already in the box (for example, after a pause) and add to it.
+    spokenSoFar = $("message").value.trim();
     userStopped = false;
+    restarts = 0;
     try {
-      recognition.start();
+      startListening();
       listening = true;
       $("mic-btn").setAttribute("aria-pressed", "true");
       $("message").placeholder = "Listening… tap the mic again to send";
@@ -649,6 +667,12 @@ if (!SpeechRecognition) {
       /* already started */
     }
   });
+}
+
+function stopListeningUI() {
+  listening = false;
+  $("mic-btn").setAttribute("aria-pressed", "false");
+  $("message").placeholder = `Say something to ${name}…`;
 }
 
 // ---------- End call and debrief ----------
