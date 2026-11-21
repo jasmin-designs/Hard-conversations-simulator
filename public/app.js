@@ -186,7 +186,8 @@ function updateSettingsState() {
   if (!el) return;
   const coach = document.querySelector(".coach-toggle")?.checked ?? true;
   const tips = document.querySelector(".tips-toggle")?.checked ?? true;
-  el.textContent = coach ? `Coach on · "Try instead" ${tips ? "on" : "off"}` : "Coach off (everything comes with your debrief)";
+  const call = document.querySelector(".callmode-toggle")?.checked ?? true;
+  el.textContent = `${call ? "Hands-free call" : "Tap to talk or type"} · ` + (coach ? `Coach on · "Try instead" ${tips ? "on" : "off"}` : "Coach off");
 }
 
 // ---------- "Try instead" on/off ----------
@@ -275,7 +276,22 @@ $("start-btn").addEventListener("click", () => {
   timerId = setInterval(updateTimer, 1000);
   updateTimer();
   setStatus(`Connected with ${name}. You start the conversation.`);
-  $("message").focus();
+  // Call mode (draft): hands-free voice.
+  callMode = callModeWanted && Boolean(SpeechRecognition);
+  document.body.classList.toggle("call-mode", callMode);
+  document.body.classList.remove("cm-typing", "cc-off");
+  cmMuted = false;
+  for (const id of ["cm-mute", "cm-type"]) $(id).setAttribute("aria-pressed", "false");
+  $("cm-mute-label").textContent = "Mute";
+  $("cc-btn").setAttribute("aria-pressed", "true");
+  $("cc-label").textContent = "Captions on";
+  for (const c of ["cap-you", "cap-jordan"]) $(c).hidden = true;
+  if (callMode) {
+    setStatus("Listening… just talk");
+    setTimeout(listenTurn, 400);
+  } else {
+    $("message").focus();
+  }
 });
 
 function resetConversation() {
@@ -365,6 +381,8 @@ async function getReply(note) {
   const typing = addBubble("employee", "", { typing: true });
   $("call-avatar").className = "avatar avatar-lg thinking";
   setStatus(`${name} is thinking…`);
+  $("call-avatar").classList.remove("listening");
+  clearTimeout(silenceTimer);
 
   try {
     const { reply } = await api("/api/employee", { transcript });
@@ -373,7 +391,12 @@ async function getReply(note) {
     addBubble("employee", reply);
     setStatus("");
     $("call-avatar").className = "avatar avatar-lg";
-    speak(reply);
+    if (callMode) {
+      setCaption("jordan", reply);
+      setStatus(`${name} is speaking`);
+    }
+    const spoken = speak(reply);
+    if (callMode) spoken.then(() => afterJordanSpeaks());
     runCoach(note);
   } catch (err) {
     typing.remove();
@@ -525,6 +548,7 @@ function unlockAudio() {
   if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(""));
 }
 
+// Resolves when Jordan has finished speaking (or straight away if the voice is off).
 async function speak(text) {
   if (!voiceOn) return;
   const token = ++speakToken;
@@ -538,28 +562,44 @@ async function speak(text) {
       if (player.src.startsWith("blob:")) URL.revokeObjectURL(player.src);
       player.muted = false;
       player.src = URL.createObjectURL(blob);
-      player.onplay = () => avatar.classList.add("speaking");
-      player.onended = player.onpause = player.onerror = () => avatar.classList.remove("speaking");
-      await player.play();
+      await new Promise((resolve) => {
+        player.onplay = () => avatar.classList.add("speaking");
+        player.onended = player.onpause = player.onerror = () => {
+          avatar.classList.remove("speaking");
+          resolve();
+        };
+        player.play().catch(() => resolve());
+      });
       return;
     } catch (err) {
       console.warn("Natural voice unavailable, using the built-in voice.", err);
       if (token !== speakToken) return;
     }
   }
-  speakBuiltIn(text);
+  return speakBuiltIn(text);
 }
 
 function speakBuiltIn(text) {
-  if (!voiceOn || !("speechSynthesis" in window)) return;
+  if (!voiceOn || !("speechSynthesis" in window)) return Promise.resolve();
+  return new Promise((resolve) => {
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   if (voice) u.voice = voice;
   u.rate = 1;
   const avatar = $("call-avatar");
   u.onstart = () => avatar.classList.add("speaking");
-  u.onend = u.onerror = () => avatar.classList.remove("speaking");
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    avatar.classList.remove("speaking");
+    resolve();
+  };
+  u.onend = u.onerror = finish;
+  // Backup: some browsers never report the end of speech.
+  setTimeout(finish, 2500 + text.length * 75);
   speechSynthesis.speak(u);
+  });
 }
 function stopSpeaking() {
   speakToken++;
@@ -604,6 +644,11 @@ if (!SpeechRecognition) {
     let text = "";
     for (const r of e.results) text += r[0].transcript;
     $("message").value = (spokenSoFar ? spokenSoFar + " " : "") + text.trim();
+    if (callMode && !cmTyping()) {
+      setCaption("you", $("message").value);
+      clearTimeout(silenceTimer);
+      silenceTimer = setTimeout(finishTurn, PAUSE_MS);
+    }
   };
   recognition.onerror = (e) => {
     if (e.error === "not-allowed" || e.error === "service-not-allowed") {
@@ -645,6 +690,10 @@ if (!SpeechRecognition) {
     listening = false;
     $("mic-btn").setAttribute("aria-pressed", "false");
     $("message").placeholder = `Say something to ${name}…`;
+    if (cmPaused) {
+      cmPaused = false;
+      return;
+    }
     if (!$("call-screen").hidden) sendTurn($("message").value);
   };
 
@@ -675,6 +724,117 @@ function stopListeningUI() {
   $("message").placeholder = `Say something to ${name}…`;
 }
 
+// ---------- Call mode (draft): a hands-free voice call ----------
+const PAUSE_MS = 1500; // this much silence means "I'm done talking"
+let callModeWanted = true;
+try { callModeWanted = localStorage.getItem("callMode") !== "off"; } catch { /* keep default */ }
+let callMode = false;
+let cmMuted = false;
+let cmPaused = false; // stopping the mic without sending (mute, type, end-call dialog)
+let silenceTimer = null;
+const cmTyping = () => document.body.classList.contains("cm-typing");
+
+for (const box of document.querySelectorAll(".callmode-toggle")) {
+  box.checked = callModeWanted;
+  box.addEventListener("change", () => {
+    callModeWanted = box.checked;
+    try { localStorage.setItem("callMode", box.checked ? "on" : "off"); } catch { /* fine */ }
+    updateSettingsState();
+  });
+}
+if (!SpeechRecognition) $("callmode-row").hidden = true;
+
+function setCaption(who, text) {
+  const el = $(who === "you" ? "cap-you" : "cap-jordan");
+  el.hidden = !text;
+  el.querySelector("span").textContent = text;
+}
+
+// Start listening for the learner's next turn.
+function listenTurn() {
+  if (!callMode || cmMuted || cmTyping() || busy || listening || $("call-screen").hidden) return;
+  stopSpeaking();
+  $("message").value = "";
+  spokenSoFar = "";
+  userStopped = false;
+  restarts = 0;
+  setCaption("you", "");
+  try {
+    startListening();
+    listening = true;
+    $("call-avatar").classList.add("listening");
+    setStatus("Listening… just talk");
+  } catch {
+    setStatus("Tap the mic to start talking.");
+  }
+}
+
+// After a pause, send what was said.
+function finishTurn() {
+  if (!listening || !$("message").value.trim()) return;
+  userStopped = true;
+  $("call-avatar").classList.remove("listening");
+  recognition.stop(); // onend sends the message
+}
+
+// Stop the mic without sending anything.
+function pauseListening() {
+  clearTimeout(silenceTimer);
+  $("call-avatar").classList.remove("listening");
+  if (listening) {
+    cmPaused = true;
+    userStopped = true;
+    try { recognition.abort(); } catch { cmPaused = false; }
+    listening = false;
+  }
+}
+
+function afterJordanSpeaks() {
+  if (!callMode || $("call-screen").hidden) return;
+  if (cmMuted) return setStatus("You're muted. Tap Mute to talk again.");
+  if (cmTyping()) return setStatus("");
+  listenTurn();
+}
+
+$("cm-mute").addEventListener("click", () => {
+  cmMuted = !cmMuted;
+  $("cm-mute").setAttribute("aria-pressed", String(cmMuted));
+  $("cm-mute-label").textContent = cmMuted ? "Unmute" : "Mute";
+  if (cmMuted) {
+    pauseListening();
+    $("message").value = "";
+    setStatus("You're muted. Tap Unmute to talk again.");
+  } else if (!busy) {
+    listenTurn();
+  }
+});
+
+$("cm-type").addEventListener("click", () => {
+  const typing = !cmTyping();
+  document.body.classList.toggle("cm-typing", typing);
+  $("cm-type").setAttribute("aria-pressed", String(typing));
+  $("cm-type-label").textContent = typing ? "Talk" : "Type";
+  if (typing) {
+    pauseListening();
+    setStatus("Type your message below.");
+    $("message").focus();
+  } else if (!busy && !cmMuted) {
+    listenTurn();
+  }
+});
+
+$("cc-btn").addEventListener("click", () => {
+  const on = $("cc-btn").getAttribute("aria-pressed") !== "true";
+  $("cc-btn").setAttribute("aria-pressed", String(on));
+  $("cc-label").textContent = on ? "Captions on" : "Captions off";
+  document.body.classList.toggle("cc-off", !on);
+});
+
+$("cm-end").addEventListener("click", () => {
+  pauseListening();
+  $("end-btn").click();
+});
+
 // ---------- End call and debrief ----------
 // Ask before ending, so one accidental tap doesn't end the conversation.
 $("end-btn").addEventListener("click", () => {
@@ -682,7 +842,10 @@ $("end-btn").addEventListener("click", () => {
   if (managerTurns === 0) return endCall();
   $("confirm-dialog").showModal();
 });
-$("confirm-keep").addEventListener("click", () => $("confirm-dialog").close());
+$("confirm-keep").addEventListener("click", () => {
+  $("confirm-dialog").close();
+  if (callMode && !busy) listenTurn();
+});
 $("confirm-end").addEventListener("click", () => {
   $("confirm-dialog").close();
   endCall();

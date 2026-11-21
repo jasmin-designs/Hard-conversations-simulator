@@ -121,3 +121,35 @@ h1, h2, h3, .scenario-head h2 { font-family: "Space Grotesk", system-ui, sans-se
 }
 /* Pop-up labels in ocean blue (orange stays in the header only) */
 .policy-dialog .eyebrow { color: var(--brand); }
+
+/* ============================================================
+   CALL MODE (draft): a hands-free voice call
+   ============================================================ */
+.cm-only { display: none !important; }
+.call-mode .cm-only { display: revert !important; }
+.call-mode .cm-controls.cm-only { display: flex !important; }
+.call-mode .captions.cm-only { display: grid !important; }
+.call-mode .transcript, .call-mode .call-controls, .call-mode .mic-btn { display: none; }
+.call-mode .composer { display: none; }
+.call-mode.cm-typing .composer { display: flex; }
+.call-mode.cc-off .captions { visibility: hidden; }
+.call-mode .call-panel { grid-template-rows: auto minmax(0, 1fr) auto auto auto auto; }
+.call-mode .stage { align-content: center; gap: 20px; }
+.call-mode .avatar-lg { width: 180px; height: 180px; font-size: 4rem; }
+.call-mode .stage-status { font-size: 1.05rem; font-weight: 600; color: var(--call-ink); }
+.call-mode .avatar-lg.listening::before { border-color: rgba(127,209,199,.9); animation: pulse 1.4s ease-in-out infinite; }
+.captions { width: min(680px, 100%); margin: 0 auto; padding: 0 18px 14px; gap: 8px; }
+.cap { border-radius: 14px; padding: 10px 14px; line-height: 1.45; }
+.cap small { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .7; margin-bottom: 2px; }
+.cap.you { background: rgba(255,255,255,.06); color: var(--call-soft); }
+.cap.jordan { background: rgba(255,255,255,.1); color: #fff; font-size: 1.05rem; }
+.cm-controls { justify-content: center; align-items: flex-start; gap: 22px; padding: 6px 16px 20px; }
+.ctl { display: grid; justify-items: center; gap: 6px; font-size: .8rem; color: var(--call-soft); }
+.ctl button { width: 60px; height: 60px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--call-surface); color: #fff; cursor: pointer; }
+.ctl button svg { width: 26px; height: 26px; fill: currentColor; }
+.ctl button[aria-pressed="true"] { background: #eef7fa; color: var(--call-bg); }
+.ctl.end button { width: 72px; height: 72px; background: #cf4438; }
+.ctl.end button svg { width: 32px; height: 32px; }
+.cc-badge { font-size: .75rem; border: 1.5px solid currentColor; border-radius: 4px; padding: 0 3px; }
+#cc-btn[aria-pressed="true"] { color: #7fd1c7; }
+@media (max-width: 480px) { .call-mode .avatar-lg { width: 140px; height: 140px; font-size: 3rem; } }
