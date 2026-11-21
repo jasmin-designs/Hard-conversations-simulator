@@ -35,6 +35,13 @@ One complete scenario, live at **hard-conversations-simulator.vercel.app**:
 
 ---
 
+## User test 2 (Steve, November 21, 2026)
+
+- Liked: the new look ("brighter, easier to look at"), the "Reviewed" prep cards, talking instead of typing, and the skill-score reasons.
+- Profile and toolkit: "not really necessary, but can't hurt", so they stay as optional preparation.
+- **Coach during the call:** Steve and Alicia both preferred it off ("more natural, less distracting"); Steve would want it on the first time. Still on by default, so this is a decision for Jasmin.
+- Fixed: the mic cut Steve off mid-sentence (it now keeps listening until you tap to finish); HR-210 contradicted itself about who approves adjusted hours (now: the manager approves within core hours whatever the reason, and refers ongoing caregiving or health needs to HR); the policy result is now Yes / Mostly / Not yet, with a short note; the "phrasings" button no longer prints as an empty PDF page.
+
 ## Next up (from Steve's user test, November 2026)
 
 - [x] **Natural voice for Jordan:** live (November 2026) with ElevenLabs (Starter plan) through `api/voice.js`, falling back to the built-in browser voice if it fails or credits run out. Settings in Vercel: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`. Possible next step: try a faster, lower-credit voice model and compare.

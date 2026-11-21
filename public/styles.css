@@ -369,7 +369,7 @@ input:focus-visible + .switch { outline: 3px solid var(--accent); outline-offset
 /* ============ Print (Save as PDF) ============ */
 @media print {
   body { background: #fff; }
-  .debrief-actions, .toast { display: none !important; }
+  .debrief-actions, .toast, .tries-link, .try-again .btn { display: none !important; }
   .card, .outcome { box-shadow: none; border: 1px solid var(--line); }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } /* keep bars and badges */
   details.transcript-review summary { list-style: none; font-size: 0; }

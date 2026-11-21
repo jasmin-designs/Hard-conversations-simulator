@@ -18,7 +18,7 @@ const DEBRIEF_SCHEMA = {
     "planAgreed",
     "followUpAgreed",
     "planNote",
-    "policyAligned",
+    "policyResult",
     "policyNote",
     "overall",
     "skillReasons",
@@ -31,8 +31,13 @@ const DEBRIEF_SCHEMA = {
     planAgreed: { type: "boolean", description: "A concrete plan was agreed." },
     followUpAgreed: { type: "boolean", description: "A specific follow-up (time or check-in) was agreed." },
     planNote: { type: "string", description: "One sentence describing the plan, or what was missing." },
-    policyAligned: { type: "boolean", description: "The manager's approach and plan fit the company HR policy." },
-    policyNote: { type: "string", description: "One sentence on how the approach fit the policy, or what it missed (e.g. involving HR, written summary, check-in)." },
+    policyResult: {
+      type: "string",
+      enum: ["yes", "mostly", "no"],
+      description:
+        "yes = the approach and plan fit the HR policies. mostly = the approach was sound and nothing went against policy, but a step was missed (for example, the written summary or the EAP). no = something went against policy (for example, promising leave, asking about medical details, or approving something only HR or a department head can approve), or no plan at all.",
+    },
+    policyNote: { type: "string", description: "One or two short sentences: what fit the policy, and the single most important thing missed (if any). No lists of every rule." },
     overall: {
       type: "string",
       description:

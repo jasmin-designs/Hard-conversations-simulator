@@ -64,7 +64,7 @@ export const POLICY_LIBRARY = {
       owner: "Human Resources",
       appliesTo: "Employees whose roles allow flexible work",
       effective: "January 1, 2024",
-      revised: "November 12, 2026",
+      revised: "November 21, 2026",
       title: "Flexible Work Arrangements",
       purpose:
         "Describes the flexible work options available, who may approve them, and how they must be documented.",
@@ -80,7 +80,7 @@ export const POLICY_LIBRARY = {
         {
           heading: "Manager approval",
           points: [
-            "The employee's direct manager may approve: adjusted hours within core hours; up to two remote workdays per week; and temporary adjustments of up to four weeks.",
+            "The employee's direct manager may approve, whatever the reason: adjusted hours within core hours; up to two remote workdays per week; and temporary adjustments of up to four weeks.",
             "Managers must notify HR of any arrangement they approve within five business days, using the Flexible Work Arrangement form.",
           ],
         },
@@ -89,7 +89,7 @@ export const POLICY_LIBRARY = {
           points: [
             "The following require approval from both the department head and HR: hours outside the core hours; more than two remote workdays per week; temporary adjustments longer than four weeks; and any extension of an existing arrangement beyond its end date.",
             "Managers may not promise these arrangements before they are approved.",
-            "Requests connected to a health condition or family circumstances are handled as accommodation requests under HR-305.",
+            "If the need is ongoing or connected to health or caregiving, the manager also refers the employee to HR (HR-305) for longer-term options.",
           ],
         },
         {

@@ -321,7 +321,10 @@ function toast(text) {
 // ---------- One turn of the conversation ----------
 $("composer").addEventListener("submit", (e) => {
   e.preventDefault();
-  if (listening) recognition.stop(); // sending happens when the mic finishes
+  if (listening) {
+    userStopped = true;
+    recognition.stop(); // sending happens when the mic finishes
+  }
   else sendTurn($("message").value);
 });
 
@@ -576,6 +579,8 @@ $("voice-toggle").addEventListener("click", () => {
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = null;
 let listening = false;
+let userStopped = false; // true only when the learner taps to finish (or the call ends)
+let spokenSoFar = ""; // text from earlier listening sessions in this same message
 
 if (!SpeechRecognition) {
   $("mic-btn").hidden = true;
@@ -590,11 +595,12 @@ if (!SpeechRecognition) {
   recognition.onresult = (e) => {
     let text = "";
     for (const r of e.results) text += r[0].transcript;
-    $("message").value = text;
+    $("message").value = (spokenSoFar ? spokenSoFar + " " : "") + text.trim();
   };
   recognition.onerror = (e) => {
     if (e.error === "not-allowed" || e.error === "service-not-allowed") {
       // Reset the mic button right away (some browsers never fire "end" here).
+      userStopped = true;
       listening = false;
       $("mic-btn").setAttribute("aria-pressed", "false");
       $("message").placeholder = `Say something to ${name}…`;
@@ -604,6 +610,21 @@ if (!SpeechRecognition) {
     }
   };
   recognition.onend = () => {
+    // The browser sometimes stops listening on its own after a pause.
+    // Unless the learner tapped to finish, quietly keep listening.
+    if (!userStopped && listening && !$("call-screen").hidden) {
+      spokenSoFar = $("message").value.trim();
+      try {
+        recognition.start();
+        return;
+      } catch {
+        /* couldn't restart: fall through and leave the text for the learner */
+      }
+      listening = false;
+      $("mic-btn").setAttribute("aria-pressed", "false");
+      $("message").placeholder = `Say something to ${name}…`;
+      return; // don't send a half-finished message
+    }
     listening = false;
     $("mic-btn").setAttribute("aria-pressed", "false");
     $("message").placeholder = `Say something to ${name}…`;
@@ -611,9 +632,14 @@ if (!SpeechRecognition) {
   };
 
   $("mic-btn").addEventListener("click", () => {
-    if (listening) return recognition.stop(); // stop and send
+    if (listening) {
+      userStopped = true;
+      return recognition.stop(); // stop and send
+    }
     stopSpeaking(); // don't let the mic hear Jordan
     $("message").value = "";
+    spokenSoFar = "";
+    userStopped = false;
     try {
       recognition.start();
       listening = true;
@@ -639,7 +665,10 @@ $("confirm-end").addEventListener("click", () => {
 });
 
 function endCall() {
-  if (listening) recognition.abort();
+  if (listening) {
+    userStopped = true;
+    recognition.abort();
+  }
   stopSpeaking();
   clearInterval(timerId);
   const managerTurns = transcript.filter((t) => t.role === "manager").length;
@@ -703,10 +732,12 @@ function renderDebrief(d) {
     d.planNote
   );
 
+  // Policy: Yes / Mostly / Not yet. (Older debriefs used a true/false field.)
+  const policy = d.policyResult || (d.policyAligned ? "yes" : "no");
   setOutcome(
     "outcome-policy",
-    d.policyAligned ? "yes" : "no",
-    d.policyAligned ? "Yes" : "Not fully",
+    policy === "yes" ? "yes" : policy === "mostly" ? "partial" : "no",
+    { yes: "Yes", mostly: "Mostly", no: "Not yet" }[policy],
     d.policyNote
   );
   // Which policies they actually opened (counted by the app, not the AI).
@@ -928,7 +959,7 @@ function buildTranscript(d) {
       ...(d.uncoveredRealIssue ? [] : ["   Jordan didn't share what's really going on this time. We highly recommend practicing again with a different approach."]),
       `Agreed a plan: ${yesNo(d.planAgreed)} · Follow-up agreed: ${yesNo(d.followUpAgreed)}`,
       `   ${d.planNote}`,
-      `Followed company policy: ${d.policyAligned ? "Yes" : "Not fully"}`,
+      `Followed company policy: ${{ yes: "Yes", mostly: "Mostly", no: "Not yet" }[d.policyResult || (d.policyAligned ? "yes" : "no")]}`,
       `   ${d.policyNote || ""}`,
       `   ${policyUseText(policyUse()).replace("📋 ", "")}`,
       "",
